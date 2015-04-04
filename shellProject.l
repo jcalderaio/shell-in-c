@@ -1,6 +1,7 @@
 %{
 #include <stdio.h>
 #include "y.tab.h"
+#incliude "shellProject.h"
 extern YYSTYPE yylval;
 %}
 

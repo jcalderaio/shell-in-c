@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include "global.h"
 #include "shellProject.h"
 
 extern int yylex();
