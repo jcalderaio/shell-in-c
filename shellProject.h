@@ -81,6 +81,19 @@ extern char distf[];
 extern int append;
 extern int loop;
 
+extern int yylex();
+extern int yyparse();
+extern int currcmd;
+extern char* home;
+extern char* pathtab[MAXPATH]
+extern command_path;
+extern int argc;
+extern char* argv[MAXARGS];
+extern char* executable_path;
+extern int yylineno;
+extern char* yytext;
+
+
 #define NIL(x) (x *)0
 #define ALL NIL(char)
 #define copystring (a,b) strcpy((a=(char *)malloc(strlen(b)+1)), b)

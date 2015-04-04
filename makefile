@@ -6,7 +6,7 @@ y.tab.h: y.tab.c
 y.tab.c: shellProject.y
 		yacc -dv shellProject.y
 
-lex.yy.c: shell_project.l
+lex.yy.c: shellProject.l
 		lex shellProject.l
 
 clean:

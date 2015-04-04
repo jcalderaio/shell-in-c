@@ -1,10 +1,6 @@
 #include <stdio.h>
 #include "shellProject.h"
 
-extern int yylex();
-extern int yylineno;
-extern char* yytext;
-
 void init_scanner_and_parser(){
     // Need to initialize all the variables
 }

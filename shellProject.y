@@ -1,17 +1,23 @@
 %{
 #include <stdio.h>
 #include <string.h>
-#include "global.h"
 #include "shellProject.h"
 
 /*-------------------------------------------------------------------------------------
- * shellProject.y - yacc specification file for he parser generator
+ * shellProject.y - yacc specification file for the parser generator
  *------------------------------------------------------------------------------------
  */
-
+int eventcount = 0;
+void yyerror(const char *str){
+    fprintf(stderr, "error: %s\n", str);
+}
+int yywrap(){
+    return 1;
+}
  /* parse local working data section */
  COMMAND *q, *p;
  int pfd[2];
+
 %}
 
 %union{
@@ -34,6 +40,8 @@
 
 cmd:           builtin.cmd
                  { eventcount++; }
+               | simple.cmd
+                 { eventcount++; }
                | builtin.cmd LT WORD
                  { nuterr("illegal input redirection");
                    undoit(); bicmd = 0; }
@@ -49,107 +57,42 @@ cmd:           builtin.cmd
                  { nuterr("illegal input redirection");
                    undoit(); bicmd = 0; }
                | other.cmd { eventcount++; builtin = 0; }
+               ;
 
-builtin.cmd     SET PATH    dir.list    useless.redir
+
+builtin.cmd     SETENV PATH    dir.list    useless.redir
                         { bicmd = SETPATH; }
-                | SET PATH
+                | SETENV PATH
                         { pathleng =0; bicmd = SETPATH; }
-                | SET PROMPT STRING
+                | SETENV PROMPT STRING
                         { bicmd = SETPROMPT; bistr = mkstr($3); }
                         useless.redir
-                | SET
+                | SETENV
                         { bicmd = SETT; }
-                | SET GT WORD
+                | SETENV GT WORD
                         { bicmd = SETT; bioutf = 1; bistr = mkstr($3); }
-                | SET GT STRING
+                | SETENV GT STRING
                         { bicmd = SETT; bioutf = 1; bistr = mkstr($3); }
-                | SET GT GT WORD
+                | SETENV GT GT WORD
                         { bicmd = SETT; bioutf = 1; bistr = mkstr($3); append = 1; }
-                | SET GT GT STRING
+                | SETENV GT GT STRING
                         { bicmd = SETT; bioutf = 1; bistr = mkstr($3); append = 1; }
                 | CD WORD useless.redir
                         { bicmd = CDX; bistr = mkstr($2); }
                 | CD STRING useless.redir
+                | BYE
+                        { bicmd = byeCMD; return 0; }
+                | NEWLINE
+                        { bicmd = newlineCMD; return 0;}
+                ;
+
+simple.cmd:     exec.cmd
 
 
-/*-------------------------------------------------------------------------------------
- * Need to add code in here
- *------------------------------------------------------------------------------------
- */
-
-simple.cmd:         cmd.file
-                        {
-                            comtab[currcmd].comname = mkstr($1);
-                            comtab[currcmd].atptr = NIL(ARGTAB);
-                            comtab[currcmd].narg = 0;
-                            /* first arg is reversed for command */
-                        }
-                    | cmd.file  arguments
-                        {
-                            comtab[currcmd].comname = mkstr($1);
-                            comtab[currcmd].narg = currarg;
-                            /* first arg is reversed for command */
-                        }
-                    ;
-
-
-cmd.file:           WORD
-                        {
-                            (p = &comtab[currcmd])->atptr = Allocate(ARGTAB);
-                            currarg = 1; /* 1st arg is reversed for the comm.  */
-                            p->atptr->args[currarg++] = mkstr($1);
-                        }
-                    | STRING
-                        {
-                            (p = &comtab[currcmd])->atptr = Allocate(ARGTAB);
-                            currarg = 1; /* 1st arg is reversed for the comm.  */
-                            p->atptr->args[currarg++] = mkstr($1);
-                        }
-                    | arguments WORD
-                        {
-                            p->atptr->args[currarg++] = mkstr($2);
-                        }
-                    | arguments STRING
-                        {
-                            p->atptr->args[currarg++] = mkstr($2);
-                        }
-                    ;
-
-
-input:              LT WORD
-                        {
-                            strcopy( srcf, $2 );
-                            comtab[0].infd = BADFD;
-                        }
-                    ;
-
-
-ouput:              GT WORD
-                        {
-                            strcopy( distf, $2 );
-                            comtab[currcmd-1].outfd = BADFD;
-                        }
-                    | GT GT WORD
-                        {
-                            strcopy( distf, $3 );
-                            comtab[currcmd-1].outfd = BADFD;
-                            append = 1;
-                        }
-                    ;
-
-words:              WORD WORD
-                    | words WORD
-                    ;
-
-
-
-
-/*-------------------------------------------------------------------------------------
- * Need to add code in here
- *------------------------------------------------------------------------------------
- */
-
-
-
+exec.cmd        WORD{
+                        input_command = $1;
+                        argv[0] = $1;
+                        argv[1] = NULL;
+                        return 0;
+                }
 %%
-
