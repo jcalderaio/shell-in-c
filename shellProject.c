@@ -3,9 +3,54 @@
 
 void init_scanner_and_parser(){
     // Need to initialize all the variables
+    argc = 0;
+    bicmd = 0;
+    builtin = 0;
+}
+
+void printPrompt(){
+    printf("[shell-->$] ");
+    return;
+}
+
+void understand_errors(){
+    printf("An error occured while parsing the yacc file.\n");
 }
 
 void shell_init(){
+    //init all variables
+    currcmd = 0;
+
+
+
+    //define (allocate storage) for some var/tables
+        struct alias aliastab[MAXALIAS];
+        struct env envtab[MAXENV];
+
+    //init all tables (e.g., alias table)
+    //get PATH environment variable (use getenv())
+    char* my_path = getenv("PATH");
+    char* delim = ":";
+    char* token = strtok(my_path, delim);
+
+    int i = 0;
+    while(token != NULL){
+        pathtab[i] = token;
+        i++;
+        token = strtok(NULL, delim);
+    }
+    pathtab[i] = NULL;
+    //printf("two: %d\n", strlen(pathtab));
+    //get HOME env variable (also use getenv())
+    char *home_path = getenv("HOME");
+    //printf("%s", home_path);
+    home = home_path;
+    //disable anything that can kill your shell
+    //(the shell should never die; only can be exit)
+    //do anything you feel should be done as init
+    return;
+
+
     // init all variables.
     // define (allocate storage) for some var/tables
     // init all tables (e.g., alias table)
@@ -24,7 +69,7 @@ void getCommand(){
     if (yyparse())
         understand_errors();
     else
-        Return (OK);
+        return (OK);
 }
 
 void recover_from_errors(){
@@ -55,6 +100,10 @@ void do_it(){
       case PRINTENV …
     …
     }
+}
+
+void undoit(){
+    //Need to define this function
 }
 
 void execute_it(){

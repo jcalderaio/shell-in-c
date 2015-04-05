@@ -87,6 +87,7 @@ builtin.cmd     SETENV PATH    dir.list    useless.redir
                 ;
 
 simple.cmd:     exec.cmd
+                ;
 
 
 exec.cmd        WORD{
@@ -95,4 +96,5 @@ exec.cmd        WORD{
                         argv[1] = NULL;
                         return 0;
                 }
+                ;
 %%
