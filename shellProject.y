@@ -60,7 +60,7 @@ cmd:           builtin.cmd
                ;
 
 
-builtin.cmd     SETENV PATH    dir.list    useless.redir
+builtin.cmd:     SETENV PATH    dir.list    useless.redir
                         { bicmd = SETPATH; }
                 | SETENV PATH
                         { pathleng =0; bicmd = SETPATH; }
@@ -90,11 +90,10 @@ simple.cmd:     exec.cmd
                 ;
 
 
-exec.cmd        WORD{
+exec.cmd:        WORD{
                         input_command = $1;
                         argv[0] = $1;
                         argv[1] = NULL;
                         return 0;
                 }
-                ;
 %%

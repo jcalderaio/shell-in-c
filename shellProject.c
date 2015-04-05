@@ -135,14 +135,35 @@ void execute_it(){
     //Process background
 }
 
+int executable(){
+    int i = 0;
+    for(i = 0; pathtab[i] != NULL; ++i){
+        int len = strlen(pathtab[i]) + strlen(input_command) + strlen("/"); // add 1 for the '/'
+        executable_path = malloc(len);
+        strcpy(executable_path, pathtab[i]);
+        strcat(executable_path, "/");
+        strcat(executable_path, input_command);
+        int retVal = access(executable_path, X_OK);
+        if(retVal == 0){
+            return OK;
+        }
+    }
+    return ERRORS;
+}
+
 int main(void){
     shell_init();
     while (1) {
         printPrompt( );
         switch (CMD = getCommand()) {
-            case: BYE       exit();
-            case: ERRORS    recover_from_errors();
-            case: OK        processCommand();
+            case: BYE
+                exit();
+            case: ERRORS
+                recover_from_errors();
+                break;
+            case: OK
+                processCommand();
+                break;
         }
     }
 }
