@@ -24,8 +24,8 @@ void shell_init(){
 
 
     //define (allocate storage) for some var/tables
-        struct alias aliastab[MAXALIAS];
-        struct env envtab[MAXENV];
+    struct alias aliastab[MAXALIAS];
+    struct env envtab[MAXENV];
 
     //init all tables (e.g., alias table)
     //get PATH environment variable (use getenv())
