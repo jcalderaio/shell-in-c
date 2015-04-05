@@ -26,13 +26,12 @@ int yywrap(){
     char *w;
 }
 
-%token <i> LT GT AMP LPAREN VBAR DOT DEBUG
-%token <i> SET PATH PROMPT CD BYE ALIAS UNALIAS PWD EXTEND
-%token <i> ALIASLOOP
+%token <i> LT GT AMP LPAREN VBAR DOT DEBUG NEWLINE
+%token <i> SETENV PATH PROMPT CD BYE ALIAS UNALIAS PWD EXTEND
+%token <i> ALIASLOOP UNSETENV PRINTENV QUOTE PIPE BACKGROUND BACKSLASH TILDE
+%token <i> useless.redir other.cmd alias.cmd dir.list cmd.file
 %token <w> WORD
 %token <s> STRING
-
-%type <w> cmd.file
 
 %start cmd
 

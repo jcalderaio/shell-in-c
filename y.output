@@ -1,0 +1,408 @@
+Terminals which are not used
+
+   AMP
+   LPAREN
+   VBAR
+   DOT
+   DEBUG
+   ALIAS
+   UNALIAS
+   PWD
+   EXTEND
+   ALIASLOOP
+   UNSETENV
+   PRINTENV
+   QUOTE
+   PIPE
+   BACKGROUND
+   BACKSLASH
+   TILDE
+   cmd.file
+
+
+Grammar
+
+    0 $accept: cmd $end
+
+    1 cmd: builtin.cmd
+    2    | simple.cmd
+    3    | builtin.cmd LT WORD
+    4    | builtin.cmd LT STRING
+    5    | alias.cmd
+    6    | alias.cmd LT WORD
+    7    | alias.cmd LT STRING
+    8    | other.cmd
+
+    9 builtin.cmd: SETENV PATH dir.list useless.redir
+   10            | SETENV PATH
+
+   11 @1: /* empty */
+
+   12 builtin.cmd: SETENV PROMPT STRING @1 useless.redir
+   13            | SETENV
+   14            | SETENV GT WORD
+   15            | SETENV GT STRING
+   16            | SETENV GT GT WORD
+   17            | SETENV GT GT STRING
+   18            | CD WORD useless.redir
+   19            | CD STRING useless.redir
+   20            | BYE
+   21            | NEWLINE
+
+   22 simple.cmd: exec.cmd
+
+   23 exec.cmd: WORD
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+LT (258) 3 4 6 7
+GT (259) 14 15 16 17
+AMP (260)
+LPAREN (261)
+VBAR (262)
+DOT (263)
+DEBUG (264)
+NEWLINE (265) 21
+SETENV (266) 9 10 12 13 14 15 16 17
+PATH (267) 9 10
+PROMPT (268) 12
+CD (269) 18 19
+BYE (270) 20
+ALIAS (271)
+UNALIAS (272)
+PWD (273)
+EXTEND (274)
+ALIASLOOP (275)
+UNSETENV (276)
+PRINTENV (277)
+QUOTE (278)
+PIPE (279)
+BACKGROUND (280)
+BACKSLASH (281)
+TILDE (282)
+useless.redir (283) 9 12 18 19
+other.cmd (284) 8
+alias.cmd (285) 5 6 7
+dir.list (286) 9
+cmd.file (287)
+WORD (288) 3 6 14 16 18 23
+STRING (289) 4 7 12 15 17 19
+
+
+Nonterminals, with rules where they appear
+
+$accept (35)
+    on left: 0
+cmd (36)
+    on left: 1 2 3 4 5 6 7 8, on right: 0
+builtin.cmd (37)
+    on left: 9 10 12 13 14 15 16 17 18 19 20 21, on right: 1 3 4
+@1 (38)
+    on left: 11, on right: 12
+simple.cmd (39)
+    on left: 22, on right: 2
+exec.cmd (40)
+    on left: 23, on right: 22
+
+
+state 0
+
+    0 $accept: . cmd $end
+
+    NEWLINE    shift, and go to state 1
+    SETENV     shift, and go to state 2
+    CD         shift, and go to state 3
+    BYE        shift, and go to state 4
+    other.cmd  shift, and go to state 5
+    alias.cmd  shift, and go to state 6
+    WORD       shift, and go to state 7
+
+    cmd          go to state 8
+    builtin.cmd  go to state 9
+    simple.cmd   go to state 10
+    exec.cmd     go to state 11
+
+
+state 1
+
+   21 builtin.cmd: NEWLINE .
+
+    $default  reduce using rule 21 (builtin.cmd)
+
+
+state 2
+
+    9 builtin.cmd: SETENV . PATH dir.list useless.redir
+   10            | SETENV . PATH
+   12            | SETENV . PROMPT STRING @1 useless.redir
+   13            | SETENV .
+   14            | SETENV . GT WORD
+   15            | SETENV . GT STRING
+   16            | SETENV . GT GT WORD
+   17            | SETENV . GT GT STRING
+
+    GT      shift, and go to state 12
+    PATH    shift, and go to state 13
+    PROMPT  shift, and go to state 14
+
+    $default  reduce using rule 13 (builtin.cmd)
+
+
+state 3
+
+   18 builtin.cmd: CD . WORD useless.redir
+   19            | CD . STRING useless.redir
+
+    WORD    shift, and go to state 15
+    STRING  shift, and go to state 16
+
+
+state 4
+
+   20 builtin.cmd: BYE .
+
+    $default  reduce using rule 20 (builtin.cmd)
+
+
+state 5
+
+    8 cmd: other.cmd .
+
+    $default  reduce using rule 8 (cmd)
+
+
+state 6
+
+    5 cmd: alias.cmd .
+    6    | alias.cmd . LT WORD
+    7    | alias.cmd . LT STRING
+
+    LT  shift, and go to state 17
+
+    $default  reduce using rule 5 (cmd)
+
+
+state 7
+
+   23 exec.cmd: WORD .
+
+    $default  reduce using rule 23 (exec.cmd)
+
+
+state 8
+
+    0 $accept: cmd . $end
+
+    $end  shift, and go to state 18
+
+
+state 9
+
+    1 cmd: builtin.cmd .
+    3    | builtin.cmd . LT WORD
+    4    | builtin.cmd . LT STRING
+
+    LT  shift, and go to state 19
+
+    $default  reduce using rule 1 (cmd)
+
+
+state 10
+
+    2 cmd: simple.cmd .
+
+    $default  reduce using rule 2 (cmd)
+
+
+state 11
+
+   22 simple.cmd: exec.cmd .
+
+    $default  reduce using rule 22 (simple.cmd)
+
+
+state 12
+
+   14 builtin.cmd: SETENV GT . WORD
+   15            | SETENV GT . STRING
+   16            | SETENV GT . GT WORD
+   17            | SETENV GT . GT STRING
+
+    GT      shift, and go to state 20
+    WORD    shift, and go to state 21
+    STRING  shift, and go to state 22
+
+
+state 13
+
+    9 builtin.cmd: SETENV PATH . dir.list useless.redir
+   10            | SETENV PATH .
+
+    dir.list  shift, and go to state 23
+
+    $default  reduce using rule 10 (builtin.cmd)
+
+
+state 14
+
+   12 builtin.cmd: SETENV PROMPT . STRING @1 useless.redir
+
+    STRING  shift, and go to state 24
+
+
+state 15
+
+   18 builtin.cmd: CD WORD . useless.redir
+
+    useless.redir  shift, and go to state 25
+
+
+state 16
+
+   19 builtin.cmd: CD STRING . useless.redir
+
+    useless.redir  shift, and go to state 26
+
+
+state 17
+
+    6 cmd: alias.cmd LT . WORD
+    7    | alias.cmd LT . STRING
+
+    WORD    shift, and go to state 27
+    STRING  shift, and go to state 28
+
+
+state 18
+
+    0 $accept: cmd $end .
+
+    $default  accept
+
+
+state 19
+
+    3 cmd: builtin.cmd LT . WORD
+    4    | builtin.cmd LT . STRING
+
+    WORD    shift, and go to state 29
+    STRING  shift, and go to state 30
+
+
+state 20
+
+   16 builtin.cmd: SETENV GT GT . WORD
+   17            | SETENV GT GT . STRING
+
+    WORD    shift, and go to state 31
+    STRING  shift, and go to state 32
+
+
+state 21
+
+   14 builtin.cmd: SETENV GT WORD .
+
+    $default  reduce using rule 14 (builtin.cmd)
+
+
+state 22
+
+   15 builtin.cmd: SETENV GT STRING .
+
+    $default  reduce using rule 15 (builtin.cmd)
+
+
+state 23
+
+    9 builtin.cmd: SETENV PATH dir.list . useless.redir
+
+    useless.redir  shift, and go to state 33
+
+
+state 24
+
+   12 builtin.cmd: SETENV PROMPT STRING . @1 useless.redir
+
+    $default  reduce using rule 11 (@1)
+
+    @1  go to state 34
+
+
+state 25
+
+   18 builtin.cmd: CD WORD useless.redir .
+
+    $default  reduce using rule 18 (builtin.cmd)
+
+
+state 26
+
+   19 builtin.cmd: CD STRING useless.redir .
+
+    $default  reduce using rule 19 (builtin.cmd)
+
+
+state 27
+
+    6 cmd: alias.cmd LT WORD .
+
+    $default  reduce using rule 6 (cmd)
+
+
+state 28
+
+    7 cmd: alias.cmd LT STRING .
+
+    $default  reduce using rule 7 (cmd)
+
+
+state 29
+
+    3 cmd: builtin.cmd LT WORD .
+
+    $default  reduce using rule 3 (cmd)
+
+
+state 30
+
+    4 cmd: builtin.cmd LT STRING .
+
+    $default  reduce using rule 4 (cmd)
+
+
+state 31
+
+   16 builtin.cmd: SETENV GT GT WORD .
+
+    $default  reduce using rule 16 (builtin.cmd)
+
+
+state 32
+
+   17 builtin.cmd: SETENV GT GT STRING .
+
+    $default  reduce using rule 17 (builtin.cmd)
+
+
+state 33
+
+    9 builtin.cmd: SETENV PATH dir.list useless.redir .
+
+    $default  reduce using rule 9 (builtin.cmd)
+
+
+state 34
+
+   12 builtin.cmd: SETENV PROMPT STRING @1 . useless.redir
+
+    useless.redir  shift, and go to state 35
+
+
+state 35
+
+   12 builtin.cmd: SETENV PROMPT STRING @1 useless.redir .
+
+    $default  reduce using rule 12 (builtin.cmd)

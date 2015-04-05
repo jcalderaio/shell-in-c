@@ -14,10 +14,7 @@ setenv              return SETENV;
 unsetenv            return UNSETENV;
 printenv            return PRINTENV;
 bye                 return BYE;
-ls                  {return LS;}
-[a-zA-Z0-9\-\.*]+       {
-    yylval.word = strdup(yytext); return WORD;
-}
+[a-zA-Z0-9\-\.*_]+  {yylval.word = strdup(yytext); return WORD;}
 \"                  return QUOTE;
 \<                  return LT;
 \>                  return GT;
@@ -27,7 +24,6 @@ ls                  {return LS;}
 ~                   return TILDE;
 \n                  {;}
 [\t]+               {;}/*ignore white space*/
-
 .                   {;} /*no match*/
 
 %%

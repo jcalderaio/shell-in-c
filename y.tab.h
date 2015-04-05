@@ -39,23 +39,78 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     NUMBER = 258,
-     HELLO = 259,
-     BYE = 260,
-     STATE = 261
+     LT = 258,
+     GT = 259,
+     AMP = 260,
+     LPAREN = 261,
+     VBAR = 262,
+     DOT = 263,
+     DEBUG = 264,
+     NEWLINE = 265,
+     SETENV = 266,
+     PATH = 267,
+     PROMPT = 268,
+     CD = 269,
+     BYE = 270,
+     ALIAS = 271,
+     UNALIAS = 272,
+     PWD = 273,
+     EXTEND = 274,
+     ALIASLOOP = 275,
+     UNSETENV = 276,
+     PRINTENV = 277,
+     QUOTE = 278,
+     PIPE = 279,
+     BACKGROUND = 280,
+     BACKSLASH = 281,
+     TILDE = 282,
+     WORD = 288,
+     STRING = 289
    };
 #endif
 /* Tokens.  */
-#define NUMBER 258
-#define HELLO 259
-#define BYE 260
-#define STATE 261
+#define LT 258
+#define GT 259
+#define AMP 260
+#define LPAREN 261
+#define VBAR 262
+#define DOT 263
+#define DEBUG 264
+#define NEWLINE 265
+#define SETENV 266
+#define PATH 267
+#define PROMPT 268
+#define CD 269
+#define BYE 270
+#define ALIAS 271
+#define UNALIAS 272
+#define PWD 273
+#define EXTEND 274
+#define ALIASLOOP 275
+#define UNSETENV 276
+#define PRINTENV 277
+#define QUOTE 278
+#define PIPE 279
+#define BACKGROUND 280
+#define BACKSLASH 281
+#define TILDE 282
+#define WORD 288
+#define STRING 289
 
 
 
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+typedef union YYSTYPE
+#line 23 "shellProject.y"
+{
+    int i;
+    char *s;
+    char *w;
+}
+/* Line 1529 of yacc.c.  */
+#line 113 "y.tab.h"
+	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 # define YYSTYPE_IS_TRIVIAL 1

@@ -84,9 +84,8 @@ extern int loop;
 extern int yylex();
 extern int yyparse();
 extern int currcmd;
-extern char* home;
-extern char* pathtab[MAXPATH]
-extern command_path;
+extern char* pathtab[MAXPATH];
+extern char* command_path;
 extern int argc;
 extern char* argv[MAXARGS];
 extern char* executable_path;
