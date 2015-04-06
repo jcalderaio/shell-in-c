@@ -20,8 +20,6 @@
 
 
 //Assigning "bicmd" different numbers
-#define OK                      0
-#define ERRORS                  1
 #define byeCMD                  2
 #define cdhomeCMD               3
 #define cdpathCMD               4
@@ -94,6 +92,14 @@ extern char srcf[];
 extern char distf[];
 extern int append;
 extern int loop;
+
+extern int SETPATH;
+extern int SETT;
+extern int CDX;
+extern int MAXENV;
+extern int ALIAS;
+extern int PROMPT;
+
 
 extern int yylex();
 extern int yyparse();
