@@ -97,8 +97,7 @@ extern int SETPATH;
 extern int SETT;
 extern int CDX;
 extern int MAXENV;
-extern int ALIAS;
-extern int PROMPT;
+extern int SETPROMPT;
 
 
 extern int yylex();

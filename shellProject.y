@@ -37,52 +37,48 @@ int yywrap(){
 
 %%
 
-cmd:           builtin.cmd
-                 { eventcount++; }
-               | simple.cmd
-                 { eventcount++; }
-               | builtin.cmd LT WORD
-                 { nuterr("illegal input redirection");
-                   undoit(); bicmd = 0; }
-               | builtin.cmd LT STRING
-                 { nuterr("illegal input redirection");
-                   undoit(); bicmd = 0; }
-               | alias.cmd
-                 { eventcount++; }
-               | alias.cmd LT WORD
-                 { nuterr("illegal input redirection");
-                   undoit(); bicmd = 0; }
-               | alias.cmd LT STRING
-                 { nuterr("illegal input redirection");
-                   undoit(); bicmd = 0; }
-               | other.cmd { eventcount++; builtin = 0; }
-               ;
+cmd:            builtin.cmd
+                          { eventcount++; }
+                | simple.cmd
+                          { eventcount++; }
+                | builtin.cmd LT WORD
+                          { nuterr("illegal input redirection"); undoit(); bicmd = 0; }
+                | builtin.cmd LT STRING
+                          { nuterr("illegal input redirection"); undoit(); bicmd = 0; }
+                | alias.cmd
+                          { eventcount++; }
+                | alias.cmd LT WORD
+                          { nuterr("illegal input redirection"); undoit(); bicmd = 0; }
+                | alias.cmd LT STRING
+                          { nuterr("illegal input redirection"); undoit(); bicmd = 0; }
+                | other.cmd { eventcount++; builtin = 0; }
+                ;
 
 
-builtin.cmd:     SETENV PATH    dir.list    useless.redir
-                        { bicmd = SETPATH; }
+builtin.cmd:     SETENV PATH    dir.list
+                          { bicmd = SETPATH; }
                 | SETENV PATH
-                        { pathleng =0; bicmd = SETPATH; }
+                          { pathleng =0; bicmd = SETPATH; }
                 | SETENV PROMPT STRING
-                        { bicmd = SETPROMPT; bistr = mkstr($3); }
-                        useless.redir
+                          { bicmd = SETPROMPT; bistr = mkstr($3); }
+
                 | SETENV
-                        { bicmd = SETT; }
+                          { bicmd = SETT; }
                 | SETENV GT WORD
-                        { bicmd = SETT; bioutf = 1; bistr = mkstr($3); }
+                          { bicmd = SETT; bioutf = 1; bistr = mkstr($3); }
                 | SETENV GT STRING
-                        { bicmd = SETT; bioutf = 1; bistr = mkstr($3); }
+                          { bicmd = SETT; bioutf = 1; bistr = mkstr($3); }
                 | SETENV GT GT WORD
-                        { bicmd = SETT; bioutf = 1; bistr = mkstr($3); append = 1; }
+                          { bicmd = SETT; bioutf = 1; bistr = mkstr($3); append = 1; }
                 | SETENV GT GT STRING
-                        { bicmd = SETT; bioutf = 1; bistr = mkstr($3); append = 1; }
+                          { bicmd = SETT; bioutf = 1; bistr = mkstr($3); append = 1; }
                 | CD WORD useless.redir
-                        { bicmd = CDX; bistr = mkstr($2); }
-                | CD STRING useless.redir
+                          { bicmd = CDX; bistr = mkstr($2); }
+                | CD STRING
                 | BYE
-                        { bicmd = byeCMD; return 0; }
+                          { bicmd = byeCMD; return 0; }
                 | NEWLINE
-                        { bicmd = newlineCMD; return 0;}
+                          { bicmd = newlineCMD; return 0;}
                 ;
 
 simple.cmd:     exec.cmd
