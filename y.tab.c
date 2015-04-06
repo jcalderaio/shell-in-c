@@ -486,7 +486,7 @@ static const yytype_uint8 yyrline[] =
 {
        0,    40,    40,    42,    44,    47,    50,    52,    55,    58,
       62,    64,    66,    69,    71,    73,    75,    77,    79,    81,
-      82,    84,    88,    92
+      83,    85,    89,    93
 };
 #endif
 
@@ -1497,18 +1497,23 @@ yyreduce:
     { bicmd = CDX; bistr = mkstr((yyvsp[(2) - (2)].word)); }
     break;
 
+  case 19:
+#line 82 "shellProject.y"
+    { bicmd = CD; bistr = mkstr((yyvsp[(2) - (2)].s)); }
+    break;
+
   case 20:
-#line 83 "shellProject.y"
-    { bicmd = byeCMD; return 0; }
+#line 84 "shellProject.y"
+    { bicmd = BYE; return 0; }
     break;
 
   case 21:
-#line 85 "shellProject.y"
-    { bicmd = newlineCMD; return 0;}
+#line 86 "shellProject.y"
+    { bicmd = NEWLINE; return 0;}
     break;
 
   case 23:
-#line 92 "shellProject.y"
+#line 93 "shellProject.y"
     {
                         input_command = (yyvsp[(1) - (1)].word);
                         argv[0] = (yyvsp[(1) - (1)].word);
@@ -1519,7 +1524,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1523 "y.tab.c"
+#line 1528 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1733,5 +1738,5 @@ yyreturn:
 }
 
 
-#line 98 "shellProject.y"
+#line 99 "shellProject.y"
 

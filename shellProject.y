@@ -76,13 +76,14 @@ builtin.cmd:     SETENV PATH    dir.list
                         { bicmd = SETT; bioutf = 1; bistr = mkstr($3); append = 1; }
                 | SETENV GT GT STRING
                         { bicmd = SETT; bioutf = 1; bistr = mkstr($3); append = 1; }
-                | CD WORD 
+                | CD WORD
                         { bicmd = CDX; bistr = mkstr($2); }
-                | CD STRING 
+                | CD STRING
+                        { bicmd = CD; bistr = mkstr($2); }
                 | BYE
-                        { bicmd = byeCMD; return 0; }
+                        { bicmd = BYE; return 0; }
                 | NEWLINE
-                        { bicmd = newlineCMD; return 0;}
+                        { bicmd = NEWLINE; return 0;}
                 ;
 
 simple.cmd:     exec.cmd
