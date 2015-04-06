@@ -5,6 +5,7 @@
 #define MAXPATH         50
 
 #define OK              0
+#define ERRORS          1
 #define SYSERR          1
 #define OLD_ERR         3
 #define SYSCALLER      -1
@@ -107,6 +108,8 @@ extern int SETT;
 extern int CDX;
 extern int MAXENV;
 extern int SETPROMPT;
+extern int X_OK;
+extern int CMD;
 
 
 extern int yylex();
@@ -119,6 +122,7 @@ extern char* argv[MAXARGS];
 extern char* executable_path;
 extern int yylineno;
 extern char* yytext;
+extern char* input_command;
 
 
 #define NIL(x) (x *)0

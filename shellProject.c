@@ -64,7 +64,7 @@ void shell_init(){
     // do anything you feel should be done as init
 }
 
-void getCommand(){
+int getCommand(){
     init_scanner_and_parser();
     if (yyparse())
         understand_errors();
@@ -79,8 +79,6 @@ void recover_from_errors(){
     // the rest of the command.
     // To do this: use yylex() directly.
 }
-
-
 
 void do_it(){
     switch (builtin) {
@@ -161,7 +159,7 @@ int main(void){
         printPrompt( );
         switch (CMD = getCommand()) {
             case BYE:
-                exit();
+                exit(0);
             case ERRORS:
                 recover_from_errors();
                 break;
