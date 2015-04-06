@@ -175,7 +175,7 @@ typedef union YYSTYPE
 {
     int i;
     char *s;
-    char *w;
+    char *word;
 }
 /* Line 193 of yacc.c.  */
 #line 182 "y.tab.c"
@@ -1474,7 +1474,7 @@ yyreduce:
 
   case 15:
 #line 72 "shellProject.y"
-    { bicmd = SETT; bioutf = 1; bistr = mkstr((yyvsp[(3) - (3)].w)); }
+    { bicmd = SETT; bioutf = 1; bistr = mkstr((yyvsp[(3) - (3)].word)); }
     break;
 
   case 16:
@@ -1494,7 +1494,7 @@ yyreduce:
 
   case 19:
 #line 80 "shellProject.y"
-    { bicmd = CDX; bistr = mkstr((yyvsp[(2) - (3)].w)); }
+    { bicmd = CDX; bistr = mkstr((yyvsp[(2) - (3)].word)); }
     break;
 
   case 21:
@@ -1510,8 +1510,8 @@ yyreduce:
   case 24:
 #line 92 "shellProject.y"
     {
-                        input_command = (yyvsp[(1) - (1)].w);
-                        argv[0] = (yyvsp[(1) - (1)].w);
+                        input_command = (yyvsp[(1) - (1)].word);
+                        argv[0] = (yyvsp[(1) - (1)].word);
                         argv[1] = NULL;
                         return 0;
                 }

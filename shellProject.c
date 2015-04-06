@@ -148,7 +148,7 @@ int executable(){
             return OK;
         }
     }
-    return ERRORS;
+    return SYSERR;
 }
 
 int main(void){

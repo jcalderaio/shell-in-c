@@ -23,14 +23,14 @@ int yywrap(){
 %union{
     int i;
     char *s;
-    char *w;
+    char *word;
 }
 
 %token <i> LT GT AMP LPAREN VBAR DOT DEBUG NEWLINE
 %token <i> SETENV PATH PROMPT CD BYE ALIAS UNALIAS PWD EXTEND
 %token <i> ALIASLOOP UNSETENV PRINTENV QUOTE PIPE BACKGROUND BACKSLASH TILDE
 %token <i> useless.redir other.cmd alias.cmd dir.list cmd.file
-%token <w> WORD
+%token <word> WORD
 %token <s> STRING
 
 %start cmd

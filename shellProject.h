@@ -18,6 +18,20 @@
 
 #define REGISTRY "REGISTRY"
 
+
+//Assigning "bicmd" different numbers
+#define OK                      0
+#define ERRORS                  1
+#define byeCMD                  2
+#define cdhomeCMD               3
+#define cdpathCMD               4
+#define aliasCMD                5
+#define unaliasCMD              6
+#define setenvCMD               7
+#define printenvCMD             8
+#define newlineCMD              9
+
+
 /*Command line arguments structure*/
 typedef struct comrgs{
     char *args[MAXARGS];

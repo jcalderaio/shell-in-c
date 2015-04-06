@@ -106,7 +106,7 @@ typedef union YYSTYPE
 {
     int i;
     char *s;
-    char *w;
+    char *word;
 }
 /* Line 1529 of yacc.c.  */
 #line 113 "y.tab.h"
