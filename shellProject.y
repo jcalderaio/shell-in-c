@@ -21,17 +21,17 @@ int yywrap(){
 %}
 
 %union{
-    int i;
-    char *s;
+    int integer;
+    char *string;
     char *word;
 }
 
-%token <i> LT GT AMP LPAREN VBAR DOT DEBUG NEWLINE
-%token <i> SETENV PATH PROMPT CD BYE ALIAS UNALIAS PWD EXTEND
-%token <i> ALIASLOOP UNSETENV PRINTENV QUOTE PIPE BACKGROUND BACKSLASH TILDE
-%token <i> useless.redir other.cmd alias.cmd dir.list cmd.file
+%token <integer> LT GT AMP LPAREN VBAR DOT DEBUG NEWLINE
+%token <integer> SETENV PATH PROMPT CD BYE ALIAS UNALIAS PWD EXTEND
+%token <integer> ALIASLOOP UNSETENV PRINTENV QUOTE PIPE BACKGROUND BACKSLASH TILDE
+%token <integer> other.cmd alias.cmd dir.list cmd.file
 %token <word> WORD
-%token <s> STRING
+%token <string> STRING
 
 %start cmd
 
@@ -59,13 +59,12 @@ cmd:           builtin.cmd
                ;
 
 
-builtin.cmd:     SETENV PATH    dir.list    useless.redir
+builtin.cmd:     SETENV PATH    dir.list  
                         { bicmd = SETPATH; }
                 | SETENV PATH
                         { pathleng =0; bicmd = SETPATH; }
                 | SETENV PROMPT STRING
                         { bicmd = SETPROMPT; bistr = mkstr($3); }
-                        useless.redir
                 | SETENV
                         { bicmd = SETT; }
                 | SETENV GT WORD
@@ -76,9 +75,9 @@ builtin.cmd:     SETENV PATH    dir.list    useless.redir
                         { bicmd = SETT; bioutf = 1; bistr = mkstr($3); append = 1; }
                 | SETENV GT GT STRING
                         { bicmd = SETT; bioutf = 1; bistr = mkstr($3); append = 1; }
-                | CD WORD useless.redir
+                | CD WORD 
                         { bicmd = CDX; bistr = mkstr($2); }
-                | CD STRING useless.redir
+                | CD STRING 
                 | BYE
                         { bicmd = byeCMD; return 0; }
                 | NEWLINE

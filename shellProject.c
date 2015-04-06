@@ -156,12 +156,12 @@ int main(void){
     while (1) {
         printPrompt( );
         switch (CMD = getCommand()) {
-            case: BYE
+            case BYE:
                 exit();
-            case: ERRORS
+            case ERRORS:
                 recover_from_errors();
                 break;
-            case: OK
+            case OK:
                 processCommand();
                 break;
         }
