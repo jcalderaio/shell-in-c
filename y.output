@@ -17,6 +17,7 @@ Terminals which are not used
    BACKGROUND
    BACKSLASH
    TILDE
+   useless.redir
    cmd.file
 
 
@@ -41,7 +42,7 @@ Grammar
    14            | SETENV GT STRING
    15            | SETENV GT GT WORD
    16            | SETENV GT GT STRING
-   17            | CD WORD useless.redir
+   17            | CD WORD
    18            | CD STRING
    19            | BYE
    20            | NEWLINE
@@ -80,7 +81,7 @@ PIPE (279)
 BACKGROUND (280)
 BACKSLASH (281)
 TILDE (282)
-useless.redir (283) 17
+useless.redir (283)
 other.cmd (284) 8
 alias.cmd (285) 5 6 7
 dir.list (286) 9
@@ -148,7 +149,7 @@ state 2
 
 state 3
 
-   17 builtin.cmd: CD . WORD useless.redir
+   17 builtin.cmd: CD . WORD
    18            | CD . STRING
 
     WORD    shift, and go to state 15
@@ -250,9 +251,9 @@ state 14
 
 state 15
 
-   17 builtin.cmd: CD WORD . useless.redir
+   17 builtin.cmd: CD WORD .
 
-    useless.redir  shift, and go to state 25
+    $default  reduce using rule 17 (builtin.cmd)
 
 
 state 16
@@ -267,8 +268,8 @@ state 17
     6 cmd: alias.cmd LT . WORD
     7    | alias.cmd LT . STRING
 
-    WORD    shift, and go to state 26
-    STRING  shift, and go to state 27
+    WORD    shift, and go to state 25
+    STRING  shift, and go to state 26
 
 
 state 18
@@ -283,8 +284,8 @@ state 19
     3 cmd: builtin.cmd LT . WORD
     4    | builtin.cmd LT . STRING
 
-    WORD    shift, and go to state 28
-    STRING  shift, and go to state 29
+    WORD    shift, and go to state 27
+    STRING  shift, and go to state 28
 
 
 state 20
@@ -292,8 +293,8 @@ state 20
    15 builtin.cmd: SETENV GT GT . WORD
    16            | SETENV GT GT . STRING
 
-    WORD    shift, and go to state 30
-    STRING  shift, and go to state 31
+    WORD    shift, and go to state 29
+    STRING  shift, and go to state 30
 
 
 state 21
@@ -326,47 +327,40 @@ state 24
 
 state 25
 
-   17 builtin.cmd: CD WORD useless.redir .
-
-    $default  reduce using rule 17 (builtin.cmd)
-
-
-state 26
-
     6 cmd: alias.cmd LT WORD .
 
     $default  reduce using rule 6 (cmd)
 
 
-state 27
+state 26
 
     7 cmd: alias.cmd LT STRING .
 
     $default  reduce using rule 7 (cmd)
 
 
-state 28
+state 27
 
     3 cmd: builtin.cmd LT WORD .
 
     $default  reduce using rule 3 (cmd)
 
 
-state 29
+state 28
 
     4 cmd: builtin.cmd LT STRING .
 
     $default  reduce using rule 4 (cmd)
 
 
-state 30
+state 29
 
    15 builtin.cmd: SETENV GT GT WORD .
 
     $default  reduce using rule 15 (builtin.cmd)
 
 
-state 31
+state 30
 
    16 builtin.cmd: SETENV GT GT STRING .
 

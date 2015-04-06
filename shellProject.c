@@ -80,25 +80,29 @@ void recover_from_errors(){
     // To do this: use yylex() directly.
 }
 
-void processCommand(){
-    if (builtin)
-        do_it();        // run built-in commands – no fork
-                        // no exec; only your code + Unix
-                        //system calls.
-    else
-        execute_it();   // execute general commands
-                        //using fork and exec
-}
+
 
 void do_it(){
     switch (builtin) {
-      case ALIAS …  // e.g., alias(); alias(name, word);
-      case CDHome …     // e.g., gohome();
-      case CDPath … // e.g., chdir(path);
-      case UNALIAS …
-      case SETENV …
-      case PRINTENV …
-    …
+      case ALIAS:
+        // e.g., alias(); alias(name, word);
+        break;
+      case CDHome:
+        // e.g., gohome();
+        break;
+      case CDPath:
+        // e.g., chdir(path);
+        break;
+      case UNALIAS:
+        break;
+      case SETENV:
+        break;
+      case UNSETENV:
+        break;
+      case PRINTENV:
+        break;
+      default:
+        break;
     }
 }
 

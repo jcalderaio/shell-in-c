@@ -1,16 +1,16 @@
-#define MAXCMDS     50
-#define MAXARGS     300
-#define MAXALIAS    100
-#define MAXCACHE    100
-#define MAXPATH     50
+#define MAXCMDS         50
+#define MAXARGS         300
+#define MAXALIAS        100
+#define MAXCACHE        100
+#define MAXPATH         50
 
-#define OK          0
-#define SYSERR      1
-#define OLD_ERR     3
-#define SYSCALLER   -1
+#define OK              0
+#define SYSERR          1
+#define OLD_ERR         3
+#define SYSCALLER      -1
 
-#define BADFD       -2
-#define EOFILE      2
+#define BADFD          -2
+#define EOFILE          2
 
 #define THE_ONLY_ONE    1
 #define FIRST           2
@@ -20,14 +20,17 @@
 
 
 //Assigning "bicmd" different numbers
-#define byeCMD                  2
-#define cdhomeCMD               3
-#define cdpathCMD               4
-#define aliasCMD                5
-#define unaliasCMD              6
-#define setenvCMD               7
-#define printenvCMD             8
-#define newlineCMD              9
+#define BYE                  2
+#define CDHome               3
+#define CDPath               4
+#define ALIAS                5
+#define UNALIAS              6
+#define SETENV               7
+#define UNSETENV             8
+#define PRINTENV             9
+#define NEWLINE              10
+
+
 
 
 /*Command line arguments structure*/
@@ -51,6 +54,12 @@ struct alias{
     int used;
     char *alname;
     char *alstr;
+};
+
+struct env {
+    int used; //number of usage times?
+    char *envname; //pointer to alias name?
+    char *envstr;  //pointer to alias string?
 };
 
 typedef struct cache{
