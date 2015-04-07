@@ -1,3 +1,6 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 #define MAXCMDS         50
 #define MAXARGS         300
 #define MAXALIAS        100
@@ -108,7 +111,7 @@ extern int SETT;
 extern int CDX;
 extern int MAXENV;
 extern int SETPROMPT;
-extern int X_OK;
+//extern int X_OK;
 extern int CMD;
 
 

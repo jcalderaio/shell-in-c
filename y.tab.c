@@ -138,13 +138,9 @@
  * shellProject.y - yacc specification file for the parser generator
  *------------------------------------------------------------------------------------
  */
+
 int eventcount = 0;
-void yyerror(const char *str){
-    fprintf(stderr, "error: %s\n", str);
-}
-int yywrap(){
-    return 1;
-}
+
  /* parse local working data section */
  COMMAND *q, *p;
  int pfd[2];
@@ -171,14 +167,14 @@ int yywrap(){
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 23 "shellProject.y"
+#line 19 "shellProject.y"
 {
-    int i;
-    char *s;
+    int integer;
+    char *string;
     char *word;
 }
 /* Line 193 of yacc.c.  */
-#line 182 "y.tab.c"
+#line 178 "y.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -191,7 +187,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 195 "y.tab.c"
+#line 191 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -484,9 +480,9 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    40,    40,    42,    44,    47,    50,    52,    55,    58,
-      62,    64,    66,    69,    71,    73,    75,    77,    79,    81,
-      83,    85,    89,    93
+       0,    36,    36,    38,    40,    42,    44,    46,    48,    50,
+      55,    57,    59,    61,    63,    65,    67,    69,    71,    73,
+      75,    77,    81,    85
 };
 #endif
 
@@ -1409,122 +1405,118 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 41 "shellProject.y"
+#line 37 "shellProject.y"
     { eventcount++; }
     break;
 
   case 3:
-#line 43 "shellProject.y"
+#line 39 "shellProject.y"
     { eventcount++; }
     break;
 
   case 4:
-#line 45 "shellProject.y"
-    { nuterr("illegal input redirection");
-                   undoit(); bicmd = 0; }
+#line 41 "shellProject.y"
+    { nuterr("illegal input redirection"); undoit(); bicmd = 0; }
     break;
 
   case 5:
-#line 48 "shellProject.y"
-    { nuterr("illegal input redirection");
-                   undoit(); bicmd = 0; }
+#line 43 "shellProject.y"
+    { nuterr("illegal input redirection"); undoit(); bicmd = 0; }
     break;
 
   case 6:
-#line 51 "shellProject.y"
+#line 45 "shellProject.y"
     { eventcount++; }
     break;
 
   case 7:
-#line 53 "shellProject.y"
-    { nuterr("illegal input redirection");
-                   undoit(); bicmd = 0; }
+#line 47 "shellProject.y"
+    { nuterr("illegal input redirection"); undoit(); bicmd = 0; }
     break;
 
   case 8:
-#line 56 "shellProject.y"
-    { nuterr("illegal input redirection");
-                   undoit(); bicmd = 0; }
+#line 49 "shellProject.y"
+    { nuterr("illegal input redirection"); undoit(); bicmd = 0; }
     break;
 
   case 9:
-#line 58 "shellProject.y"
+#line 51 "shellProject.y"
     { eventcount++; builtin = 0; }
     break;
 
   case 10:
-#line 63 "shellProject.y"
+#line 56 "shellProject.y"
     { bicmd = SETPATH; }
     break;
 
   case 11:
-#line 65 "shellProject.y"
+#line 58 "shellProject.y"
     { pathleng =0; bicmd = SETPATH; }
     break;
 
   case 12:
-#line 67 "shellProject.y"
-    { bicmd = SETPROMPT; bistr = mkstr((yyvsp[(3) - (3)].s)); }
+#line 60 "shellProject.y"
+    { bicmd = SETPROMPT; bistr = mkstr((yyvsp[(3) - (3)].string)); }
     break;
 
   case 13:
-#line 70 "shellProject.y"
+#line 62 "shellProject.y"
     { bicmd = SETT; }
     break;
 
   case 14:
-#line 72 "shellProject.y"
+#line 64 "shellProject.y"
     { bicmd = SETT; bioutf = 1; bistr = mkstr((yyvsp[(3) - (3)].word)); }
     break;
 
   case 15:
-#line 74 "shellProject.y"
-    { bicmd = SETT; bioutf = 1; bistr = mkstr((yyvsp[(3) - (3)].s)); }
+#line 66 "shellProject.y"
+    { bicmd = SETT; bioutf = 1; bistr = mkstr((yyvsp[(3) - (3)].string)); }
     break;
 
   case 16:
-#line 76 "shellProject.y"
-    { bicmd = SETT; bioutf = 1; bistr = mkstr((yyvsp[(3) - (4)].i)); append = 1; }
+#line 68 "shellProject.y"
+    { bicmd = SETT; bioutf = 1; bistr = mkstr((yyvsp[(3) - (4)].integer)); append = 1; }
     break;
 
   case 17:
-#line 78 "shellProject.y"
-    { bicmd = SETT; bioutf = 1; bistr = mkstr((yyvsp[(3) - (4)].i)); append = 1; }
+#line 70 "shellProject.y"
+    { bicmd = SETT; bioutf = 1; bistr = mkstr((yyvsp[(3) - (4)].integer)); append = 1; }
     break;
 
   case 18:
-#line 80 "shellProject.y"
+#line 72 "shellProject.y"
     { bicmd = CDX; bistr = mkstr((yyvsp[(2) - (2)].word)); }
     break;
 
   case 19:
-#line 82 "shellProject.y"
-    { bicmd = CD; bistr = mkstr((yyvsp[(2) - (2)].s)); }
+#line 74 "shellProject.y"
+    { bicmd = CD; bistr = mkstr((yyvsp[(2) - (2)].string)); }
     break;
 
   case 20:
-#line 84 "shellProject.y"
+#line 76 "shellProject.y"
     { bicmd = BYE; return 0; }
     break;
 
   case 21:
-#line 86 "shellProject.y"
+#line 78 "shellProject.y"
     { bicmd = NEWLINE; return 0;}
     break;
 
   case 23:
-#line 93 "shellProject.y"
+#line 85 "shellProject.y"
     {
                         input_command = (yyvsp[(1) - (1)].word);
                         argv[0] = (yyvsp[(1) - (1)].word);
                         argv[1] = NULL;
                         return 0;
-                }
+                  }
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1528 "y.tab.c"
+#line 1520 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1738,5 +1730,19 @@ yyreturn:
 }
 
 
-#line 99 "shellProject.y"
+#line 92 "shellProject.y"
 
+
+int main(void){
+    yyparse();
+    return 0;
+}
+
+int yyerror(char *s){
+    fprintf(stderr, "*%s*\n", s);
+    return 0;
+}
+
+int yywrap(){
+    return 1;
+}

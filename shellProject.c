@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 #include "shellProject.h"
 
 void init_scanner_and_parser(){
@@ -9,7 +12,7 @@ void init_scanner_and_parser(){
 }
 
 void printPrompt(){
-    printf("[shell-->$] ");
+    printf("[Shell-->$] ");
     return;
 }
 
@@ -20,8 +23,6 @@ void understand_errors(){
 void shell_init(){
     //init all variables
     currcmd = 0;
-
-
 
     //define (allocate storage) for some var/tables
     struct alias aliastab[MAXALIAS];
@@ -124,11 +125,11 @@ void execute_it(){
     /*
      * Check io file existence in case of io-redirection.
      */
-    if( check_in_file()==SYSERR ) {
+    if( check_in_file() == SYSERR ) {
         nuterr("Cann't read from : %s",srcf);
         return;
     }
-    if( check_out_file()==SYSERR ) {
+    if( check_out_file() == SYSERR ) {
         nuterr("Cann't write to : %s",distf);
         return;
     }
@@ -153,7 +154,15 @@ int executable(){
     return SYSERR;
 }
 
-int main(void){
+void processCommand(){
+    if (builtin)
+        do_it();
+    else {
+        execute_it();
+    }
+}
+
+int main(){
     shell_init();
     while (1) {
         printPrompt( );
@@ -168,4 +177,5 @@ int main(void){
                 break;
         }
     }
+    return 0;
 }

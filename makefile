@@ -1,5 +1,13 @@
+#Flags
+CFLAGS  = -stdlib=libstdc++
+
+#Directories
+INC_DIR = '/usr/bin/clang'
+
+QMAKE_CC=gcc
+
 all: lex.yy.c y.tab.c y.tab.h
-		cc lex.yy.c y.tab.c shellProject.c -o shellProject
+		gcc lex.yy.c y.tab.c -o shellProject.exe
 
 y.tab.h: y.tab.c
 
