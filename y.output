@@ -22,11 +22,6 @@ Terminals which are not used
    BACKGROUND
    BACKSLASH
    TILDE
-   useless.redir
-   other.cmd
-   alias.cmd
-   dir.list
-   cmd.file
 
 
 Grammar
@@ -75,26 +70,21 @@ PIPE (279)
 BACKGROUND (280)
 BACKSLASH (281)
 TILDE (282)
-useless.redir (283)
-other.cmd (284)
-alias.cmd (285)
-dir.list (286)
-cmd.file (287)
-WORD (288) 3 8
-STRING (289) 4
+WORD (283) 3 8
+STRING (284) 4
 
 
 Nonterminals, with rules where they appear
 
-$accept (35)
+$accept (30)
     on left: 0
-cmd (36)
+cmd (31)
     on left: 1 2, on right: 0
-builtin.cmd (37)
+builtin.cmd (32)
     on left: 3 4 5 6, on right: 1
-simple.cmd (38)
+simple.cmd (33)
     on left: 7, on right: 2
-exec.cmd (39)
+exec.cmd (34)
     on left: 8, on right: 7
 
 

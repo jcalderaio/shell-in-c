@@ -23,7 +23,6 @@ int eventcount = 0;
 %token <integer> LT GT AMP LPAREN VBAR DOT DEBUG NEWLINE
 %token <integer> SETENV PATH PROMPT CD BYE ALIAS UNALIAS PWD EXTEND
 %token <integer> ALIASLOOP UNSETENV PRINTENV QUOTE PIPE BACKGROUND BACKSLASH TILDE
-%token <integer> useless.redir other.cmd alias.cmd dir.list cmd.file
 %token <word> WORD
 %token <string> STRING
 
@@ -60,11 +59,6 @@ exec.cmd:         WORD{
                   }
                   ;
 %%
-
-int main(void){
-    yyparse();
-    return 0;
-}
 
 int yyerror(char *s){
     fprintf(stderr, "*%s*\n", s);

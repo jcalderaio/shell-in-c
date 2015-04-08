@@ -64,8 +64,8 @@
      BACKGROUND = 280,
      BACKSLASH = 281,
      TILDE = 282,
-     WORD = 288,
-     STRING = 289
+     WORD = 283,
+     STRING = 284
    };
 #endif
 /* Tokens.  */
@@ -94,8 +94,8 @@
 #define BACKGROUND 280
 #define BACKSLASH 281
 #define TILDE 282
-#define WORD 288
-#define STRING 289
+#define WORD 283
+#define STRING 284
 
 
 
