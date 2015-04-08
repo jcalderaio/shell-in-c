@@ -5,6 +5,14 @@
 #include <ctype.h>
 #include "shellProject.h"
 
+int check_in_file(){
+    return 0;
+}
+
+int check_out_file(){
+    return 0;
+}
+
 void init_scanner_and_parser(){
     // Need to initialize all the variables
     argc = 0;

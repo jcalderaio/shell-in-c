@@ -668,7 +668,8 @@ YY_DECL
     
 #line 9 "shellProject.l"
 
-#line 672 "lex.yy.c"
+
+#line 673 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -753,101 +754,101 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 10 "shellProject.l"
+#line 11 "shellProject.l"
 return CD;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 11 "shellProject.l"
+#line 12 "shellProject.l"
 return ALIAS;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 12 "shellProject.l"
+#line 13 "shellProject.l"
 return UNALIAS;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 13 "shellProject.l"
+#line 14 "shellProject.l"
 return SETENV;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 14 "shellProject.l"
+#line 15 "shellProject.l"
 return UNSETENV;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 15 "shellProject.l"
+#line 16 "shellProject.l"
 return PRINTENV;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 16 "shellProject.l"
+#line 17 "shellProject.l"
 return BYE;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 17 "shellProject.l"
+#line 18 "shellProject.l"
 {yylval.word = strdup(yytext); return WORD;}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 18 "shellProject.l"
+#line 19 "shellProject.l"
 return QUOTE;
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 19 "shellProject.l"
+#line 20 "shellProject.l"
 return LT;
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 20 "shellProject.l"
+#line 21 "shellProject.l"
 return GT;
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 21 "shellProject.l"
+#line 22 "shellProject.l"
 return PIPE;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 22 "shellProject.l"
+#line 23 "shellProject.l"
 return BACKGROUND;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 23 "shellProject.l"
+#line 24 "shellProject.l"
 return BACKSLASH;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 24 "shellProject.l"
+#line 25 "shellProject.l"
 return TILDE;
 	YY_BREAK
 case 16:
 /* rule 16 can match eol */
 YY_RULE_SETUP
-#line 25 "shellProject.l"
+#line 26 "shellProject.l"
 {;}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 26 "shellProject.l"
+#line 27 "shellProject.l"
 {;}/*ignore white space*/
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 27 "shellProject.l"
+#line 28 "shellProject.l"
 {;} /*no match*/
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 29 "shellProject.l"
+#line 30 "shellProject.l"
 ECHO;
 	YY_BREAK
-#line 851 "lex.yy.c"
+#line 852 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1844,7 +1845,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 29 "shellProject.l"
+#line 30 "shellProject.l"
 
 
 

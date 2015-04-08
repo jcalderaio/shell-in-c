@@ -33,15 +33,12 @@
 #define PRINTENV_CMD             9
 #define NEWLINE_CMD              10
 
-
-
-
-/*Command line arguments structure*/
+///////*Command line arguments structure*//////
 typedef struct comrgs{
     char *args[MAXARGS];
 } ARGTAB;
 
-/*Command line structure*/
+//////*Command line structure*////////
 typedef struct com{
     char *comname;
     int remote;
@@ -52,7 +49,7 @@ typedef struct com{
 
 } COMMAND;
 
-/*Alias structure*/
+/////////*Alias structure*//////////
 struct alias{
     int used;
     char *alname;
@@ -70,7 +67,8 @@ typedef struct cache{
     char *hostport;
 } CACHE;
 
-/*Externals*/
+///////*Externals*/////////////
+
 extern struct alias aliastab[];
 extern COMMAND camtab[];
 extern CACHE cachetab[];
@@ -96,7 +94,7 @@ extern int cmd_has_tail;
 extern int backgnd;
 extern int concurrp;
 extern int eventcount;
-extern char home[];
+extern char home[] = {0};
 extern char *shname;
 extern char *prompt_string;
 extern int user_defined_prompt;
@@ -106,6 +104,7 @@ extern int append = 0;
 extern int loop;
 
 ////////////////////////////////
+
 extern int SETPATH = 0;
 extern int SETT = 0;
 extern int CDX = 0;
@@ -114,12 +113,12 @@ extern int SETPROMPT = 0;
 extern int CMD = 0;
 extern int yylex();
 extern int yyparse();
-extern int currcmd;
-extern char* pathtab[MAXPATH];
+extern int currcmd = 0;
+extern char* pathtab[MAXPATH] = {0};
 extern char* command_path;
-extern int argc;
+extern int argc = 0;
 extern char* argv[MAXARGS] = {0};
-extern char* executable_path;
+extern char* executable_path = "";
 extern int yylineno;
 extern char* yytext;
 extern char* input_command = "";

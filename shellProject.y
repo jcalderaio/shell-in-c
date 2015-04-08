@@ -9,7 +9,6 @@
  */
 
 int eventcount = 0;
-int yylex();
  /* parse local working data section */
  COMMAND *q, *p;
  int pfd[2];

@@ -140,7 +140,6 @@
  */
 
 int eventcount = 0;
-int yylex();
  /* parse local working data section */
  COMMAND *q, *p;
  int pfd[2];
@@ -166,14 +165,14 @@ int yylex();
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 18 "shellProject.y"
+#line 17 "shellProject.y"
 {
     int integer;
     char *string;
     char *word;
 }
 /* Line 193 of yacc.c.  */
-#line 177 "y.tab.c"
+#line 176 "y.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -186,7 +185,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 190 "y.tab.c"
+#line 189 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -472,7 +471,7 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    35,    35,    37,    42,    44,    46,    48,    52,    56
+       0,    34,    34,    36,    41,    43,    45,    47,    51,    55
 };
 #endif
 
@@ -1383,37 +1382,37 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 36 "shellProject.y"
+#line 35 "shellProject.y"
     { eventcount++; }
     break;
 
   case 3:
-#line 38 "shellProject.y"
+#line 37 "shellProject.y"
     { eventcount++; }
     break;
 
   case 4:
-#line 43 "shellProject.y"
+#line 42 "shellProject.y"
     { bicmd = CDX; }
     break;
 
   case 5:
-#line 45 "shellProject.y"
+#line 44 "shellProject.y"
     { bicmd = CD; }
     break;
 
   case 6:
-#line 47 "shellProject.y"
+#line 46 "shellProject.y"
     { bicmd = BYE; return 0; }
     break;
 
   case 7:
-#line 49 "shellProject.y"
+#line 48 "shellProject.y"
     { bicmd = NEWLINE; return 0;}
     break;
 
   case 9:
-#line 56 "shellProject.y"
+#line 55 "shellProject.y"
     {
                         input_command = (yyvsp[(1) - (1)].word);
                         argv[0] = (yyvsp[(1) - (1)].word);
@@ -1424,7 +1423,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1428 "y.tab.c"
+#line 1427 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1638,7 +1637,7 @@ yyreturn:
 }
 
 
-#line 63 "shellProject.y"
+#line 62 "shellProject.y"
 
 
 int main(void){
