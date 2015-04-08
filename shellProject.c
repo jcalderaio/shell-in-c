@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <ctype.h>
 #include "shellProject.h"
 
 void init_scanner_and_parser(){
@@ -65,14 +66,6 @@ void shell_init(){
     // do anything you feel should be done as init
 }
 
-int getCommand(){
-    init_scanner_and_parser();
-    if (yyparse())
-        understand_errors();
-    else
-        return (OK);
-}
-
 void recover_from_errors(){
     // Find out if error occurs in middle of command
     // That is, the command still has a “tail”
@@ -83,22 +76,22 @@ void recover_from_errors(){
 
 void do_it(){
     switch (builtin) {
-      case ALIAS:
+      case ALIAS_CMD:
         // e.g., alias(); alias(name, word);
         break;
-      case CDHome:
+      case CDHome_CMD:
         // e.g., gohome();
         break;
-      case CDPath:
+      case CDPath_CMD:
         // e.g., chdir(path);
         break;
-      case UNALIAS:
+      case UNALIAS_CMD:
         break;
-      case SETENV:
+      case SETENV_CMD:
         break;
-      case UNSETENV:
+      case UNSETENV_CMD:
         break;
-      case PRINTENV:
+      case PRINTENV_CMD:
         break;
       default:
         break;
@@ -116,9 +109,8 @@ void execute_it(){
     /*
      * Check Command Accessability and Executability
      */
-    if( ! Executable() ) {
+    if( ! executable() ) {
         //use access() system call with X_OK
-        nuterr("Command not Found");
         return;
     }
 
@@ -126,11 +118,11 @@ void execute_it(){
      * Check io file existence in case of io-redirection.
      */
     if( check_in_file() == SYSERR ) {
-        nuterr("Cann't read from : %s",srcf);
+        //nuterr("Cann't read from : %s",srcf);
         return;
     }
     if( check_out_file() == SYSERR ) {
-        nuterr("Cann't write to : %s",distf);
+        //nuterr("Cann't write to : %s",distf);
         return;
     }
 
@@ -162,12 +154,21 @@ void processCommand(){
     }
 }
 
+int getCommand(){
+    init_scanner_and_parser();
+    if (yyparse())
+        understand_errors();
+    else
+        return (OK);
+}
+
 int main(){
+    printf("This is a test!!!!\n");
     shell_init();
-    while (1) {
-        printPrompt( );
+    while (1) { //Shell Loop
+        printPrompt();
         switch (CMD = getCommand()) {
-            case BYE:
+            case BYE_CMD:
                 exit(0);
             case ERRORS:
                 recover_from_errors();

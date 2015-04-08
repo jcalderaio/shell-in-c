@@ -1,5 +1,6 @@
 %{
 #include <stdio.h>
+#include <ctype.h>
 #include "y.tab.h"
 extern YYSTYPE yylval;
 %}
@@ -29,9 +30,4 @@ bye                 return BYE;
 
 int yywrap(void){
     return 1;
-}
-
-int main(void){
-    yylex();
-    return 0;
 }

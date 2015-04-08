@@ -102,14 +102,14 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 18 "shellProject.y"
+#line 20 "shellProject.y"
 {
     int integer;
     char *string;
     char *word;
 }
 /* Line 1529 of yacc.c.  */
-#line 113 "y.tab.h"
+#line 113 "shellProject.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

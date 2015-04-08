@@ -1,38 +1,37 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
 
-#define MAXCMDS         50
-#define MAXARGS         300
-#define MAXALIAS        100
-#define MAXCACHE        100
-#define MAXPATH         50
+#define MAXCMDS              50
+#define MAXARGS              300
+#define MAXALIAS             100
+#define MAXCACHE             100
+#define MAXPATH              50
 
-#define OK              0
-#define ERRORS          1
-#define SYSERR          1
-#define OLD_ERR         3
-#define SYSCALLER      -1
+#define OK                   0
+#define ERRORS               1
+#define SYSERR               1
+#define OLD_ERR              3
+#define SYSCALLER           -1
 
-#define BADFD          -2
-#define EOFILE          2
+#define BADFD               -2
+#define EOFILE               2
 
-#define THE_ONLY_ONE    1
-#define FIRST           2
-#define LAST            3
+#define THE_ONLY_ONE         1
+#define FIRST                2
+#define LAST                 3
 
 #define REGISTRY "REGISTRY"
 
-
-//Assigning "bicmd" different numbers
-#define BYE                  2
-#define CDHome               3
-#define CDPath               4
-#define ALIAS                5
-#define UNALIAS              6
-#define SETENV               7
-#define UNSETENV             8
-#define PRINTENV             9
-#define NEWLINE              10
+#define BYE_CMD                  2
+#define CDHome_CMD               3
+#define CDPath_CMD               4
+#define ALIAS_CMD                5
+#define UNALIAS_CMD              6
+#define SETENV_CMD               7
+#define UNSETENV_CMD             8
+#define PRINTENV_CMD             9
+#define NEWLINE_CMD              10
 
 
 
@@ -83,10 +82,10 @@ extern int recursive;
 extern int pathleng;
 extern int currarg;
 extern int login;
-extern int builtin;
-extern int bicmd;
-extern int bioutf;
-extern char *bistr;
+extern int builtin = 0;
+extern int bicmd = 0;
+extern int bioutf = 0;
+extern char *bistr = "";
 extern char *bistr2;
 extern int debug;
 extern int IwasSet;
@@ -103,34 +102,33 @@ extern char *prompt_string;
 extern int user_defined_prompt;
 extern char srcf[];
 extern char distf[];
-extern int append;
+extern int append = 0;
 extern int loop;
 
-extern int SETPATH;
-extern int SETT;
-extern int CDX;
-extern int MAXENV;
-extern int SETPROMPT;
-//extern int X_OK;
-extern int CMD;
-
-
+////////////////////////////////
+extern int SETPATH = 0;
+extern int SETT = 0;
+extern int CDX = 0;
+extern int MAXENV = 0;
+extern int SETPROMPT = 0;
+extern int CMD = 0;
 extern int yylex();
 extern int yyparse();
 extern int currcmd;
 extern char* pathtab[MAXPATH];
 extern char* command_path;
 extern int argc;
-extern char* argv[MAXARGS];
+extern char* argv[MAXARGS] = {0};
 extern char* executable_path;
 extern int yylineno;
 extern char* yytext;
-extern char* input_command;
+extern char* input_command = "";
 
+////////////////////////////////////
 
 #define NIL(x) (x *)0
 #define ALL NIL(char)
 #define copystring (a,b) strcpy((a=(char *)malloc(strlen(b)+1)), b)
 #define mkstr(a) (char *)makestring(a)
-#define Allocate(t) (t *)malloc(sizeof(t))
+#define allocate(t) (t *)malloc(sizeof(t))
 
