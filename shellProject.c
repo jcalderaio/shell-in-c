@@ -102,8 +102,10 @@ void do_it(){
       case CDHome_CMD:
             goHome();
         break;
-      case CDPath_CMD:
-        // e.g., chdir(path);
+      case CDPath_CMD:{
+            chdir(bistr);
+            printf("--%s-->$", bistr);
+        }
         break;
       case UNALIAS_CMD:
         break;

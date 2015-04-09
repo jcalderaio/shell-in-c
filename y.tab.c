@@ -398,7 +398,7 @@ union yyalloc
 #endif
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  11
+#define YYFINAL  10
 /* YYLAST -- Last index in YYTABLE.  */
 #define YYLAST   18
 
@@ -409,7 +409,7 @@ union yyalloc
 /* YYNRULES -- Number of rules.  */
 #define YYNRULES  9
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  12
+#define YYNSTATES  11
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
@@ -457,15 +457,14 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     5,     7,    10,    13,    15,    17,    19
+       0,     0,     3,     5,     7,     9,    12,    14,    16,    18
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-      31,     0,    -1,    32,    -1,    33,    -1,    14,    28,    -1,
-      14,    29,    -1,    15,    -1,    10,    -1,    34,    -1,    28,
-      -1
+      31,     0,    -1,    32,    -1,    33,    -1,    14,    -1,    14,
+      28,    -1,    15,    -1,    10,    -1,    34,    -1,    28,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
@@ -508,7 +507,7 @@ static const yytype_uint8 yyr1[] =
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     1,     1,     2,     2,     1,     1,     1,     1
+       0,     2,     1,     1,     1,     2,     1,     1,     1,     1
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -516,8 +515,8 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     7,     0,     6,     9,     0,     2,     3,     8,     4,
-       5,     1
+       0,     7,     4,     6,     9,     0,     2,     3,     8,     5,
+       1
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -531,8 +530,8 @@ static const yytype_int8 yydefgoto[] =
 #define YYPACT_NINF -28
 static const yytype_int8 yypact[] =
 {
-     -10,   -28,   -27,   -28,   -28,     3,   -28,   -28,   -28,   -28,
-     -28,   -28
+     -10,   -28,   -27,   -28,   -28,     2,   -28,   -28,   -28,   -28,
+     -28
 };
 
 /* YYPGOTO[NTERM-NUM].  */
@@ -548,13 +547,13 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -1
 static const yytype_uint8 yytable[] =
 {
-       1,     9,    10,    11,     2,     3,     0,     0,     0,     0,
+       1,     9,    10,     0,     2,     3,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     4
 };
 
 static const yytype_int8 yycheck[] =
 {
-      10,    28,    29,     0,    14,    15,    -1,    -1,    -1,    -1,
+      10,    28,     0,    -1,    14,    15,    -1,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    28
 };
 
@@ -563,7 +562,7 @@ static const yytype_int8 yycheck[] =
 static const yytype_uint8 yystos[] =
 {
        0,    10,    14,    15,    28,    31,    32,    33,    34,    28,
-      29,     0
+       0
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1389,12 +1388,12 @@ yyreduce:
 
   case 4:
 #line 41 "shellProject.y"
-    { bicmd = CDX; }
+    { bicmd = CDHome_CMD; builtin = 1; return 0;}
     break;
 
   case 5:
 #line 43 "shellProject.y"
-    { bicmd = CDX; }
+    { bicmd = CDPath_CMD; builtin = 1; bistr = (yyvsp[(2) - (2)].word);}
     break;
 
   case 6:
@@ -1419,7 +1418,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1423 "y.tab.c"
+#line 1422 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);

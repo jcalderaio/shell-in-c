@@ -22,6 +22,7 @@ Terminals which are not used
    BACKGROUND
    BACKSLASH
    TILDE
+   STRING
 
 
 Grammar
@@ -31,8 +32,8 @@ Grammar
     1 cmd: builtin.cmd
     2    | simple.cmd
 
-    3 builtin.cmd: CD WORD
-    4            | CD STRING
+    3 builtin.cmd: CD
+    4            | CD WORD
     5            | BYE
     6            | NEWLINE
 
@@ -70,8 +71,8 @@ PIPE (279)
 BACKGROUND (280)
 BACKSLASH (281)
 TILDE (282)
-WORD (283) 3 8
-STRING (284) 4
+WORD (283) 4 8
+STRING (284)
 
 
 Nonterminals, with rules where they appear
@@ -112,11 +113,12 @@ state 1
 
 state 2
 
-    3 builtin.cmd: CD . WORD
-    4            | CD . STRING
+    3 builtin.cmd: CD .
+    4            | CD . WORD
 
-    WORD    shift, and go to state 9
-    STRING  shift, and go to state 10
+    WORD  shift, and go to state 9
+
+    $default  reduce using rule 3 (builtin.cmd)
 
 
 state 3
@@ -137,7 +139,7 @@ state 5
 
     0 $accept: cmd . $end
 
-    $end  shift, and go to state 11
+    $end  shift, and go to state 10
 
 
 state 6
@@ -163,19 +165,12 @@ state 8
 
 state 9
 
-    3 builtin.cmd: CD WORD .
-
-    $default  reduce using rule 3 (builtin.cmd)
-
-
-state 10
-
-    4 builtin.cmd: CD STRING .
+    4 builtin.cmd: CD WORD .
 
     $default  reduce using rule 4 (builtin.cmd)
 
 
-state 11
+state 10
 
     0 $accept: cmd $end .
 
