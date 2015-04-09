@@ -45,6 +45,8 @@ builtin.cmd:      CD
                         { bicmd = BYE_CMD; return 0; }
                 | NEWLINE
                         { bicmd = NEWLINE; return 0;}
+                | ALIAS
+                    { bicmd = ALIAS_CMD; return 0; }
                 ;
 
 simple.cmd:     exec.cmd

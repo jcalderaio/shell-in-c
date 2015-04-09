@@ -67,6 +67,14 @@ typedef struct cache{
     char *hostport;
 } CACHE;
 
+struct AliasNode {
+        struct AliasNode* next;
+        char* key;
+        char* value;
+};
+
+struct AliasNode* aliasHead = NULL;
+
 ///////*Externals*/////////////
 
 struct alias aliastab[];
