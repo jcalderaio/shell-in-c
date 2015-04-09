@@ -33,7 +33,7 @@ void init_scanner_and_parser(){
 }
 
 void printPrompt(){
-    printf("SHELL--->$");
+    printf("//SHELL--->$");
     return;
 }
 
@@ -65,8 +65,8 @@ void shell_init(){
     //printf("two: %d\n", strlen(pathtab));
     //get HOME env variable (also use getenv())
     char *home_path = getenv("HOME");
-    //printf("%s", home_path);
-    home[0] = *home_path;
+    printf("%s", home_path);
+    home = home_path;
     //disable anything that can kill your shell
     //(the shell should never die; only can be exit)
     //do anything you feel should be done as init

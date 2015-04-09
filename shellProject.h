@@ -94,7 +94,7 @@ int cmd_has_tail;
 int backgnd;
 int concurrp;
 int eventcount;
-char home[];
+char *home;
 char *shname;
 char *prompt_string;
 int user_defined_prompt;
