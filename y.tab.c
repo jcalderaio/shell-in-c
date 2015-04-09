@@ -1394,12 +1394,12 @@ yyreduce:
 
   case 5:
 #line 43 "shellProject.y"
-    { bicmd = CD; }
+    { bicmd = CDX; }
     break;
 
   case 6:
 #line 45 "shellProject.y"
-    { bicmd = BYE; return 0; }
+    { bicmd = BYE_CMD; return 0; }
     break;
 
   case 7:

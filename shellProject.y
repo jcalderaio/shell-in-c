@@ -37,12 +37,12 @@ cmd:              builtin.cmd
                 ;
 
 
-builtin.cmd:      CD WORD
+builtin.cmd:    CD WORD
                         { bicmd = CDX; }
                 | CD STRING
-                        { bicmd = CD; }
+                        { bicmd = CDX; }
                 | BYE
-                        { bicmd = BYE; return 0; }
+                        { bicmd = BYE_CMD; return 0; }
                 | NEWLINE
                         { bicmd = NEWLINE; return 0;}
                 ;

@@ -5,6 +5,18 @@
 #include <ctype.h>
 #include "shellProject.h"
 
+/////////////////////////////////
+///////Builtin Functions/////////
+/////////////////////////////////
+
+void goHome(){
+    chdir(home);
+}
+
+/////////////////////////////////
+///////Shell Functions///////////
+/////////////////////////////////
+
 int check_in_file(){
     return 0;
 }
@@ -21,7 +33,7 @@ void init_scanner_and_parser(){
 }
 
 void printPrompt(){
-    printf("[Shell-->$] ");
+    printf("SHELL--->$");
     return;
 }
 
@@ -34,8 +46,8 @@ void shell_init(){
     currcmd = 0;
 
     //define (allocate storage) for some var/tables
-    struct alias aliastab[MAXALIAS];
-    struct env envtab[MAXENV];
+    //struct alias aliastab[MAXALIAS];
+    //struct env envtab[MAXENV];
 
     //init all tables (e.g., alias table)
     //get PATH environment variable (use getenv())
@@ -54,7 +66,7 @@ void shell_init(){
     //get HOME env variable (also use getenv())
     char *home_path = getenv("HOME");
     //printf("%s", home_path);
-    home[0] = home_path;
+    home[0] = *home_path;
     //disable anything that can kill your shell
     //(the shell should never die; only can be exit)
     //do anything you feel should be done as init
@@ -83,12 +95,12 @@ void recover_from_errors(){
 }
 
 void do_it(){
-    switch (builtin) {
+    switch (bicmd) {
       case ALIAS_CMD:
         // e.g., alias(); alias(name, word);
         break;
       case CDHome_CMD:
-        // e.g., gohome();
+            goHome();
         break;
       case CDPath_CMD:
         // e.g., chdir(path);
@@ -117,7 +129,7 @@ void execute_it(){
     /*
      * Check Command Accessability and Executability
      */
-    if( ! executable() ) {
+    if(isExe == 0) {
         //use access() system call with X_OK
         return;
     }
@@ -147,9 +159,8 @@ int executable(){
         strcat(executable_path, "/");
         strcat(executable_path, input_command);
         int retVal = access(executable_path, X_OK);
-        if(retVal == 0){
+        if(retVal == 0)
             return OK;
-        }
     }
     return SYSERR;
 }
@@ -157,21 +168,28 @@ int executable(){
 void processCommand(){
     if (builtin)
         do_it();
-    else {
+    else
         execute_it();
-    }
 }
 
 int getCommand(){
     init_scanner_and_parser();
-    if (yyparse())
+    if (yyparse()) {
         understand_errors();
-    else
-        return (OK);
+        return ERRORS;
+    }
+    else {
+        if (bicmd == BYE_CMD) {
+            return BYE_CMD;
+        }
+        else {
+            return OK;
+        }
+    }
 }
 
 int main(){
-    printf("This is a test!!!!\n");
+    printf("This is the shell!!!!\n");
     shell_init();
     while (1) { //Shell Loop
         printPrompt();

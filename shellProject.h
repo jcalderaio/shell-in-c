@@ -122,6 +122,7 @@ char* executable_path;
 int yylineno;
 char* yytext;
 char* input_command;
+int isExe;
 
 ////////////////////////////////////
 
