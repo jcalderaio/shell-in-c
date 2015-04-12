@@ -34,7 +34,7 @@ int eventcount = 0;
 
 cmd:              builtin.cmd
                         { eventcount++; }
-                | simple.cmd
+                | sim.cmd
                         { eventcount++; }
                 ;
 
@@ -49,17 +49,13 @@ builtin.cmd:      CD
                         { bicmd = NEWLINE_CMD; builtin = 1; return 0;}
                 ;
 
-simple.cmd:     exec.cmd
-                ;
-
-
-exec.cmd:          WORD NEWLINE
+sim.cmd:          WORD NEWLINE
                         { bistr = $1; argv[0] = $1; argv[1] = NULL; return 0; }
-                 | WORD WORD NEWLINE
+                | WORD WORD NEWLINE
                         { bistr = $1; argv[argc] = $1; argv[++argc] = $2; argv[++argc] = NULL; return 0; }
-                 | WORD STRING NEWLINE
+                | WORD STRING NEWLINE
                         { bistr = $1; argv[argc] = $1; argv[++argc] = $2; argv[++argc] = NULL; return 0; }
-                 ;
+                ;
 %%
 
 int yyerror(char *s){

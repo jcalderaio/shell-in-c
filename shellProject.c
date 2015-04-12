@@ -11,20 +11,21 @@
     //////////////////////////////////////////////////////
 
     void goHome(){
-        strcpy(pathtab, home);
+        strcpy(currLoc, home);
+        printf(home);
         chdir(home);
     }
 
     void goPath(){
         //printf(", CURRENT_LOCATION_AT_START: %s", current_location);
         //printf(", PATH TO APPEND: %s", path_to_append);
-        strcpy(pathtab, &currentLocation);
-        strcat(pathtab, "/");
-        strcat(pathtab, strPath);
+        strcpy(currLoc, &currentLocation);
+        strcat(currLoc, "/");
+        strcat(currLoc, strPath);
         //printf(", Combined Path: %s", current_loc);
-        currentLocation = pathtab;
+        currentLocation = currLoc;
 
-        chdir(currentLocation);
+        chdir(&currentLocation);
     }
 
     ///////////////////////////////////////////////////////
@@ -47,7 +48,7 @@
     }
 
     void printPrompt(){
-        printf("//SHELL--->$");
+        printf(" || SHELL---->$");
         return;
     }
 

@@ -132,7 +132,7 @@ char* yytext;
 char* input_command;
 int isExe;
 char currentLocation;
-//char currLoc[MAXPATH];
+char currLoc[MAXPATH];
 char* strPath;
 
 ////////////////////////////////////
