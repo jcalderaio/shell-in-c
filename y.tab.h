@@ -65,7 +65,8 @@
      BACKSLASH = 281,
      TILDE = 282,
      WORD = 283,
-     STRING = 284
+     STRING = 284,
+     OPTION = 285
    };
 #endif
 /* Tokens.  */
@@ -96,6 +97,7 @@
 #define TILDE 282
 #define WORD 283
 #define STRING 284
+#define OPTION 285
 
 
 
@@ -107,9 +109,10 @@ typedef union YYSTYPE
     int integer;
     char *string;
     char *word;
+    char *option;
 }
 /* Line 1529 of yacc.c.  */
-#line 113 "y.tab.h"
+#line 116 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

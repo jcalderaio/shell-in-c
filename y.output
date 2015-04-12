@@ -22,25 +22,24 @@ Terminals which are not used
    BACKGROUND
    BACKSLASH
    TILDE
+   OPTION
 
 
 Grammar
 
     0 $accept: cmd $end
 
-    1 cmd: builtin.cmd
-    2    | simple.cmd
+    1 cmd: bin.cmd
+    2    | simp.cmd
 
-    3 builtin.cmd: CD
-    4            | CD WORD NEWLINE
-    5            | BYE
-    6            | NEWLINE
+    3 bin.cmd: CD
+    4        | CD WORD NEWLINE
+    5        | BYE
+    6        | NEWLINE
 
-    7 simple.cmd: exec.cmd
-
-    8 exec.cmd: WORD NEWLINE
-    9         | WORD WORD NEWLINE
-   10         | WORD STRING NEWLINE
+    7 simp.cmd: WORD NEWLINE
+    8         | WORD WORD NEWLINE
+    9         | WORD STRING NEWLINE
 
 
 Terminals, with rules where they appear
@@ -54,7 +53,7 @@ LPAREN (261)
 VBAR (262)
 DOT (263)
 DEBUG (264)
-NEWLINE (265) 4 6 8 9 10
+NEWLINE (265) 4 6 7 8 9
 SETENV (266)
 PATH (267)
 PROMPT (268)
@@ -72,22 +71,21 @@ PIPE (279)
 BACKGROUND (280)
 BACKSLASH (281)
 TILDE (282)
-WORD (283) 4 8 9 10
-STRING (284) 10
+WORD (283) 4 7 8 9
+STRING (284) 9
+OPTION (285)
 
 
 Nonterminals, with rules where they appear
 
-$accept (30)
+$accept (31)
     on left: 0
-cmd (31)
+cmd (32)
     on left: 1 2, on right: 0
-builtin.cmd (32)
+bin.cmd (33)
     on left: 3 4 5 6, on right: 1
-simple.cmd (33)
-    on left: 7, on right: 2
-exec.cmd (34)
-    on left: 8 9 10, on right: 7
+simp.cmd (34)
+    on left: 7 8 9, on right: 2
 
 
 state 0
@@ -99,126 +97,118 @@ state 0
     BYE      shift, and go to state 3
     WORD     shift, and go to state 4
 
-    cmd          go to state 5
-    builtin.cmd  go to state 6
-    simple.cmd   go to state 7
-    exec.cmd     go to state 8
+    cmd       go to state 5
+    bin.cmd   go to state 6
+    simp.cmd  go to state 7
 
 
 state 1
 
-    6 builtin.cmd: NEWLINE .
+    6 bin.cmd: NEWLINE .
 
-    $default  reduce using rule 6 (builtin.cmd)
+    $default  reduce using rule 6 (bin.cmd)
 
 
 state 2
 
-    3 builtin.cmd: CD .
-    4            | CD . WORD NEWLINE
+    3 bin.cmd: CD .
+    4        | CD . WORD NEWLINE
 
-    WORD  shift, and go to state 9
+    WORD  shift, and go to state 8
 
-    $default  reduce using rule 3 (builtin.cmd)
+    $default  reduce using rule 3 (bin.cmd)
 
 
 state 3
 
-    5 builtin.cmd: BYE .
+    5 bin.cmd: BYE .
 
-    $default  reduce using rule 5 (builtin.cmd)
+    $default  reduce using rule 5 (bin.cmd)
 
 
 state 4
 
-    8 exec.cmd: WORD . NEWLINE
-    9         | WORD . WORD NEWLINE
-   10         | WORD . STRING NEWLINE
+    7 simp.cmd: WORD . NEWLINE
+    8         | WORD . WORD NEWLINE
+    9         | WORD . STRING NEWLINE
 
-    NEWLINE  shift, and go to state 10
-    WORD     shift, and go to state 11
-    STRING   shift, and go to state 12
+    NEWLINE  shift, and go to state 9
+    WORD     shift, and go to state 10
+    STRING   shift, and go to state 11
 
 
 state 5
 
     0 $accept: cmd . $end
 
-    $end  shift, and go to state 13
+    $end  shift, and go to state 12
 
 
 state 6
 
-    1 cmd: builtin.cmd .
+    1 cmd: bin.cmd .
 
     $default  reduce using rule 1 (cmd)
 
 
 state 7
 
-    2 cmd: simple.cmd .
+    2 cmd: simp.cmd .
 
     $default  reduce using rule 2 (cmd)
 
 
 state 8
 
-    7 simple.cmd: exec.cmd .
+    4 bin.cmd: CD WORD . NEWLINE
 
-    $default  reduce using rule 7 (simple.cmd)
+    NEWLINE  shift, and go to state 13
 
 
 state 9
 
-    4 builtin.cmd: CD WORD . NEWLINE
+    7 simp.cmd: WORD NEWLINE .
 
-    NEWLINE  shift, and go to state 14
+    $default  reduce using rule 7 (simp.cmd)
 
 
 state 10
 
-    8 exec.cmd: WORD NEWLINE .
+    8 simp.cmd: WORD WORD . NEWLINE
 
-    $default  reduce using rule 8 (exec.cmd)
+    NEWLINE  shift, and go to state 14
 
 
 state 11
 
-    9 exec.cmd: WORD WORD . NEWLINE
+    9 simp.cmd: WORD STRING . NEWLINE
 
     NEWLINE  shift, and go to state 15
 
 
 state 12
 
-   10 exec.cmd: WORD STRING . NEWLINE
-
-    NEWLINE  shift, and go to state 16
-
-
-state 13
-
     0 $accept: cmd $end .
 
     $default  accept
 
 
+state 13
+
+    4 bin.cmd: CD WORD NEWLINE .
+
+    $default  reduce using rule 4 (bin.cmd)
+
+
 state 14
 
-    4 builtin.cmd: CD WORD NEWLINE .
+    8 simp.cmd: WORD WORD NEWLINE .
 
-    $default  reduce using rule 4 (builtin.cmd)
+    $default  reduce using rule 8 (simp.cmd)
 
 
 state 15
 
-    9 exec.cmd: WORD WORD NEWLINE .
+    9 simp.cmd: WORD STRING NEWLINE .
 
-    $default  reduce using rule 9 (exec.cmd)
-
-
-state 16
-
-   10 exec.cmd: WORD STRING NEWLINE .
-
-    $default  reduce using rule 10 (exec.cmd)
+    $default  reduce using rule 9 (simp.cmd)

@@ -16,15 +16,11 @@
         chdir(home);
     }
 
-    void goPath(){
-        //printf(", CURRENT_LOCATION_AT_START: %s", current_location);
-        //printf(", PATH TO APPEND: %s", path_to_append);
+    void goPath(const char* thePathStr){
         strcpy(currLoc, &currentLocation);
         strcat(currLoc, "/");
-        strcat(currLoc, strPath);
-        //printf(", Combined Path: %s", current_loc);
+        strcat(currLoc, thePathStr);
         currentLocation = currLoc;
-
         chdir(&currentLocation);
     }
 
@@ -82,7 +78,7 @@
         //printf("two: %d\n", strlen(pathtab));
         //get HOME env variable (also use getenv())
 
-        printf("%s", homePath);
+        printf("%s", currPath);
         home = homePath;
         //disable anything that can kill your shell
         //(the shell should never die; only can be exit)
@@ -140,25 +136,28 @@
 
     void do_it(){
         switch (bicmd) {
-          case ALIAS_CMD:
-                printAlias();
-                break;
           case CDHome_CMD:
                 goHome();
                 break;
           case CDPath_CMD:
-                goPath();
+                goPath(strPath);
+                chdir(&currentLocation);
+                break;
+          case ALIAS_CMD:
+                printAlias();
                 break;
           case UNALIAS_CMD:
-            break;
+                break;
           case SETENV_CMD:
-            break;
+                break;
           case UNSETENV_CMD:
-            break;
+                break;
           case PRINTENV_CMD:
-            break;
+                break;
+          case NEWLINE_CMD:
+                break;
           default:
-            break;
+                break;
         }
     }
 

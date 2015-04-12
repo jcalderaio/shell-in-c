@@ -20,6 +20,7 @@ int eventcount = 0;
     int integer;
     char *string;
     char *word;
+    char *option;
 }
 
 %token <integer> LT GT AMP LPAREN VBAR DOT DEBUG NEWLINE
@@ -27,19 +28,20 @@ int eventcount = 0;
 %token <integer> ALIASLOOP UNSETENV PRINTENV QUOTE PIPE BACKGROUND BACKSLASH TILDE
 %token <word> WORD
 %token <string> STRING
+%token <option> OPTION
 
 %start cmd
 
 %%
 
-cmd:              builtin.cmd
+cmd:              bin.cmd
                         { eventcount++; }
-                | sim.cmd
+                | simp.cmd
                         { eventcount++; }
                 ;
 
 
-builtin.cmd:      CD
+bin.cmd:          CD
                         { bicmd = CDHome_CMD; builtin = 1; return 0;}
                 | CD WORD NEWLINE
                         { bicmd = CDPath_CMD; builtin = 1; bistr = $2; return 0;}
@@ -49,7 +51,7 @@ builtin.cmd:      CD
                         { bicmd = NEWLINE_CMD; builtin = 1; return 0;}
                 ;
 
-sim.cmd:          WORD NEWLINE
+simp.cmd:         WORD NEWLINE
                         { bistr = $1; argv[0] = $1; argv[1] = NULL; return 0; }
                 | WORD WORD NEWLINE
                         { bistr = $1; argv[argc] = $1; argv[++argc] = $2; argv[++argc] = NULL; return 0; }
