@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+#define FALSE 0
+#define TRUE !FALSE
+
 #define MAXCMDS              50
 #define MAXARGS              300
 #define MAXALIAS             100
@@ -32,6 +35,8 @@
 #define UNSETENV_CMD             8
 #define PRINTENV_CMD             9
 #define NEWLINE_CMD              10
+#define LS_CMD                   11
+#define LSWord_CMD               12
 
 ///////*Command line arguments structure*//////
 typedef struct comrgs{
@@ -131,9 +136,13 @@ int yylineno;
 char* yytext;
 char* input_command;
 int isExe;
-char currentLocation;
+char* currentLocation;
 char currLoc[MAXPATH];
 char* strPath;
+int alphasort(); //Inbuilt sorting function
+char* pathname[MAXPATH];
+char* currentWorkDir;
+char* fileName;
 
 ////////////////////////////////////
 

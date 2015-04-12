@@ -3,6 +3,8 @@
     #include <string.h>
     #include <unistd.h>
     #include <ctype.h>
+    #include <dirent.h>
+    #include <errno.h>
     #include "shellProject.h"
 
 
@@ -10,18 +12,135 @@
     ///////Builtin Functions//////////////////////////////
     //////////////////////////////////////////////////////
 
+    char* remove_spaces(char * source, char * target){
+        while(*source++ && *target){
+            if (!isspace(*source))
+                 *target++ = *source;
+        }
+
+        return target;
+    }
+
+    void getCurrentPath(){
+        char * cwd;
+        cwd = getcwd (0, 0);
+        if (! cwd) {
+            fprintf (stderr, "getcwd failed: %s\n", strerror (errno));
+        }
+        else {
+            //printf("\n\nI am here\n\n");
+            //printf("%s\n", cwd);
+            currentWorkDir = cwd;
+            free(cwd);
+            //printf("\n\nI am here\n\n");
+        }
+    }
+
     void goHome(){
         strcpy(currLoc, home);
-        printf(home);
         chdir(home);
     }
 
     void goPath(const char* thePathStr){
-        strcpy(currLoc, &currentLocation);
+        getCurrentPath();
+        printf("\n\nI am here\n\n");
+        printf("%s", currentWorkDir);
+        printf("\n\nI am here\n\n");
+
+        strcpy(currLoc, currentWorkDir);
         strcat(currLoc, "/");
         strcat(currLoc, thePathStr);
-        currentLocation = currLoc;
-        chdir(&currentLocation);
+        currentWorkDir = currLoc;
+        char *dir = "";
+        dir = remove_spaces(currentWorkDir, dir);
+
+        printf("\n\nI am here\n\n");
+        printf("%s", dir);
+        printf("\n\nI am here\n\n");
+
+        chdir(currentWorkDir);
+    }
+
+    void do_print_Alias(struct AliasNode* alias) {
+        char* toPrint = alias->key;
+            printf("%s", toPrint);
+        printf(": ");
+            toPrint = alias->value;
+            printf("%s", toPrint);
+            printf("\n");
+    }
+
+    void printAlias() {
+        if (aliasHead == 0) {
+            printf("No aliases have been created.");
+            return;
+        }
+        else {
+            struct AliasNode* current = aliasHead;
+            printf("Current Aliases: \n");
+            while (current != 0) {
+                do_print_Alias(current);
+                current = current->next;
+            }
+        }
+    }
+
+    void goLS(){
+        DIR *dirp;
+        struct dirent* dir;
+        dirp = opendir(currentWorkDir);
+        if(dirp){
+            while((dir = readdir(dirp)) != NULL){
+                printf("%s\n", dir->d_name);
+            }
+            closedir(dirp);
+        }
+    }
+
+    // void goLSWord(){
+    //     DIR *dirp;
+    //     struct dirent *dir;
+    //     dirp = opendir(".");
+    //     int flag = 0;
+    //     if (dirp)
+    //     {
+    //         while ((dir = readdir(dirp)) != NULL){
+    //             if(strcmp(fileName, dir->d_name) == 0){
+    //                 flag = 1;
+    //                 DIR *d2;
+    //                 struct dirent *dir2;
+    //                 d2 = opendir(dir->d_name);
+    //                 if (d2)
+    //                 {
+    //                     while ((dir2 = readdir(d2)) != NULL)
+    //                     {
+    //                         printf("%s\n", dir2->d_name);
+    //                     }
+    //                 closedir(d2);
+    //                 }
+    //             }
+    //         }
+    //     closedir(dirp);
+    //     if(flag == 0)
+    //         printf("Directory %s does not exist.\n", fileName);
+    //     }
+    // }
+
+    ///////////////////////////////////////////////////////
+    ///////Error Handling//////////////////////////////////
+    ///////////////////////////////////////////////////////
+
+    void understand_errors(){
+        printf("An error occured while parsing the yacc file.\n");
+    }
+
+    void recover_from_errors(){
+        // Find out if error occurs in middle of command
+        // That is, the command still has a “tail”
+        // In this case you have to recover by “eating”
+        // the rest of the command.
+        // To do this: use yylex() directly.
+        printf("Command Error!!!");
     }
 
     ///////////////////////////////////////////////////////
@@ -44,12 +163,10 @@
     }
 
     void printPrompt(){
+        getCurrentPath();
+        printf("%s", currentWorkDir);
         printf(" || SHELL---->$");
         return;
-    }
-
-    void understand_errors(){
-        printf("An error occured while parsing the yacc file.\n");
     }
 
     void shell_init(){
@@ -62,7 +179,7 @@
 
         //init all tables (e.g., alias table)
         //get PATH environment variable (use getenv())
-        char* currPath = getenv("PATH");
+        char *currPath = getenv("PATH");
         char *homePath = getenv("HOME");
 
         char* dlim = ":";
@@ -78,7 +195,7 @@
         //printf("two: %d\n", strlen(pathtab));
         //get HOME env variable (also use getenv())
 
-        printf("%s", currPath);
+        //printf("%s", home);
         home = homePath;
         //disable anything that can kill your shell
         //(the shell should never die; only can be exit)
@@ -99,41 +216,6 @@
         // do anything you feel should be done as init
     }
 
-    void recover_from_errors(){
-        // Find out if error occurs in middle of command
-        // That is, the command still has a “tail”
-        // In this case you have to recover by “eating”
-        // the rest of the command.
-        // To do this: use yylex() directly.
-        printf("Command Error!!!");
-    }
-
-    void do_print_Alias(struct AliasNode* alias) {
-        char* toPrint = alias->key;
-            printf(toPrint);
-        printf(": ");
-            toPrint = alias->value;
-            printf(toPrint);
-            printf("\n");
-        }
-
-    void printAlias() {
-        if (aliasHead == 0) {
-            printf("No aliases have been created.");
-            return;
-        }
-        else {
-            struct AliasNode* current = aliasHead;
-            printf("Current Aliases: \n");
-            while (current != 0) {
-                do_print_Alias(current);
-                current = current->next;
-            }
-        }
-
-    }
-
-
     void do_it(){
         switch (bicmd) {
           case CDHome_CMD:
@@ -141,8 +223,11 @@
                 break;
           case CDPath_CMD:
                 goPath(strPath);
-                chdir(&currentLocation);
                 break;
+          case LS_CMD:
+                goLS();
+          case LSWord_CMD:
+                //goLSWord();
           case ALIAS_CMD:
                 printAlias();
                 break;

@@ -7,6 +7,7 @@ Terminals which are not used
    VBAR
    DOT
    DEBUG
+   TILDE
    SETENV
    PATH
    PROMPT
@@ -21,7 +22,8 @@ Terminals which are not used
    PIPE
    BACKGROUND
    BACKSLASH
-   TILDE
+   SPACE
+   VARIABLE
    OPTION
 
 
@@ -32,14 +34,17 @@ Grammar
     1 cmd: bin.cmd
     2    | simp.cmd
 
-    3 bin.cmd: CD
+    3 bin.cmd: CD NEWLINE
     4        | CD WORD NEWLINE
     5        | BYE
     6        | NEWLINE
+    7        | LS NEWLINE
+    8        | LS WORD NEWLINE
+    9        | LS STRING NEWLINE
 
-    7 simp.cmd: WORD NEWLINE
-    8         | WORD WORD NEWLINE
-    9         | WORD STRING NEWLINE
+   10 simp.cmd: WORD NEWLINE
+   11         | WORD WORD NEWLINE
+   12         | WORD STRING NEWLINE
 
 
 Terminals, with rules where they appear
@@ -53,39 +58,42 @@ LPAREN (261)
 VBAR (262)
 DOT (263)
 DEBUG (264)
-NEWLINE (265) 4 6 7 8 9
-SETENV (266)
-PATH (267)
-PROMPT (268)
-CD (269) 3 4
-BYE (270) 5
-ALIAS (271)
-UNALIAS (272)
-PWD (273)
-EXTEND (274)
-ALIASLOOP (275)
-UNSETENV (276)
-PRINTENV (277)
-QUOTE (278)
-PIPE (279)
-BACKGROUND (280)
-BACKSLASH (281)
-TILDE (282)
-WORD (283) 4 7 8 9
-STRING (284) 9
-OPTION (285)
+NEWLINE (265) 3 4 6 7 8 9 10 11 12
+TILDE (266)
+LS (267) 7 8 9
+SETENV (268)
+PATH (269)
+PROMPT (270)
+CD (271) 3 4
+BYE (272) 5
+ALIAS (273)
+UNALIAS (274)
+PWD (275)
+EXTEND (276)
+ALIASLOOP (277)
+UNSETENV (278)
+PRINTENV (279)
+QUOTE (280)
+PIPE (281)
+BACKGROUND (282)
+BACKSLASH (283)
+WORD (284) 4 8 10 11 12
+SPACE (285)
+VARIABLE (286)
+STRING (287) 9 12
+OPTION (288)
 
 
 Nonterminals, with rules where they appear
 
-$accept (31)
+$accept (34)
     on left: 0
-cmd (32)
+cmd (35)
     on left: 1 2, on right: 0
-bin.cmd (33)
-    on left: 3 4 5 6, on right: 1
-simp.cmd (34)
-    on left: 7 8 9, on right: 2
+bin.cmd (36)
+    on left: 3 4 5 6 7 8 9, on right: 1
+simp.cmd (37)
+    on left: 10 11 12, on right: 2
 
 
 state 0
@@ -93,13 +101,14 @@ state 0
     0 $accept: . cmd $end
 
     NEWLINE  shift, and go to state 1
-    CD       shift, and go to state 2
-    BYE      shift, and go to state 3
-    WORD     shift, and go to state 4
+    LS       shift, and go to state 2
+    CD       shift, and go to state 3
+    BYE      shift, and go to state 4
+    WORD     shift, and go to state 5
 
-    cmd       go to state 5
-    bin.cmd   go to state 6
-    simp.cmd  go to state 7
+    cmd       go to state 6
+    bin.cmd   go to state 7
+    simp.cmd  go to state 8
 
 
 state 1
@@ -111,104 +120,156 @@ state 1
 
 state 2
 
-    3 bin.cmd: CD .
-    4        | CD . WORD NEWLINE
-
-    WORD  shift, and go to state 8
-
-    $default  reduce using rule 3 (bin.cmd)
-
-
-state 3
-
-    5 bin.cmd: BYE .
-
-    $default  reduce using rule 5 (bin.cmd)
-
-
-state 4
-
-    7 simp.cmd: WORD . NEWLINE
-    8         | WORD . WORD NEWLINE
-    9         | WORD . STRING NEWLINE
+    7 bin.cmd: LS . NEWLINE
+    8        | LS . WORD NEWLINE
+    9        | LS . STRING NEWLINE
 
     NEWLINE  shift, and go to state 9
     WORD     shift, and go to state 10
     STRING   shift, and go to state 11
 
 
+state 3
+
+    3 bin.cmd: CD . NEWLINE
+    4        | CD . WORD NEWLINE
+
+    NEWLINE  shift, and go to state 12
+    WORD     shift, and go to state 13
+
+
+state 4
+
+    5 bin.cmd: BYE .
+
+    $default  reduce using rule 5 (bin.cmd)
+
+
 state 5
 
-    0 $accept: cmd . $end
+   10 simp.cmd: WORD . NEWLINE
+   11         | WORD . WORD NEWLINE
+   12         | WORD . STRING NEWLINE
 
-    $end  shift, and go to state 12
+    NEWLINE  shift, and go to state 14
+    WORD     shift, and go to state 15
+    STRING   shift, and go to state 16
 
 
 state 6
+
+    0 $accept: cmd . $end
+
+    $end  shift, and go to state 17
+
+
+state 7
 
     1 cmd: bin.cmd .
 
     $default  reduce using rule 1 (cmd)
 
 
-state 7
+state 8
 
     2 cmd: simp.cmd .
 
     $default  reduce using rule 2 (cmd)
 
 
-state 8
-
-    4 bin.cmd: CD WORD . NEWLINE
-
-    NEWLINE  shift, and go to state 13
-
-
 state 9
 
-    7 simp.cmd: WORD NEWLINE .
+    7 bin.cmd: LS NEWLINE .
 
-    $default  reduce using rule 7 (simp.cmd)
+    $default  reduce using rule 7 (bin.cmd)
 
 
 state 10
 
-    8 simp.cmd: WORD WORD . NEWLINE
+    8 bin.cmd: LS WORD . NEWLINE
 
-    NEWLINE  shift, and go to state 14
+    NEWLINE  shift, and go to state 18
 
 
 state 11
 
-    9 simp.cmd: WORD STRING . NEWLINE
+    9 bin.cmd: LS STRING . NEWLINE
 
-    NEWLINE  shift, and go to state 15
+    NEWLINE  shift, and go to state 19
 
 
 state 12
+
+    3 bin.cmd: CD NEWLINE .
+
+    $default  reduce using rule 3 (bin.cmd)
+
+
+state 13
+
+    4 bin.cmd: CD WORD . NEWLINE
+
+    NEWLINE  shift, and go to state 20
+
+
+state 14
+
+   10 simp.cmd: WORD NEWLINE .
+
+    $default  reduce using rule 10 (simp.cmd)
+
+
+state 15
+
+   11 simp.cmd: WORD WORD . NEWLINE
+
+    NEWLINE  shift, and go to state 21
+
+
+state 16
+
+   12 simp.cmd: WORD STRING . NEWLINE
+
+    NEWLINE  shift, and go to state 22
+
+
+state 17
 
     0 $accept: cmd $end .
 
     $default  accept
 
 
-state 13
+state 18
+
+    8 bin.cmd: LS WORD NEWLINE .
+
+    $default  reduce using rule 8 (bin.cmd)
+
+
+state 19
+
+    9 bin.cmd: LS STRING NEWLINE .
+
+    $default  reduce using rule 9 (bin.cmd)
+
+
+state 20
 
     4 bin.cmd: CD WORD NEWLINE .
 
     $default  reduce using rule 4 (bin.cmd)
 
 
-state 14
+state 21
 
-    8 simp.cmd: WORD WORD NEWLINE .
+   11 simp.cmd: WORD WORD NEWLINE .
 
-    $default  reduce using rule 8 (simp.cmd)
+    $default  reduce using rule 11 (simp.cmd)
 
 
-state 15
+state 22
 
-    9 simp.cmd: WORD STRING NEWLINE .
+   12 simp.cmd: WORD STRING NEWLINE .
 
-    $default  reduce using rule 9 (simp.cmd)
+    $default  reduce using rule 12 (simp.cmd)

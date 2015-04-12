@@ -15,14 +15,19 @@ setenv              return SETENV;
 unsetenv            return UNSETENV;
 printenv            return PRINTENV;
 bye                 return BYE;
+ls                  return LS;
 [-][a-z]            {
                         yylval.option = strdup(yytext);
                         return OPTION;
                     }
 [^\|\>\<\&\t\n\r][^\|\>\<\& \t\n]*  {
-                                        yylval.option = strdup(yytext);
+                                        yylval.word = strdup(yytext);
                                         return WORD;
                                     }
+\".*\"              {
+                        yylval.string = strdup(yytext);
+                        return STRING;
+                    }
 \"                  return QUOTE;
 \<                  return LT;
 \>                  return GT;

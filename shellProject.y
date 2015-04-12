@@ -23,12 +23,12 @@ int eventcount = 0;
     char *option;
 }
 
-%token <integer> LT GT AMP LPAREN VBAR DOT DEBUG NEWLINE
+%token <integer> LT GT AMP LPAREN VBAR DOT DEBUG NEWLINE TILDE LS
 %token <integer> SETENV PATH PROMPT CD BYE ALIAS UNALIAS PWD EXTEND
-%token <integer> ALIASLOOP UNSETENV PRINTENV QUOTE PIPE BACKGROUND BACKSLASH TILDE
-%token <word> WORD
-%token <string> STRING
-%token <option> OPTION
+%token <integer> ALIASLOOP UNSETENV PRINTENV QUOTE PIPE BACKGROUND BACKSLASH
+%token <word>    WORD SPACE VARIABLE
+%token <string>  STRING
+%token <option>  OPTION
 
 %start cmd
 
@@ -41,14 +41,21 @@ cmd:              bin.cmd
                 ;
 
 
-bin.cmd:          CD
+bin.cmd:          CD NEWLINE
                         { bicmd = CDHome_CMD; builtin = 1; return 0;}
+
                 | CD WORD NEWLINE
-                        { bicmd = CDPath_CMD; builtin = 1; bistr = $2; return 0;}
+                        { bicmd = CDPath_CMD; builtin = 1; strPath = $2; return 0;}
                 | BYE
                         { bicmd = BYE_CMD; return 0; }
                 | NEWLINE
                         { bicmd = NEWLINE_CMD; builtin = 1; return 0;}
+                | LS NEWLINE
+                        { bicmd = LS_CMD; builtin = 1; return 0; }
+                | LS WORD NEWLINE
+                        { bicmd = LSWord_CMD; builtin = 1; fileName = $2; return 0; }
+                | LS STRING NEWLINE
+                        { bicmd = LSWord_CMD; builtin = 1; fileName = $3; return 0; }
                 ;
 
 simp.cmd:         WORD NEWLINE
