@@ -73,7 +73,7 @@ struct AliasNode {
         char* value;
 };
 
-struct AliasNode* aliasHead = NULL;
+struct AliasNode* aliasHead;
 
 ///////*Externals*/////////////
 
@@ -131,6 +131,9 @@ int yylineno;
 char* yytext;
 char* input_command;
 int isExe;
+char currentLocation;
+//char currLoc[MAXPATH];
+char* strPath;
 
 ////////////////////////////////////
 

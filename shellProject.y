@@ -5,12 +5,14 @@
 
 /*-------------------------------------------------------------------------------------
  * shellProject.y - yacc specification file for the parser generator
- *------------------------------------------------------------------------------------
- */
+ *--------------------------------------------------------------------------------------*/
 
 int eventcount = 0;
+
  /* parse local working data section */
+
  COMMAND *q, *p;
+
  int pfd[2];
 %}
 
@@ -39,27 +41,25 @@ cmd:              builtin.cmd
 
 builtin.cmd:      CD
                         { bicmd = CDHome_CMD; builtin = 1; return 0;}
-                | CD WORD
-                        { bicmd = CDPath_CMD; builtin = 1; bistr = $2;}
+                | CD WORD NEWLINE
+                        { bicmd = CDPath_CMD; builtin = 1; bistr = $2; return 0;}
                 | BYE
                         { bicmd = BYE_CMD; return 0; }
                 | NEWLINE
-                        { bicmd = NEWLINE; return 0;}
-                | ALIAS
-                    { bicmd = ALIAS_CMD; return 0; }
+                        { bicmd = NEWLINE_CMD; builtin = 1; return 0;}
                 ;
 
 simple.cmd:     exec.cmd
                 ;
 
 
-exec.cmd:         WORD{
-                        input_command = $1;
-                        argv[0] = $1;
-                        argv[1] = NULL;
-                        return 0;
-                  }
-                  ;
+exec.cmd:          WORD NEWLINE
+                        { bistr = $1; argv[0] = $1; argv[1] = NULL; return 0; }
+                 | WORD WORD NEWLINE
+                        { bistr = $1; argv[argc] = $1; argv[++argc] = $2; argv[++argc] = NULL; return 0; }
+                 | WORD STRING NEWLINE
+                        { bistr = $1; argv[argc] = $1; argv[++argc] = $2; argv[++argc] = NULL; return 0; }
+                 ;
 %%
 
 int yyerror(char *s){

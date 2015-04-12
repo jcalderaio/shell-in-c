@@ -6,17 +6,30 @@
     #include "shellProject.h"
 
 
-    /////////////////////////////////
-    ///////Builtin Functions/////////
-    /////////////////////////////////
+    //////////////////////////////////////////////////////
+    ///////Builtin Functions//////////////////////////////
+    //////////////////////////////////////////////////////
 
     void goHome(){
+        strcpy(pathtab, home);
         chdir(home);
     }
 
-    /////////////////////////////////
-    ///////Shell Functions///////////
-    /////////////////////////////////
+    void goPath(){
+        //printf(", CURRENT_LOCATION_AT_START: %s", current_location);
+        //printf(", PATH TO APPEND: %s", path_to_append);
+        strcpy(pathtab, &currentLocation);
+        strcat(pathtab, "/");
+        strcat(pathtab, strPath);
+        //printf(", Combined Path: %s", current_loc);
+        currentLocation = pathtab;
+
+        chdir(currentLocation);
+    }
+
+    ///////////////////////////////////////////////////////
+    ///////Shell Functions/////////////////////////////////
+    ///////////////////////////////////////////////////////
 
     int check_in_file(){
         return 0;
@@ -52,22 +65,24 @@
 
         //init all tables (e.g., alias table)
         //get PATH environment variable (use getenv())
-        char* my_path = getenv("PATH");
-        char* delim = ":";
-        char* token = strtok(my_path, delim);
+        char* currPath = getenv("PATH");
+        char *homePath = getenv("HOME");
+
+        char* dlim = ":";
+        char* tok = strtok(currPath, dlim);
 
         int i = 0;
-        while(token != NULL){
-            pathtab[i] = token;
+        while(tok != NULL){
+            pathtab[i] = tok;
             i++;
-            token = strtok(NULL, delim);
+            tok = strtok(NULL, dlim);
         }
         pathtab[i] = NULL;
         //printf("two: %d\n", strlen(pathtab));
         //get HOME env variable (also use getenv())
-        char *home_path = getenv("HOME");
-        printf("%s", home_path);
-        home = home_path;
+
+        printf("%s", homePath);
+        home = homePath;
         //disable anything that can kill your shell
         //(the shell should never die; only can be exit)
         //do anything you feel should be done as init
@@ -93,6 +108,7 @@
         // In this case you have to recover by “eating”
         // the rest of the command.
         // To do this: use yylex() directly.
+        printf("Command Error!!!");
     }
 
     void do_print_Alias(struct AliasNode* alias) {
@@ -117,23 +133,21 @@
                 current = current->next;
             }
         }
-                
+
     }
-        
+
 
     void do_it(){
         switch (bicmd) {
           case ALIAS_CMD:
                 printAlias();
-            break;
+                break;
           case CDHome_CMD:
                 goHome();
-            break;
-          case CDPath_CMD:{
-                chdir(bistr);
-                printf("--%s-->$", bistr);
-            }
-            break;
+                break;
+          case CDPath_CMD:
+                goPath();
+                break;
           case UNALIAS_CMD:
             break;
           case SETENV_CMD:
@@ -218,9 +232,9 @@
     }
 
     int main(){
-        printf("This is the shell!!!!\n");
+        printf("Welcome to the shell!!!!\n");
         shell_init();
-        while (1) { //Shell Loop
+        while (1) {
             printPrompt();
             switch (CMD = getCommand()) {
                 case BYE_CMD:
