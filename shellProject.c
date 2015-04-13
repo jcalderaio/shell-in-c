@@ -50,31 +50,24 @@
 
     void goPath(const char* thePathStr){
         getCurrentPath();
-
-        // printf("\n\nI am here\n\n");
-        // printf("%s", currentWorkDir);
-        // printf("\n\nI am here\n\n");
-
         strcpy(currLoc, currentWorkDir);
         strcat(currLoc, "/");
         strcat(currLoc, thePathStr);
         currentWorkDir = currLoc;
         removeSpaces(currentWorkDir);
-
-        // printf("\n\nI am here\n\n");
-        // printf("%s", currentWorkDir);
-        // printf("\n\nI am here\n\n");
-
-        chdir(currentWorkDir);
+        int isDir = chdir(currentWorkDir);
+        if(isDir){
+            printf("%s is not a valid directory name.\n", thePathStr);
+        }
     }
 
     void do_print_Alias(struct AliasNode* alias) {
         char* toPrint = alias->key;
-            printf("%s", toPrint);
+        printf("%s", toPrint);
         printf(": ");
-            toPrint = alias->value;
-            printf("%s", toPrint);
-            printf("\n");
+        toPrint = alias->value;
+        printf("%s", toPrint);
+        printf("\n");
     }
 
     void printAlias() {
