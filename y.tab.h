@@ -68,8 +68,9 @@
      WORD = 284,
      SPACE = 285,
      VARIABLE = 286,
-     STRING = 287,
-     OPTION = 288
+     VALUE = 287,
+     STRING = 288,
+     OPTION = 289
    };
 #endif
 /* Tokens.  */
@@ -102,8 +103,9 @@
 #define WORD 284
 #define SPACE 285
 #define VARIABLE 286
-#define STRING 287
-#define OPTION 288
+#define VALUE 287
+#define STRING 288
+#define OPTION 289
 
 
 
@@ -118,7 +120,7 @@ typedef union YYSTYPE
     char *option;
 }
 /* Line 1529 of yacc.c.  */
-#line 122 "y.tab.h"
+#line 124 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

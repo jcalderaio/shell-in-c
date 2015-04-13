@@ -26,7 +26,7 @@ int eventcount = 0;
 %token <integer> LT GT AMP LPAREN VBAR DOT DEBUG NEWLINE TILDE LS
 %token <integer> SETENV PATH PROMPT CD BYE ALIAS UNALIAS PWD EXTEND
 %token <integer> ALIASLOOP UNSETENV PRINTENV QUOTE PIPE BACKGROUND BACKSLASH
-%token <word>    WORD SPACE VARIABLE
+%token <word>    WORD SPACE VARIABLE VALUE
 %token <string>  STRING
 %token <option>  OPTION
 
@@ -34,14 +34,14 @@ int eventcount = 0;
 
 %%
 
-cmd:              bin.cmd
+cmd:              builtin.cmd
                         { eventcount++; }
-                | simp.cmd
+                | simple.cmd
                         { eventcount++; }
                 ;
 
 
-bin.cmd:          CD NEWLINE
+builtin.cmd:          CD NEWLINE
                         { bicmd = CDHome_CMD; builtin = 1; return 0;}
 
                 | CD WORD NEWLINE
@@ -56,9 +56,15 @@ bin.cmd:          CD NEWLINE
                         { bicmd = LSWord_CMD; builtin = 1; fileName = $2; return 0; }
                 | LS STRING NEWLINE
                         { bicmd = LSWord_CMD; builtin = 1; fileName = $3; return 0; }
+                | SETENV NEWLINE
+                        { bicmd = SETENV_CMD; builtin = 2; return 0; }
+                | SETENV VARIABLE NEWLINE
+                        { bicmd = SETENV_CMD; builtin = 1; var = $2; return 0; }
+                | SETENV VARIABLE VALUE NEWLINE
+                        { bicmd = SETENV_CMD; builtin = 1; var = $2; value = $3; return 0; }
                 ;
 
-simp.cmd:         WORD NEWLINE
+simple.cmd:         WORD NEWLINE
                         { bistr = $1; argv[0] = $1; argv[1] = NULL; return 0; }
                 | WORD WORD NEWLINE
                         { bistr = $1; argv[argc] = $1; argv[++argc] = $2; argv[++argc] = NULL; return 0; }

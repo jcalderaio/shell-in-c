@@ -143,6 +143,8 @@ int alphasort(); //Inbuilt sorting function
 char* pathname[MAXPATH];
 char* currentWorkDir;
 char* fileName;
+char* var;
+char* value;
 
 ////////////////////////////////////
 

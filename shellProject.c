@@ -45,6 +45,7 @@
 
     void goHome(){
         strcpy(currLoc, home);
+        printf("You are now being redirected to the home directory\n");
         chdir(home);
     }
 
@@ -316,7 +317,9 @@
     }
 
     int main(){
-        printf("Welcome to the shell!!!!\n");
+        printf("=====================================================\n");
+        printf("---------------Welcome to the shell------------------\n");
+        printf("=====================================================\n\n");
         shell_init();
         while (1) {
             printPrompt();
