@@ -37,6 +37,7 @@
 #define NEWLINE_CMD              10
 #define LS_CMD                   11
 #define LSWord_CMD               12
+#define ALIAS_CMD_CREATE         13
 
 ///////*Command line arguments structure*//////
 typedef struct comrgs{
@@ -79,6 +80,8 @@ struct AliasNode {
 };
 
 struct AliasNode* aliasHead;
+struct AliasNode* aliasHead1;
+struct AliasNode* aliasHead2;
 
 ///////*Externals*/////////////
 
@@ -145,6 +148,8 @@ char* currentWorkDir;
 char* fileName;
 char* var;
 char* value;
+char* word1;
+char* word2;
 
 ////////////////////////////////////
 

@@ -38,6 +38,7 @@
             //printf("\n\nI am here\n\n");
             //printf("%s\n", cwd);
             currentWorkDir = cwd;
+           // printf("%s\n", currentWorkDir);
             free(cwd);
             //printf("\n\nI am here\n\n");
         }
@@ -52,6 +53,8 @@
     void goPath(const char* thePathStr){
         getCurrentPath();
         strcpy(currLoc, currentWorkDir);
+        printf("%s\n", currLoc);
+        printf("%s\n", currentWorkDir);
         strcat(currLoc, "/");
         strcat(currLoc, thePathStr);
         currentWorkDir = currLoc;
@@ -62,6 +65,10 @@
         }
     }
 
+
+
+
+
     void do_print_Alias(struct AliasNode* alias) {
         char* toPrint = alias->key;
         printf("%s", toPrint);
@@ -69,23 +76,53 @@
         toPrint = alias->value;
         printf("%s", toPrint);
         printf("\n");
+	
     }
 
     void printAlias() {
-        if (aliasHead == 0) {
+        if (aliasHead2 == 0) {
             printf("No aliases have been created.");
             return;
         }
         else {
-            struct AliasNode* current = aliasHead;
+            struct AliasNode* current = aliasHead2;
+	   // printf("hgdsgbvhfdsgv",aliasHead2->key,aliasHead2->value);
             printf("Current Aliases: \n");
-            while (current != 0) {
+            while (current != NULL) {
                 do_print_Alias(current);
                 current = current->next;
+
             }
         }
-    }
-
+	
+        
+   }
+//""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+	void createAlias(char* word3,char* word4)
+	{
+		
+		aliasHead=(struct AliasNode *)malloc(sizeof(struct AliasNode));
+		aliasHead->key=word3;
+		aliasHead->value=word4;
+		aliasHead->next=NULL;
+		//aliasHead2=aliasHead;
+		//printf("alias2",aliasHead2->key,aliasHead2->value);
+		//p2=*k;
+		if(aliasHead1==NULL)
+		{
+		aliasHead1=aliasHead;
+		aliasHead2=aliasHead;
+		}
+		else
+		{
+		while(aliasHead1->next!=NULL)
+		{
+			aliasHead1=aliasHead1->next;
+		}
+		aliasHead1->next=aliasHead;
+		}
+	}
+//""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
     void goLS(){
         DIR *dirp;
         struct dirent* dir;
@@ -230,6 +267,9 @@
                 break;
           case ALIAS_CMD:
                 printAlias();
+                break;
+	  case ALIAS_CMD_CREATE:
+                createAlias(word1,word2);
                 break;
           case UNALIAS_CMD:
                 break;
