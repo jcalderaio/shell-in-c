@@ -12,13 +12,20 @@
     ///////Builtin Functions//////////////////////////////
     //////////////////////////////////////////////////////
 
-    char* remove_spaces(char * source, char * target){
-        while(*source++ && *target){
-            if (!isspace(*source))
-                 *target++ = *source;
+    void removeSpaces (char *str) {
+        // Set up two pointers.
+        char *src = str;
+        char *dst = src;
+        // Process all characters to end of string.
+        while (*src != '\0') {
+            // If it's not a space, transfer and increment destination.
+            if (*src != ' ')
+                *dst++ = *src;
+            // Increment source no matter what.
+            src++;
         }
-
-        return target;
+        // Terminate the new string.
+        *dst = '\0';
     }
 
     void getCurrentPath(){
@@ -43,20 +50,20 @@
 
     void goPath(const char* thePathStr){
         getCurrentPath();
-        printf("\n\nI am here\n\n");
-        printf("%s", currentWorkDir);
-        printf("\n\nI am here\n\n");
+
+        // printf("\n\nI am here\n\n");
+        // printf("%s", currentWorkDir);
+        // printf("\n\nI am here\n\n");
 
         strcpy(currLoc, currentWorkDir);
         strcat(currLoc, "/");
         strcat(currLoc, thePathStr);
         currentWorkDir = currLoc;
-        char *dir = "";
-        dir = remove_spaces(currentWorkDir, dir);
+        removeSpaces(currentWorkDir);
 
-        printf("\n\nI am here\n\n");
-        printf("%s", dir);
-        printf("\n\nI am here\n\n");
+        // printf("\n\nI am here\n\n");
+        // printf("%s", currentWorkDir);
+        // printf("\n\nI am here\n\n");
 
         chdir(currentWorkDir);
     }
@@ -97,34 +104,31 @@
         }
     }
 
-    // void goLSWord(){
-    //     DIR *dirp;
-    //     struct dirent *dir;
-    //     dirp = opendir(".");
-    //     int flag = 0;
-    //     if (dirp)
-    //     {
-    //         while ((dir = readdir(dirp)) != NULL){
-    //             if(strcmp(fileName, dir->d_name) == 0){
-    //                 flag = 1;
-    //                 DIR *d2;
-    //                 struct dirent *dir2;
-    //                 d2 = opendir(dir->d_name);
-    //                 if (d2)
-    //                 {
-    //                     while ((dir2 = readdir(d2)) != NULL)
-    //                     {
-    //                         printf("%s\n", dir2->d_name);
-    //                     }
-    //                 closedir(d2);
-    //                 }
-    //             }
-    //         }
-    //     closedir(dirp);
-    //     if(flag == 0)
-    //         printf("Directory %s does not exist.\n", fileName);
-    //     }
-    // }
+    void goLSWord(){
+        DIR *dirp;
+        struct dirent *dir;
+        dirp = opendir(currentWorkDir);
+        int flag = 0;
+        if (dirp){
+            while ((dir = readdir(dirp)) != NULL){
+                if(strcmp(fileName, dir->d_name) == 0){
+                    flag = 1;
+                    DIR *d2;
+                    struct dirent *dir2;
+                    d2 = opendir(dir->d_name);
+                    if (d2){
+                        while ((dir2 = readdir(d2)) != NULL){
+                            printf("%s\n", dir2->d_name);
+                        }
+                    closedir(d2);
+                    }
+                }
+            }
+        closedir(dirp);
+        if(flag == 0)
+            printf("Directory %s does not exist.\n", fileName);
+        }
+    }
 
     ///////////////////////////////////////////////////////
     ///////Error Handling//////////////////////////////////
@@ -226,8 +230,10 @@
                 break;
           case LS_CMD:
                 goLS();
+                break;
           case LSWord_CMD:
-                //goLSWord();
+                goLSWord();
+                break;
           case ALIAS_CMD:
                 printAlias();
                 break;
