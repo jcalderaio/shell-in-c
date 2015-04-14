@@ -43,6 +43,7 @@ cmd:              builtin.cmd
 
 builtin.cmd:      CD NEWLINE
                         { bicmd = CDHome_CMD; builtin = 1; return 0;}
+
                 | CD WORD NEWLINE
                         { bicmd = CDPath_CMD; builtin = 1; strPath = $2; return 0;}
                 | BYE
@@ -56,23 +57,31 @@ builtin.cmd:      CD NEWLINE
                 | LS STRING NEWLINE
                         { bicmd = LSWord_CMD; builtin = 1; fileName = $3; return 0; }
                 | SETENV NEWLINE
-                        { bicmd = SETENV_CMD; builtin = 1; return 0; }
+                        { bicmd = SETENV_CMD; builtin = 2; return 0; }
                 | SETENV VARIABLE NEWLINE
                         { bicmd = SETENV_CMD; builtin = 1; var = $2; return 0; }
                 | SETENV VARIABLE VALUE NEWLINE
                         { bicmd = SETENV_CMD; builtin = 1; var = $2; value = $3; return 0; }
+
+		| ALIAS NEWLINE
+			{ bicmd = ALIAS_CMD; builtin = 1; return 0; }
+		| ALIAS WORD WORD NEWLINE
+			{ bicmd = ALIAS_CMD_CREATE; builtin = 1; word1 = $2; word2 = $3; return 0; }
+		| UNALIAS WORD NEWLINE
+			{ bicmd = UNALIAS_CMD; builtin = 1; word5 = $2; return 0; }
                 | UNSETENV NEWLINE
                         { bicmd = UNSETENV_CMD; builtin = 1; return 0; }
                 | UNSETENV VARIABLE NEWLINE
                         { bicmd = UNSETENV_CMD; builtin = 1; var = $2; return 0; }
-		        | ALIAS NEWLINE
-			            { bicmd = ALIAS_CMD; builtin = 1; return 0; }
-		        | ALIAS WORD WORD NEWLINE
-			            { bicmd = ALIAS_CMD_CREATE; builtin = 1; word1 = $2; word2 = $3; return 0; }
+                | ALIAS NEWLINE
+                        { bicmd = ALIAS_CMD; builtin = 1; return 0; }
+                | ALIAS WORD WORD NEWLINE
+                        { bicmd = ALIAS_CMD; builtin = 1; word1 = $2; word2 = $3; return 0; }
                 | ALIAS WORD STRING NEWLINE
                         { bicmd = ALIAS_CMD; builtin = 1; al = $2; alWord = $3; return 0; }
-		        | UNALIAS WORD NEWLINE
-		 	            { bicmd = UNALIAS_CMD; builtin = 1; word5 = $2; return 0; }
+                | UNALIAS WORD NEWLINE
+                        { bicmd = UNALIAS_CMD; builtin = 1; word5 = $2; return 0; }
+
                 ;
 
 simple.cmd:       WORD NEWLINE

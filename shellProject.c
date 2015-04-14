@@ -3,10 +3,9 @@
     #include <string.h>
     #include <unistd.h>
     #include <ctype.h>
+    #include <string.h>
     #include <dirent.h>
     #include <errno.h>
-    #include <fcntl.h>
-    #include <signal.h>
     #include "shellProject.h"
 
 
@@ -37,8 +36,12 @@
             fprintf (stderr, "getcwd failed: %s\n", strerror (errno));
         }
         else {
+            //printf("\n\nI am here\n\n");
+            //printf("%s\n", cwd);
             currentWorkDir = cwd;
+           // printf("%s\n", currentWorkDir);
             free(cwd);
+            //printf("\n\nI am here\n\n");
         }
     }
 
@@ -63,6 +66,10 @@
         }
     }
 
+
+
+
+
     void do_print_Alias(struct AliasNode* alias) {
         char* toPrint = alias->key;
         printf("%s", toPrint);
@@ -70,7 +77,7 @@
         toPrint = alias->value;
         printf("%s", toPrint);
         printf("\n");
-
+	
     }
 
     void printAlias(char* dec1) {
@@ -88,11 +95,13 @@
 
             }
         }
+	
+        
    }
-//""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
 	void createAlias(char* word3,char* word4)
 	{
-
+		
 		aliasHead=(struct AliasNode *)malloc(sizeof(struct AliasNode));
 		aliasHead->key=word3;
 		aliasHead->value=word4;
@@ -107,6 +116,7 @@
 		dec=aliasHead;
 		aliasHead3=aliasHead;
 		aliasHead4=aliasHead;
+		aliasHead5=aliasHead;
 		//printf("dedfe",aliasHead1->key,aliasHead1->value);
 		}
 		else
@@ -118,40 +128,34 @@
 		aliasHead1->next=aliasHead;
 		}
 	}
-//""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 		void unaliasword(char* word6)
 		{
+			aliasHead3=aliasHead5;
     			char* temp = aliasHead3->key;
-			printf(temp);
-			printf(word6);
-		//	if((temp) == word6)
-		//	{
-			while((aliasHead3)->key != word6)
+			if(strcmp(temp,word6) == 0)
+			{
+			
+				aliasHead3=aliasHead4->next;
+				aliasHead4->next=NULL;
+				free(aliasHead4);
+				aliasHead4=aliasHead3;
+				printAlias(aliasHead3);
+			}
+			else{
+    			while(strcmp((aliasHead3->next->key),word6) != 0)
     			{
     				aliasHead3=aliasHead3->next;
     			}
-				printf("fhjhfds");
-				aliasHead3=aliasHead4->next;
-				aliasHead4->next=NULL;
-				printf(word6);
-				free(aliasHead4);
-				aliasHead4=aliasHead3;
-
-		//	}
-		//	else{
-    		//	while((aliasHead3)->key!=word6)
-    		//	{
-    		//		aliasHead3=aliasHead3->next;
-    		//	}
-		//	aliasHead4=aliasHead3->next;
-    		//	aliasHead3->next=(aliasHead3->next)->next;
-		//	free(aliasHead4);
-			printAlias(aliasHead3);
-		//	}
+			//printf("vbhvbv",aliasHead3->next->key);
+			aliasHead4=aliasHead3->next;
+			aliasHead3->next=aliasHead4->next;
+			aliasHead4->next=NULL;
+			free(aliasHead4);
+			printAlias(aliasHead5);
+			}
 		}
-//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
     void goLS(){
         DIR *dirp;
         struct dirent* dir;
@@ -188,10 +192,6 @@
         if(flag == 0)
             printf("Directory %s does not exist.\n", fileName);
         }
-    }
-
-    void printEnv(){
-
     }
 
     ///////////////////////////////////////////////////////
@@ -267,11 +267,6 @@
         home = homePath;
         //disable anything that can kill your shell
         //(the shell should never die; only can be exit)
-
-        signal(SIGINT, SIG_IGN); 
-        signal(SIGTSTP, SIG_IGN);
-        signal(SIGKILL, SIG_IGN);
-        signal(SIGSTOP, SIG_IGN);
         //do anything you feel should be done as init
         return;
 
@@ -283,6 +278,10 @@
         //Dont require
         // get PATH environment variable (use getenv())
         // get HOME env variable (also use getenv())
+
+        // disable anything that can kill your shell.
+        // (the shell should never die; only can be exit)
+        // do anything you feel should be done as init
     }
 
     void do_it(){
@@ -302,11 +301,11 @@
           case ALIAS_CMD:
                 printAlias(dec);
                 break;
-	      case ALIAS_CMD_CREATE:
+	  case ALIAS_CMD_CREATE:
                 createAlias(word1,word2);
                 break;
           case UNALIAS_CMD:
-		        unaliasword(word5);
+		unaliasword(word5);
                 break;
           case SETENV_CMD:
                 break;
@@ -393,7 +392,7 @@
 
     int main(){
         printf("=====================================================\n");
-        printf("---------------Welcome to the Shell------------------\n");
+        printf("---------------Welcome to the shell------------------\n");
         printf("=====================================================\n\n");
         shell_init();
         while (1) {

@@ -84,6 +84,7 @@ struct AliasNode* aliasHead1;
 struct AliasNode* aliasHead2;
 struct AliasNode* aliasHead3;
 struct AliasNode* aliasHead4;
+struct AliasNode* aliasHead5;
 struct AliasNode* dec;
 
 ///////*Externals*/////////////
@@ -153,6 +154,7 @@ char* var;
 char* value;
 char* word1;
 char* word2;
+
 char* word5;
 char* al;
 char* alWord;
