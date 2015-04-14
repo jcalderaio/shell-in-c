@@ -66,6 +66,8 @@ builtin.cmd:      CD NEWLINE
 			{ bicmd = ALIAS_CMD; builtin = 1; return 0; }
 		| ALIAS WORD WORD NEWLINE
 			{ bicmd = ALIAS_CMD_CREATE; builtin = 1; word1 = $2; word2 = $3; return 0; }
+		| UNALIAS WORD NEWLINE
+			{ bicmd = UNALIAS_CMD; builtin = 1; word5 = $2; return 0; }
                 ;
 
 simple.cmd:         WORD NEWLINE

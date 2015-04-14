@@ -10,7 +10,6 @@ Terminals unused in grammar
    TILDE
    PATH
    PROMPT
-   UNALIAS
    PWD
    EXTEND
    ALIASLOOP
@@ -43,10 +42,11 @@ Grammar
    12            | SETENV VARIABLE VALUE NEWLINE
    13            | ALIAS NEWLINE
    14            | ALIAS WORD WORD NEWLINE
+   15            | UNALIAS WORD NEWLINE
 
-   15 simple.cmd: WORD NEWLINE
-   16           | WORD WORD NEWLINE
-   17           | WORD STRING NEWLINE
+   16 simple.cmd: WORD NEWLINE
+   17           | WORD WORD NEWLINE
+   18           | WORD STRING NEWLINE
 
 
 Terminals, with rules where they appear
@@ -60,7 +60,7 @@ LPAREN (261)
 VBAR (262)
 DOT (263)
 DEBUG (264)
-NEWLINE (265) 3 4 6 7 8 9 10 11 12 13 14 15 16 17
+NEWLINE (265) 3 4 6 7 8 9 10 11 12 13 14 15 16 17 18
 TILDE (266)
 LS (267) 7 8 9
 SETENV (268) 10 11 12
@@ -69,7 +69,7 @@ PROMPT (270)
 CD (271) 3 4
 BYE (272) 5
 ALIAS (273) 13 14
-UNALIAS (274)
+UNALIAS (274) 15
 PWD (275)
 EXTEND (276)
 ALIASLOOP (277)
@@ -79,11 +79,11 @@ QUOTE (280)
 PIPE (281)
 BACKGROUND (282)
 BACKSLASH (283)
-WORD (284) 4 8 14 15 16 17
+WORD (284) 4 8 14 15 16 17 18
 SPACE (285)
 VARIABLE (286) 11 12
 VALUE (287) 12
-STRING (288) 9 17
+STRING (288) 9 18
 OPTION (289)
 
 
@@ -94,9 +94,9 @@ $accept (35)
 cmd (36)
     on left: 1 2, on right: 0
 builtin.cmd (37)
-    on left: 3 4 5 6 7 8 9 10 11 12 13 14, on right: 1
+    on left: 3 4 5 6 7 8 9 10 11 12 13 14 15, on right: 1
 simple.cmd (38)
-    on left: 15 16 17, on right: 2
+    on left: 16 17 18, on right: 2
 
 
 state 0
@@ -109,11 +109,12 @@ state 0
     CD       shift, and go to state 4
     BYE      shift, and go to state 5
     ALIAS    shift, and go to state 6
-    WORD     shift, and go to state 7
+    UNALIAS  shift, and go to state 7
+    WORD     shift, and go to state 8
 
-    cmd          go to state 8
-    builtin.cmd  go to state 9
-    simple.cmd   go to state 10
+    cmd          go to state 9
+    builtin.cmd  go to state 10
+    simple.cmd   go to state 11
 
 
 state 1
@@ -129,9 +130,9 @@ state 2
     8            | LS . WORD NEWLINE
     9            | LS . STRING NEWLINE
 
-    NEWLINE  shift, and go to state 11
-    WORD     shift, and go to state 12
-    STRING   shift, and go to state 13
+    NEWLINE  shift, and go to state 12
+    WORD     shift, and go to state 13
+    STRING   shift, and go to state 14
 
 
 state 3
@@ -140,8 +141,8 @@ state 3
    11            | SETENV . VARIABLE NEWLINE
    12            | SETENV . VARIABLE VALUE NEWLINE
 
-    NEWLINE   shift, and go to state 14
-    VARIABLE  shift, and go to state 15
+    NEWLINE   shift, and go to state 15
+    VARIABLE  shift, and go to state 16
 
 
 state 4
@@ -149,8 +150,8 @@ state 4
     3 builtin.cmd: CD . NEWLINE
     4            | CD . WORD NEWLINE
 
-    NEWLINE  shift, and go to state 16
-    WORD     shift, and go to state 17
+    NEWLINE  shift, and go to state 17
+    WORD     shift, and go to state 18
 
 
 state 5
@@ -165,199 +166,220 @@ state 6
    13 builtin.cmd: ALIAS . NEWLINE
    14            | ALIAS . WORD WORD NEWLINE
 
-    NEWLINE  shift, and go to state 18
-    WORD     shift, and go to state 19
+    NEWLINE  shift, and go to state 19
+    WORD     shift, and go to state 20
 
 
 state 7
 
-   15 simple.cmd: WORD . NEWLINE
-   16           | WORD . WORD NEWLINE
-   17           | WORD . STRING NEWLINE
+   15 builtin.cmd: UNALIAS . WORD NEWLINE
 
-    NEWLINE  shift, and go to state 20
-    WORD     shift, and go to state 21
-    STRING   shift, and go to state 22
+    WORD  shift, and go to state 21
 
 
 state 8
 
-    0 $accept: cmd . $end
+   16 simple.cmd: WORD . NEWLINE
+   17           | WORD . WORD NEWLINE
+   18           | WORD . STRING NEWLINE
 
-    $end  shift, and go to state 23
+    NEWLINE  shift, and go to state 22
+    WORD     shift, and go to state 23
+    STRING   shift, and go to state 24
 
 
 state 9
+
+    0 $accept: cmd . $end
+
+    $end  shift, and go to state 25
+
+
+state 10
 
     1 cmd: builtin.cmd .
 
     $default  reduce using rule 1 (cmd)
 
 
-state 10
+state 11
 
     2 cmd: simple.cmd .
 
     $default  reduce using rule 2 (cmd)
 
 
-state 11
+state 12
 
     7 builtin.cmd: LS NEWLINE .
 
     $default  reduce using rule 7 (builtin.cmd)
 
 
-state 12
+state 13
 
     8 builtin.cmd: LS WORD . NEWLINE
 
-    NEWLINE  shift, and go to state 24
-
-
-state 13
-
-    9 builtin.cmd: LS STRING . NEWLINE
-
-    NEWLINE  shift, and go to state 25
+    NEWLINE  shift, and go to state 26
 
 
 state 14
+
+    9 builtin.cmd: LS STRING . NEWLINE
+
+    NEWLINE  shift, and go to state 27
+
+
+state 15
 
    10 builtin.cmd: SETENV NEWLINE .
 
     $default  reduce using rule 10 (builtin.cmd)
 
 
-state 15
+state 16
 
    11 builtin.cmd: SETENV VARIABLE . NEWLINE
    12            | SETENV VARIABLE . VALUE NEWLINE
 
-    NEWLINE  shift, and go to state 26
-    VALUE    shift, and go to state 27
+    NEWLINE  shift, and go to state 28
+    VALUE    shift, and go to state 29
 
 
-state 16
+state 17
 
     3 builtin.cmd: CD NEWLINE .
 
     $default  reduce using rule 3 (builtin.cmd)
 
 
-state 17
+state 18
 
     4 builtin.cmd: CD WORD . NEWLINE
 
-    NEWLINE  shift, and go to state 28
+    NEWLINE  shift, and go to state 30
 
 
-state 18
+state 19
 
    13 builtin.cmd: ALIAS NEWLINE .
 
     $default  reduce using rule 13 (builtin.cmd)
 
 
-state 19
+state 20
 
    14 builtin.cmd: ALIAS WORD . WORD NEWLINE
 
-    WORD  shift, and go to state 29
-
-
-state 20
-
-   15 simple.cmd: WORD NEWLINE .
-
-    $default  reduce using rule 15 (simple.cmd)
+    WORD  shift, and go to state 31
 
 
 state 21
 
-   16 simple.cmd: WORD WORD . NEWLINE
+   15 builtin.cmd: UNALIAS WORD . NEWLINE
 
-    NEWLINE  shift, and go to state 30
+    NEWLINE  shift, and go to state 32
 
 
 state 22
 
-   17 simple.cmd: WORD STRING . NEWLINE
+   16 simple.cmd: WORD NEWLINE .
 
-    NEWLINE  shift, and go to state 31
+    $default  reduce using rule 16 (simple.cmd)
 
 
 state 23
+
+   17 simple.cmd: WORD WORD . NEWLINE
+
+    NEWLINE  shift, and go to state 33
+
+
+state 24
+
+   18 simple.cmd: WORD STRING . NEWLINE
+
+    NEWLINE  shift, and go to state 34
+
+
+state 25
 
     0 $accept: cmd $end .
 
     $default  accept
 
 
-state 24
+state 26
 
     8 builtin.cmd: LS WORD NEWLINE .
 
     $default  reduce using rule 8 (builtin.cmd)
 
 
-state 25
+state 27
 
     9 builtin.cmd: LS STRING NEWLINE .
 
     $default  reduce using rule 9 (builtin.cmd)
 
 
-state 26
+state 28
 
    11 builtin.cmd: SETENV VARIABLE NEWLINE .
 
     $default  reduce using rule 11 (builtin.cmd)
 
 
-state 27
+state 29
 
    12 builtin.cmd: SETENV VARIABLE VALUE . NEWLINE
 
-    NEWLINE  shift, and go to state 32
+    NEWLINE  shift, and go to state 35
 
 
-state 28
+state 30
 
     4 builtin.cmd: CD WORD NEWLINE .
 
     $default  reduce using rule 4 (builtin.cmd)
 
 
-state 29
+state 31
 
    14 builtin.cmd: ALIAS WORD WORD . NEWLINE
 
-    NEWLINE  shift, and go to state 33
+    NEWLINE  shift, and go to state 36
 
 
-state 30
+state 32
 
-   16 simple.cmd: WORD WORD NEWLINE .
+   15 builtin.cmd: UNALIAS WORD NEWLINE .
 
-    $default  reduce using rule 16 (simple.cmd)
+    $default  reduce using rule 15 (builtin.cmd)
 
 
-state 31
+state 33
 
-   17 simple.cmd: WORD STRING NEWLINE .
+   17 simple.cmd: WORD WORD NEWLINE .
 
     $default  reduce using rule 17 (simple.cmd)
 
 
-state 32
+state 34
+
+   18 simple.cmd: WORD STRING NEWLINE .
+
+    $default  reduce using rule 18 (simple.cmd)
+
+
+state 35
 
    12 builtin.cmd: SETENV VARIABLE VALUE NEWLINE .
 
     $default  reduce using rule 12 (builtin.cmd)
 
 
-state 33
+state 36
 
    14 builtin.cmd: ALIAS WORD WORD NEWLINE .
 

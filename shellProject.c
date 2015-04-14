@@ -79,13 +79,13 @@
 	
     }
 
-    void printAlias() {
-        if (aliasHead2 == 0) {
+    void printAlias(char* dec1) {
+        if (dec1 == 0) {
             printf("No aliases have been created.");
             return;
         }
         else {
-            struct AliasNode* current = aliasHead2;
+            struct AliasNode* current = dec1;
 	   // printf("hgdsgbvhfdsgv",aliasHead2->key,aliasHead2->value);
             printf("Current Aliases: \n");
             while (current != NULL) {
@@ -105,13 +105,17 @@
 		aliasHead->key=word3;
 		aliasHead->value=word4;
 		aliasHead->next=NULL;
-		//aliasHead2=aliasHead;
-		//printf("alias2",aliasHead2->key,aliasHead2->value);
+		//aliasHead3=aliasHead;
+		//printf("alias3",aliasHead3->key,aliasHead3->value);
 		//p2=*k;
 		if(aliasHead1==NULL)
 		{
 		aliasHead1=aliasHead;
 		aliasHead2=aliasHead;
+		dec=aliasHead;
+		aliasHead3=aliasHead;
+		aliasHead4=aliasHead;
+		//printf("dedfe",aliasHead1->key,aliasHead1->value);
 		}
 		else
 		{
@@ -123,6 +127,39 @@
 		}
 	}
 //""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+		void unaliasword(char* word6)
+		{
+    			char* temp = aliasHead3->key;
+			printf(temp);
+			printf(word6);
+		//	if((temp) == word6)
+		//	{
+			while((aliasHead3)->key != word6)
+    			{
+    				aliasHead3=aliasHead3->next;
+    			}
+				printf("fhjhfds");
+				aliasHead3=aliasHead4->next;
+				aliasHead4->next=NULL;
+				printf(word6);
+				free(aliasHead4);
+				aliasHead4=aliasHead3;
+				
+		//	}
+		//	else{
+    		//	while((aliasHead3)->key!=word6)
+    		//	{
+    		//		aliasHead3=aliasHead3->next;
+    		//	}
+		//	aliasHead4=aliasHead3->next;
+    		//	aliasHead3->next=(aliasHead3->next)->next;
+		//	free(aliasHead4);
+			printAlias(aliasHead3);
+		//	}
+		}
+//@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     void goLS(){
         DIR *dirp;
         struct dirent* dir;
@@ -266,12 +303,13 @@
                 goLSWord();
                 break;
           case ALIAS_CMD:
-                printAlias();
+                printAlias(dec);
                 break;
 	  case ALIAS_CMD_CREATE:
                 createAlias(word1,word2);
                 break;
           case UNALIAS_CMD:
+		unaliasword(word5);
                 break;
           case SETENV_CMD:
                 break;
