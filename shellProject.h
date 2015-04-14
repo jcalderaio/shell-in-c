@@ -150,6 +150,8 @@ char* var;
 char* value;
 char* word1;
 char* word2;
+char* al;
+char* alWord;
 
 ////////////////////////////////////
 
