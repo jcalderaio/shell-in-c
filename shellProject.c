@@ -8,7 +8,7 @@
     #include <errno.h>
     #include "shellProject.h"
 
-    //This is John's Comment
+    //This is John Comment
 
 
     //////////////////////////////////////////////////////
