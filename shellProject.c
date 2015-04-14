@@ -274,7 +274,10 @@
         //disable anything that can kill your shell
         //(the shell should never die; only can be exit)
 
-        signal(SIGINT, SIG_IGN);
+        signal(SIGINT, SIG_IGN); 
+        signal(SIGTSTP, SIG_IGN);
+        signal(SIGKILL, SIG_IGN);
+        signal(SIGSTOP, SIG_IGN);
         //do anything you feel should be done as init
         return;
 
@@ -286,10 +289,6 @@
         //Dont require
         // get PATH environment variable (use getenv())
         // get HOME env variable (also use getenv())
-
-        // disable anything that can kill your shell.
-        // (the shell should never die; only can be exit)
-        // do anything you feel should be done as init
     }
 
     void do_it(){
