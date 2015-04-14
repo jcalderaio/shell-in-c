@@ -390,7 +390,7 @@
         }
     }
 
-    int main(){
+    int main( int argc, char *argv[] ){
         printf("=====================================================\n");
         printf("---------------Welcome to the shell------------------\n");
         printf("=====================================================\n\n");
@@ -399,6 +399,7 @@
             printPrompt();
             switch (CMD = getCommand()) {
                 case BYE_CMD:
+                    printf("Goodbye!\n\n");
                     exit(0);
                 case ERRORS:
                     recover_from_errors();
