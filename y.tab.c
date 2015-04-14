@@ -471,8 +471,13 @@ static const yytype_uint8 yytranslate[] =
 static const yytype_uint8 yyprhs[] =
 {
        0,     0,     3,     5,     7,    10,    14,    16,    18,    21,
+<<<<<<< Updated upstream
       25,    29,    32,    36,    41,    44,    49,    53,    56,    60,
       63,    68,    73,    77,    80,    84
+=======
+      25,    29,    32,    36,    41,    44,    48,    51,    56,    61,
+      65,    68,    72
+>>>>>>> Stashed changes
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
@@ -482,11 +487,18 @@ static const yytype_int8 yyrhs[] =
       16,    29,    10,    -1,    17,    -1,    10,    -1,    12,    10,
       -1,    12,    29,    10,    -1,    12,    33,    10,    -1,    13,
       10,    -1,    13,    31,    10,    -1,    13,    31,    32,    10,
+<<<<<<< Updated upstream
       -1,    18,    10,    -1,    18,    29,    29,    10,    -1,    19,
       29,    10,    -1,    23,    10,    -1,    23,    31,    10,    -1,
       18,    10,    -1,    18,    29,    29,    10,    -1,    18,    29,
       33,    10,    -1,    19,    29,    10,    -1,    29,    10,    -1,
       29,    29,    10,    -1,    29,    33,    10,    -1
+=======
+      -1,    23,    10,    -1,    23,    31,    10,    -1,    18,    10,
+      -1,    18,    29,    29,    10,    -1,    18,    29,    33,    10,
+      -1,    19,    29,    10,    -1,    29,    10,    -1,    29,    29,
+      10,    -1,    29,    33,    10,    -1
+>>>>>>> Stashed changes
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
@@ -536,8 +548,13 @@ static const yytype_uint8 yyr1[] =
 static const yytype_uint8 yyr2[] =
 {
        0,     2,     1,     1,     2,     3,     1,     1,     2,     3,
+<<<<<<< Updated upstream
        3,     2,     3,     4,     2,     4,     3,     2,     3,     2,
        4,     4,     3,     2,     3,     3
+=======
+       3,     2,     3,     4,     2,     3,     2,     4,     4,     3,
+       2,     3,     3
+>>>>>>> Stashed changes
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -547,9 +564,15 @@ static const yytype_uint8 yydefact[] =
 {
        0,     7,     0,     0,     0,     6,     0,     0,     0,     0,
        0,     2,     3,     8,     0,     0,    11,     0,     4,     0,
+<<<<<<< Updated upstream
       14,     0,     0,    17,     0,    23,     0,     0,     1,     9,
       10,    12,     0,     5,     0,     0,    16,    18,    24,    25,
       13,    15,    21
+=======
+      16,     0,     0,    14,     0,    20,     0,     0,     1,     9,
+      10,    12,     0,     5,     0,     0,    19,    15,    21,    22,
+      13,    17,    18
+>>>>>>> Stashed changes
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -1480,6 +1503,7 @@ yyreduce:
     break;
 
   case 14:
+<<<<<<< Updated upstream
 #line 67 "shellProject.y"
     { bicmd = ALIAS_CMD; builtin = 1; return 0; }
     break;
@@ -1490,18 +1514,35 @@ yyreduce:
     break;
 
   case 16:
+=======
+#line 65 "shellProject.y"
+    { bicmd = UNSETENV_CMD; builtin = 1; return 0; }
+    break;
+
+  case 15:
+#line 67 "shellProject.y"
+    { bicmd = UNSETENV_CMD; builtin = 1; var = (yyvsp[(2) - (3)].word); return 0; }
+    break;
+
+  case 16:
+#line 69 "shellProject.y"
+    { bicmd = ALIAS_CMD; builtin = 1; return 0; }
+    break;
+
+  case 17:
+>>>>>>> Stashed changes
 #line 71 "shellProject.y"
-    { bicmd = UNALIAS_CMD; builtin = 1; word5 = (yyvsp[(2) - (3)].word); return 0; }
+    { bicmd = ALIAS_CMD_CREATE; builtin = 1; word1 = (yyvsp[(2) - (4)].word); word2 = (yyvsp[(3) - (4)].word); return 0; }
     break;
 
   case 17:
 #line 73 "shellProject.y"
-    { bicmd = UNSETENV_CMD; builtin = 1; return 0; }
+    { bicmd = ALIAS_CMD; builtin = 1; al = (yyvsp[(2) - (4)].word); alWord = (yyvsp[(3) - (4)].string); return 0; }
     break;
 
   case 18:
 #line 75 "shellProject.y"
-    { bicmd = UNSETENV_CMD; builtin = 1; var = (yyvsp[(2) - (3)].word); return 0; }
+    { bicmd = UNALIAS_CMD; builtin = 1; word5 = (yyvsp[(2) - (3)].word); return 0; }
     break;
 
   case 19:

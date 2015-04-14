@@ -5,7 +5,6 @@
 extern YYSTYPE yylval;
 %}
 
-
 %%
 
 cd                  return CD;
@@ -24,20 +23,22 @@ ls                  return LS;
                                         yylval.word = strdup(yytext);
                                         return WORD;
                                     }
-\".*\"              {
-                        yylval.string = strdup(yytext);
-                        return STRING;
-                    }
+["][^\|\>\<\&\t\n\r][^\|\>\<\&\t\n]*["] {
+                                            yylval.string = strdup(yytext);
+                                            return STRING;
+                                        }
 \"                  return QUOTE;
 \<                  return LT;
 \>                  return GT;
 \|                  return PIPE;
 \&                  return BACKGROUND;
 \\                  return BACKSLASH;
+//                  return FORWARDSLASH;
 ~                   return TILDE;
+.                   return SINGLEPERIOD;
+..                  return DOUBLEPERIOD;
 \n                  return NEWLINE;
 [ \t\r]+            ;
-
 
 %%
 

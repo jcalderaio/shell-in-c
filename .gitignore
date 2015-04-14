@@ -1,0 +1,11 @@
+y.output
+y.tab.c
+y.tab.h
+y.tab.o
+shellProject.tab.h
+shellProject.tab.c
+shellProject.o
+shellProject
+lex.yy.o
+lex.yy.c
+lex&yacc.txt

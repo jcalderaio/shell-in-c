@@ -8,6 +8,8 @@
     #include <errno.h>
     #include "shellProject.h"
 
+    //This is Kenans Comment
+
 
     //////////////////////////////////////////////////////
     ///////Builtin Functions//////////////////////////////
@@ -36,12 +38,8 @@
             fprintf (stderr, "getcwd failed: %s\n", strerror (errno));
         }
         else {
-            //printf("\n\nI am here\n\n");
-            //printf("%s\n", cwd);
             currentWorkDir = cwd;
-           // printf("%s\n", currentWorkDir);
             free(cwd);
-            //printf("\n\nI am here\n\n");
         }
     }
 
@@ -64,10 +62,6 @@
         }
     }
 
-
-
-
-
     void do_print_Alias(struct AliasNode* alias) {
         char* toPrint = alias->key;
         printf("%s", toPrint);
@@ -75,7 +69,7 @@
         toPrint = alias->value;
         printf("%s", toPrint);
         printf("\n");
-	
+
     }
 
     void printAlias(char* dec1) {
@@ -93,13 +87,10 @@
 
             }
         }
-	
-        
    }
 
-	void createAlias(char* word3,char* word4)
-	{
-		
+	void createAlias(char* word3,char* word4){
+
 		aliasHead=(struct AliasNode *)malloc(sizeof(struct AliasNode));
 		aliasHead->key=word3;
 		aliasHead->value=word4;
@@ -133,7 +124,7 @@
     			char* temp = aliasHead3->key;
 			if(strcmp(temp,word6) == 0)
 			{
-			
+
 				aliasHead3=aliasHead4->next;
 				aliasHead4->next=NULL;
 				free(aliasHead4);
@@ -299,11 +290,11 @@
           case ALIAS_CMD:
                 printAlias(dec);
                 break;
-	  case ALIAS_CMD_CREATE:
+	      case ALIAS_CMD_CREATE:
                 createAlias(word1,word2);
                 break;
           case UNALIAS_CMD:
-		unaliasword(word5);
+		        unaliasword(word5);
                 break;
           case SETENV_CMD:
                 break;
