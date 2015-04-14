@@ -54,8 +54,6 @@
     void goPath(const char* thePathStr){
         getCurrentPath();
         strcpy(currLoc, currentWorkDir);
-        printf("%s\n", currLoc);
-        printf("%s\n", currentWorkDir);
         strcat(currLoc, "/");
         strcat(currLoc, thePathStr);
         currentWorkDir = currLoc;
