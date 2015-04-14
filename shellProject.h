@@ -153,12 +153,10 @@ char* var;
 char* value;
 char* word1;
 char* word2;
-<<<<<<< HEAD
 char* word5;
-=======
 char* al;
 char* alWord;
->>>>>>> 817bd41cb0d584673b588d16b3b07a61c5af8796
+
 
 ////////////////////////////////////
 

@@ -62,14 +62,14 @@ builtin.cmd:      CD NEWLINE
                         { bicmd = SETENV_CMD; builtin = 1; var = $2; return 0; }
                 | SETENV VARIABLE VALUE NEWLINE
                         { bicmd = SETENV_CMD; builtin = 1; var = $2; value = $3; return 0; }
-<<<<<<< HEAD
+
 		| ALIAS NEWLINE
 			{ bicmd = ALIAS_CMD; builtin = 1; return 0; }
 		| ALIAS WORD WORD NEWLINE
 			{ bicmd = ALIAS_CMD_CREATE; builtin = 1; word1 = $2; word2 = $3; return 0; }
 		| UNALIAS WORD NEWLINE
 			{ bicmd = UNALIAS_CMD; builtin = 1; word5 = $2; return 0; }
-=======
+
                 | UNSETENV NEWLINE
                         { bicmd = UNSETENV_CMD; builtin = 1; return 0; }
                 | UNSETENV VARIABLE NEWLINE
@@ -77,12 +77,12 @@ builtin.cmd:      CD NEWLINE
                 | ALIAS NEWLINE
                         { bicmd = ALIAS_CMD; builtin = 1; return 0; }
                 | ALIAS WORD WORD NEWLINE
-                        { bicmd = ALIAS_CMD; builtin = 1; al = $2; alWord = $3; return 0; }
+                        { bicmd = ALIAS_CMD; builtin = 1; word1 = $2; word2 = $3; return 0; }
                 | ALIAS WORD STRING NEWLINE
                         { bicmd = ALIAS_CMD; builtin = 1; al = $2; alWord = $3; return 0; }
                 | UNALIAS WORD NEWLINE
-                        { bicmd = UNALIAS_CMD; builtin = 1; al = $2; return 0; }
->>>>>>> 817bd41cb0d584673b588d16b3b07a61c5af8796
+                        { bicmd = UNALIAS_CMD; builtin = 1; word5 = $2; return 0; }
+
                 ;
 
 simple.cmd:       WORD NEWLINE
