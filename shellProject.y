@@ -57,7 +57,7 @@ builtin.cmd:      CD NEWLINE
                 | LS STRING NEWLINE
                         { bicmd = LSWord_CMD; builtin = 1; fileName = $3; return 0; }
                 | SETENV NEWLINE
-                        { bicmd = SETENV_CMD; builtin = 2; return 0; }
+                        { bicmd = SETENV_CMD; builtin = 1; return 0; }
                 | SETENV VARIABLE NEWLINE
                         { bicmd = SETENV_CMD; builtin = 1; var = $2; return 0; }
                 | SETENV VARIABLE VALUE NEWLINE
