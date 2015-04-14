@@ -5,6 +5,8 @@
     #include <ctype.h>
     #include <dirent.h>
     #include <errno.h>
+    #include <fcntl.h>
+    #include <signal.h>
     #include "shellProject.h"
 
 
@@ -271,6 +273,8 @@
         home = homePath;
         //disable anything that can kill your shell
         //(the shell should never die; only can be exit)
+
+        signal(SIGINT, SIG_IGN);
         //do anything you feel should be done as init
         return;
 
