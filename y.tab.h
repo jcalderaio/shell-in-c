@@ -49,28 +49,31 @@
      NEWLINE = 265,
      TILDE = 266,
      LS = 267,
-     SETENV = 268,
-     PATH = 269,
-     PROMPT = 270,
-     CD = 271,
-     BYE = 272,
-     ALIAS = 273,
-     UNALIAS = 274,
-     PWD = 275,
-     EXTEND = 276,
-     ALIASLOOP = 277,
-     UNSETENV = 278,
-     PRINTENV = 279,
-     QUOTE = 280,
-     PIPE = 281,
-     BACKGROUND = 282,
-     BACKSLASH = 283,
-     WORD = 284,
-     SPACE = 285,
-     VARIABLE = 286,
-     VALUE = 287,
-     STRING = 288,
-     OPTION = 289
+     SINGLEPERIOD = 268,
+     SETENV = 269,
+     PATH = 270,
+     PROMPT = 271,
+     CD = 272,
+     BYE = 273,
+     ALIAS = 274,
+     UNALIAS = 275,
+     PWD = 276,
+     EXTEND = 277,
+     FORWARDSLASH = 278,
+     ALIASLOOP = 279,
+     UNSETENV = 280,
+     PRINTENV = 281,
+     QUOTE = 282,
+     PIPE = 283,
+     BACKGROUND = 284,
+     BACKSLASH = 285,
+     DOUBLEPERIOD = 286,
+     WORD = 287,
+     SPACE = 288,
+     VARIABLE = 289,
+     VALUE = 290,
+     STRING = 291,
+     OPTION = 292
    };
 #endif
 /* Tokens.  */
@@ -84,28 +87,31 @@
 #define NEWLINE 265
 #define TILDE 266
 #define LS 267
-#define SETENV 268
-#define PATH 269
-#define PROMPT 270
-#define CD 271
-#define BYE 272
-#define ALIAS 273
-#define UNALIAS 274
-#define PWD 275
-#define EXTEND 276
-#define ALIASLOOP 277
-#define UNSETENV 278
-#define PRINTENV 279
-#define QUOTE 280
-#define PIPE 281
-#define BACKGROUND 282
-#define BACKSLASH 283
-#define WORD 284
-#define SPACE 285
-#define VARIABLE 286
-#define VALUE 287
-#define STRING 288
-#define OPTION 289
+#define SINGLEPERIOD 268
+#define SETENV 269
+#define PATH 270
+#define PROMPT 271
+#define CD 272
+#define BYE 273
+#define ALIAS 274
+#define UNALIAS 275
+#define PWD 276
+#define EXTEND 277
+#define FORWARDSLASH 278
+#define ALIASLOOP 279
+#define UNSETENV 280
+#define PRINTENV 281
+#define QUOTE 282
+#define PIPE 283
+#define BACKGROUND 284
+#define BACKSLASH 285
+#define DOUBLEPERIOD 286
+#define WORD 287
+#define SPACE 288
+#define VARIABLE 289
+#define VALUE 290
+#define STRING 291
+#define OPTION 292
 
 
 
@@ -120,7 +126,7 @@ typedef union YYSTYPE
     char *option;
 }
 /* Line 1529 of yacc.c.  */
-#line 124 "y.tab.h"
+#line 130 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1

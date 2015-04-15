@@ -23,9 +23,9 @@ int eventcount = 0;
     char *option;
 }
 
-%token <integer> LT GT AMP LPAREN VBAR DOT DEBUG NEWLINE TILDE LS
-%token <integer> SETENV PATH PROMPT CD BYE ALIAS UNALIAS PWD EXTEND
-%token <integer> ALIASLOOP UNSETENV PRINTENV QUOTE PIPE BACKGROUND BACKSLASH
+%token <integer> LT GT AMP LPAREN VBAR DOT DEBUG NEWLINE TILDE LS SINGLEPERIOD
+%token <integer> SETENV PATH PROMPT CD BYE ALIAS UNALIAS PWD EXTEND FORWARDSLASH
+%token <integer> ALIASLOOP UNSETENV PRINTENV QUOTE PIPE BACKGROUND BACKSLASH DOUBLEPERIOD
 %token <word>    WORD SPACE VARIABLE VALUE
 %token <string>  STRING
 %token <option>  OPTION
@@ -43,7 +43,6 @@ cmd:              builtin.cmd
 
 builtin.cmd:      CD NEWLINE
                         { bicmd = CDHome_CMD; builtin = 1; return 0;}
-
                 | CD WORD NEWLINE
                         { bicmd = CDPath_CMD; builtin = 1; strPath = $2; return 0;}
                 | BYE
@@ -62,13 +61,6 @@ builtin.cmd:      CD NEWLINE
                         { bicmd = SETENV_CMD; builtin = 1; var = $2; return 0; }
                 | SETENV VARIABLE VALUE NEWLINE
                         { bicmd = SETENV_CMD; builtin = 1; var = $2; value = $3; return 0; }
-
-		| ALIAS NEWLINE
-			{ bicmd = ALIAS_CMD; builtin = 1; return 0; }
-		| ALIAS WORD WORD NEWLINE
-			{ bicmd = ALIAS_CMD_CREATE; builtin = 1; word1 = $2; word2 = $3; return 0; }
-		| UNALIAS WORD NEWLINE
-			{ bicmd = UNALIAS_CMD; builtin = 1; word5 = $2; return 0; }
                 | UNSETENV NEWLINE
                         { bicmd = UNSETENV_CMD; builtin = 1; return 0; }
                 | UNSETENV VARIABLE NEWLINE
