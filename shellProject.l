@@ -33,10 +33,10 @@ ls                  return LS;
 \|                  return PIPE;
 \&                  return BACKGROUND;
 \\                  return BACKSLASH;
-//                  return FORWARDSLASH;
-~                   return TILDE;
-.                   return SINGLEPERIOD;
-..                  return DOUBLEPERIOD;
+"//"                return FORWARDSLASH;
+"~/"                return TILDE;
+"./"                return SINGLEPERIOD;
+"../"               return DOUBLEPERIOD;
 \n                  return NEWLINE;
 [ \t\r]+            ;
 
