@@ -35,9 +35,9 @@ int eventcount = 0;
 %%
 
 cmd:              builtin.cmd
-                        { eventcount++; }
+                        
                 | simple.cmd
-                        { eventcount++; }
+                       
                 ;
 
 

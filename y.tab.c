@@ -1429,17 +1429,7 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-        case 2:
-#line 38 "shellProject.y"
-    { eventcount++; }
-    break;
-
-  case 3:
-#line 40 "shellProject.y"
-    { eventcount++; }
-    break;
-
-  case 4:
+        case 4:
 #line 45 "shellProject.y"
     { 
                         bicmd = CDHome_CMD; 
@@ -1646,7 +1636,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1650 "y.tab.c"
+#line 1640 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
