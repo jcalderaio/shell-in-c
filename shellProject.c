@@ -6,6 +6,7 @@
     #include <string.h>
     #include <dirent.h>
     #include <errno.h>
+    #include <signal.h>
     #include "shellProject.h"
 
 
@@ -258,6 +259,7 @@
         //disable anything that can kill your shell
         //(the shell should never die; only can be exit)
         //do anything you feel should be done as init
+        signal(SIGINT, SIG_IGN);
         return;
 
 
