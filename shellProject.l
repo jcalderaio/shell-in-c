@@ -27,18 +27,18 @@ ls                  return LS;
                                             yylval.string = strdup(yytext);
                                             return STRING;
                                         }
-\"                  return QUOTE;
-\<                  return LT;
-\>                  return GT;
-\|                  return PIPE;
-\&                  return BACKGROUND;
-\\                  return BACKSLASH;
+\"                 return QUOTE;
+\<                 return LT;
+\>                 return GT;
+\|                 return PIPE;
+\&                 return BACKGROUND;
+\\                 return BACKSLASH;
 "/"                return FORWARDSLASH;
 "~"                return TILDE;
 "."                return SINGLEPERIOD;
 ".."               return DOUBLEPERIOD;
-\n                  return NEWLINE;
-[ \t\r]+            ;
+\n                 return NEWLINE;
+[ \t\r]+           ;
 
 %%
 
