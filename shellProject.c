@@ -31,6 +31,15 @@
         *dst = '\0';
     }
 
+    char * remove_white(char * source) {
+        
+        while(isspace(*source)){ //removing preceeding 0 from the input
+            ++source;
+        }
+
+        return source;
+    }
+
     void getCurrentPath(){
         char * cwd;
         cwd = getcwd (0, 0);
@@ -61,24 +70,31 @@
             printEnvironment();
         }
         else if(argv[1] == NULL) {
-            char* string_1 = argv[0];
-            while(isspace(*string_1)){ //removing preceeding 0 from the input
-                ++string_1;
-            }
-            setenv(string_1,"", 0);
+             char* string_1 = remove_white(argv[0]);
+             setenv(string_1, "", 0);
+             printf("\"%s\" added to environment variables!\n", string_1);
         }
         else {
-            //setenv(argv[0], argv[1], 0);
-            char* string_1 = argv[0];
-            while(isspace(*string_1)){ //removing preceeding 0 from the input
-                ++string_1;
-            }
-            char* string_2 = argv[1];
-            while(isspace(*string_2)){ //removing preceeding 0 from the input
-                ++string_2;
-            }
-            setenv(string_1, string_2, 0);
+            char* string_1 = remove_white(argv[0]);
+            setenv(string_1, remove_white(argv[1]), 0);
+            printf("\"%s\" added to environment variables!\n", string_1);
         }
+    }
+
+    void unsetEnvironment() {
+        if(argv[0] == NULL) {
+            printf("%s\n", "unsetenv: you didn't include anything to unset!");
+        }
+        else if(getenv(remove_white(argv[0])) == NULL) {
+            printf("%s\n", "unsetenv: environment variable not found!");
+        }
+        else {
+            char* string_1 = remove_white(argv[0]);
+            unsetenv(string_1);
+            printf("\"%s\" removed from environment variables!\n", string_1);
+        }
+
+
     }
 
     void goPath(const char* thePathStr){
@@ -111,7 +127,7 @@
         }
         else {
             struct AliasNode* current = dec1;
-	   // printf("hgdsgbvhfdsgv",aliasHead2->key,aliasHead2->value);
+       // printf("hgdsgbvhfdsgv",aliasHead2->key,aliasHead2->value);
             printf("Current Aliases: \n");
             while (current != NULL) {
                 do_print_Alias(current);
@@ -121,61 +137,61 @@
         }
    }
 
-	void createAlias(char* word3,char* word4){
+    void createAlias(char* word3,char* word4){
 
-		aliasHead=(struct AliasNode *)malloc(sizeof(struct AliasNode));
-		aliasHead->key=word3;
-		aliasHead->value=word4;
-		aliasHead->next=NULL;
-		//aliasHead3=aliasHead;
-		//printf("alias3",aliasHead3->key,aliasHead3->value);
-		//p2=*k;
-		if(aliasHead1==NULL)
-		{
-		aliasHead1=aliasHead;
-		aliasHead2=aliasHead;
-		dec=aliasHead;
-		aliasHead3=aliasHead;
-		aliasHead4=aliasHead;
-		aliasHead5=aliasHead;
-		//printf("dedfe",aliasHead1->key,aliasHead1->value);
-		}
-		else
-		{
-		while(aliasHead1->next!=NULL)
-		{
-			aliasHead1=aliasHead1->next;
-		}
-		aliasHead1->next=aliasHead;
-		}
-	}
+        aliasHead=(struct AliasNode *)malloc(sizeof(struct AliasNode));
+        aliasHead->key=word3;
+        aliasHead->value=word4;
+        aliasHead->next=NULL;
+        //aliasHead3=aliasHead;
+        //printf("alias3",aliasHead3->key,aliasHead3->value);
+        //p2=*k;
+        if(aliasHead1==NULL)
+        {
+        aliasHead1=aliasHead;
+        aliasHead2=aliasHead;
+        dec=aliasHead;
+        aliasHead3=aliasHead;
+        aliasHead4=aliasHead;
+        aliasHead5=aliasHead;
+        //printf("dedfe",aliasHead1->key,aliasHead1->value);
+        }
+        else
+        {
+        while(aliasHead1->next!=NULL)
+        {
+            aliasHead1=aliasHead1->next;
+        }
+        aliasHead1->next=aliasHead;
+        }
+    }
 
-		void unaliasword(char* word6)
-		{
-			aliasHead3=aliasHead5;
-    			char* temp = aliasHead3->key;
-			if(strcmp(temp,word6) == 0)
-			{
+        void unaliasword(char* word6)
+        {
+            aliasHead3=aliasHead5;
+                char* temp = aliasHead3->key;
+            if(strcmp(temp,word6) == 0)
+            {
 
-				aliasHead3=aliasHead4->next;
-				aliasHead4->next=NULL;
-				free(aliasHead4);
-				aliasHead4=aliasHead3;
-				printAlias(aliasHead3);
-			}
-			else{
-    			while(strcmp((aliasHead3->next->key),word6) != 0)
-    			{
-    				aliasHead3=aliasHead3->next;
-    			}
-			//printf("vbhvbv",aliasHead3->next->key);
-			aliasHead4=aliasHead3->next;
-			aliasHead3->next=aliasHead4->next;
-			aliasHead4->next=NULL;
-			free(aliasHead4);
-			printAlias(aliasHead5);
-			}
-		}
+                aliasHead3=aliasHead4->next;
+                aliasHead4->next=NULL;
+                free(aliasHead4);
+                aliasHead4=aliasHead3;
+                printAlias(aliasHead3);
+            }
+            else{
+                while(strcmp((aliasHead3->next->key),word6) != 0)
+                {
+                    aliasHead3=aliasHead3->next;
+                }
+            //printf("vbhvbv",aliasHead3->next->key);
+            aliasHead4=aliasHead3->next;
+            aliasHead3->next=aliasHead4->next;
+            aliasHead4->next=NULL;
+            free(aliasHead4);
+            printAlias(aliasHead5);
+            }
+        }
 
     void goLS(){
         DIR *dirp;
@@ -324,16 +340,17 @@
           case ALIAS_CMD:
                 printAlias(dec);
                 break;
-	      case ALIAS_CMD_CREATE:
+          case ALIAS_CMD_CREATE:
                 createAlias(word1,word2);
                 break;
           case UNALIAS_CMD:
-		        unaliasword(word5);
+                unaliasword(word5);
                 break;
           case SETENV_CMD:
                 setEnvironment();
                 break;
           case UNSETENV_CMD:
+                unsetEnvironment();
                 break;
           case PRINTENV_CMD:
                 printEnvironment();
@@ -442,7 +459,6 @@
                 case BYE_CMD:
                     printf("Goodbye!\n\n");
                     exit(0);
-                
             }
         }
         return 0;

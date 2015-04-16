@@ -120,13 +120,14 @@ builtin.cmd:      CD NEWLINE
                         { 
                         bicmd = UNSETENV_CMD; 
                         builtin = 1; 
+                        argv[0] = NULL;
                         return 0; 
                         }
                 | UNSETENV WORD NEWLINE
                         { 
                         bicmd = UNSETENV_CMD; 
                         builtin = 1; 
-                        var = $2; 
+                        argv[0] = $2; 
                         return 0; 
                         }
                 | PRINTENV NEWLINE 

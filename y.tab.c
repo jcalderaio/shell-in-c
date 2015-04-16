@@ -500,8 +500,8 @@ static const yytype_int8 yyrhs[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    37,    37,    39,    44,    51,    58,    65,    70,    76,
-      82,    89,    96,   103,   111,   119,   125,   132,   138,   143,
-     150,   157,   167,   174,   182
+      82,    89,    96,   103,   111,   119,   126,   133,   139,   144,
+     151,   158,   168,   175,   183
 };
 #endif
 
@@ -1550,22 +1550,23 @@ yyreduce:
     { 
                         bicmd = UNSETENV_CMD; 
                         builtin = 1; 
+                        argv[0] = NULL;
                         return 0; 
                         }
     break;
 
   case 16:
-#line 126 "shellProject.y"
+#line 127 "shellProject.y"
     { 
                         bicmd = UNSETENV_CMD; 
                         builtin = 1; 
-                        var = (yyvsp[(2) - (3)].word); 
+                        argv[0] = (yyvsp[(2) - (3)].word); 
                         return 0; 
                         }
     break;
 
   case 17:
-#line 133 "shellProject.y"
+#line 134 "shellProject.y"
     {
                         builtin = 1;
                         bicmd = PRINTENV_CMD;
@@ -1574,7 +1575,7 @@ yyreduce:
     break;
 
   case 18:
-#line 139 "shellProject.y"
+#line 140 "shellProject.y"
     { bicmd = ALIAS_CMD; 
                         builtin = 1; 
                         return 0; 
@@ -1582,7 +1583,7 @@ yyreduce:
     break;
 
   case 19:
-#line 144 "shellProject.y"
+#line 145 "shellProject.y"
     { 
                         bicmd = ALIAS_CMD; 
                         builtin = 1; 
@@ -1592,7 +1593,7 @@ yyreduce:
     break;
 
   case 20:
-#line 151 "shellProject.y"
+#line 152 "shellProject.y"
     { 
                         bicmd = ALIAS_CMD; 
                         builtin = 1; 
@@ -1602,7 +1603,7 @@ yyreduce:
     break;
 
   case 21:
-#line 158 "shellProject.y"
+#line 159 "shellProject.y"
     { 
                         bicmd = UNALIAS_CMD; 
                         builtin = 1; 
@@ -1612,7 +1613,7 @@ yyreduce:
     break;
 
   case 22:
-#line 168 "shellProject.y"
+#line 169 "shellProject.y"
     { 
                         bistr = (yyvsp[(1) - (2)].word); 
                         argv[0] = (yyvsp[(1) - (2)].word); 
@@ -1622,7 +1623,7 @@ yyreduce:
     break;
 
   case 23:
-#line 175 "shellProject.y"
+#line 176 "shellProject.y"
     { 
                         bistr = (yyvsp[(1) - (3)].word); 
                         argv[argc] = (yyvsp[(1) - (3)].word); 
@@ -1633,7 +1634,7 @@ yyreduce:
     break;
 
   case 24:
-#line 183 "shellProject.y"
+#line 184 "shellProject.y"
     { 
                         bistr = (yyvsp[(1) - (3)].word); 
                         argv[argc] = (yyvsp[(1) - (3)].word); 
@@ -1645,7 +1646,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1649 "y.tab.c"
+#line 1650 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1859,7 +1860,7 @@ yyreturn:
 }
 
 
-#line 191 "shellProject.y"
+#line 192 "shellProject.y"
 
 
 int yyerror(char *s){
