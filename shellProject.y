@@ -143,17 +143,17 @@ builtin.cmd:      CD NEWLINE
                         }
                 | ALIAS WORD WORD NEWLINE
                         { 
-                        bicmd = ALIAS_CMD; 
+                        bicmd = ALIAS_CMD_CREATE; 
                         builtin = 1; 
-                        word1 = $2; 
-                        word2 = $3; 
+                        argv[0] = $2; 
+                        argv[1] = $3; 
                         return 0; }
                 | ALIAS WORD STRING NEWLINE
                         { 
-                        bicmd = ALIAS_CMD; 
+                        bicmd = ALIAS_CMD_CREATE; 
                         builtin = 1; 
-                        al = $2; 
-                        alWord = $3; 
+                        argv[0] = $2; 
+                        argv[1] = $3; 
                         return 0; }
                 | UNALIAS WORD NEWLINE
                         { 

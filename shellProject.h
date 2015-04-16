@@ -152,12 +152,8 @@ char* currentWorkDir;
 char* fileName;
 char* var;
 char* value;
-char* word1;
-char* word2;
-
 char* word5;
-char* al;
-char* alWord;
+
 
 
 ////////////////////////////////////

@@ -1575,20 +1575,20 @@ yyreduce:
   case 19:
 #line 145 "shellProject.y"
     { 
-                        bicmd = ALIAS_CMD; 
+                        bicmd = ALIAS_CMD_CREATE; 
                         builtin = 1; 
-                        word1 = (yyvsp[(2) - (4)].word); 
-                        word2 = (yyvsp[(3) - (4)].word); 
+                        argv[0] = (yyvsp[(2) - (4)].word); 
+                        argv[1] = (yyvsp[(3) - (4)].word); 
                         return 0; }
     break;
 
   case 20:
 #line 152 "shellProject.y"
     { 
-                        bicmd = ALIAS_CMD; 
+                        bicmd = ALIAS_CMD_CREATE; 
                         builtin = 1; 
-                        al = (yyvsp[(2) - (4)].word); 
-                        alWord = (yyvsp[(3) - (4)].string); 
+                        argv[0] = (yyvsp[(2) - (4)].word); 
+                        argv[1] = (yyvsp[(3) - (4)].string); 
                         return 0; }
     break;
 
