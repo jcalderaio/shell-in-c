@@ -100,7 +100,7 @@ builtin.cmd:      CD NEWLINE
                         argv[0] = NULL;
                         return 0; 
                         }
-                | SETENV VARIABLE NEWLINE
+                | SETENV WORD NEWLINE
                         { 
                         bicmd = SETENV_CMD; 
                         builtin = 1; 
@@ -108,13 +108,12 @@ builtin.cmd:      CD NEWLINE
                         argv[1] = NULL;
                         return 0;
                         }
-                | SETENV VARIABLE VALUE NEWLINE
+                | SETENV WORD WORD NEWLINE
                         { 
                         bicmd = SETENV_CMD; 
                         builtin = 1; 
                         argv[0] = $2;
                         argv[1] = $3;
-                        argv[2] = NULL;
                         return 0;
                         }
                 | UNSETENV NEWLINE
@@ -123,7 +122,7 @@ builtin.cmd:      CD NEWLINE
                         builtin = 1; 
                         return 0; 
                         }
-                | UNSETENV VARIABLE NEWLINE
+                | UNSETENV WORD NEWLINE
                         { 
                         bicmd = UNSETENV_CMD; 
                         builtin = 1; 

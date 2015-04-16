@@ -419,7 +419,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  31
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   42
+#define YYLAST   43
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  38
@@ -488,8 +488,8 @@ static const yytype_int8 yyrhs[] =
       39,     0,    -1,    40,    -1,    41,    -1,    17,    10,    -1,
       17,    11,    10,    -1,    17,    32,    10,    -1,    18,    -1,
       10,    -1,    12,    10,    -1,    12,    32,    10,    -1,    12,
-      36,    10,    -1,    14,    10,    -1,    14,    34,    10,    -1,
-      14,    34,    35,    10,    -1,    25,    10,    -1,    25,    34,
+      36,    10,    -1,    14,    10,    -1,    14,    32,    10,    -1,
+      14,    32,    32,    10,    -1,    25,    10,    -1,    25,    32,
       10,    -1,    26,    10,    -1,    19,    10,    -1,    19,    32,
       32,    10,    -1,    19,    32,    36,    10,    -1,    20,    32,
       10,    -1,    32,    10,    -1,    32,    32,    10,    -1,    32,
@@ -500,8 +500,8 @@ static const yytype_int8 yyrhs[] =
 static const yytype_uint8 yyrline[] =
 {
        0,    37,    37,    39,    44,    51,    58,    65,    70,    76,
-      82,    89,    96,   103,   111,   120,   126,   133,   139,   144,
-     151,   158,   168,   175,   183
+      82,    89,    96,   103,   111,   119,   125,   132,   138,   143,
+     150,   157,   167,   174,   182
 };
 #endif
 
@@ -568,20 +568,20 @@ static const yytype_int8 yydefgoto[] =
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-#define YYPACT_NINF -31
+#define YYPACT_NINF -28
 static const yytype_int8 yypact[] =
 {
-      -1,   -31,   -10,    -5,     4,   -31,     0,   -30,    -4,    -3,
-      -9,    12,   -31,   -31,   -31,    10,    11,   -31,    -7,   -31,
-      23,    24,   -31,   -28,    25,   -31,    27,   -31,   -31,    28,
-      29,   -31,   -31,   -31,   -31,    30,   -31,   -31,    31,    32,
-     -31,   -31,   -31,   -31,   -31,   -31,   -31
+      -8,   -28,   -10,    -7,    -3,   -28,     3,   -27,     4,     9,
+      -9,    21,   -28,   -28,   -28,    18,    20,   -28,     5,   -28,
+      22,    23,   -28,   -16,    24,   -28,    28,   -28,   -28,    29,
+      30,   -28,   -28,   -28,   -28,    31,   -28,   -28,    32,    33,
+     -28,   -28,   -28,   -28,   -28,   -28,   -28
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -31,   -31,   -31,   -31
+     -28,   -28,   -28,   -28
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -591,20 +591,20 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -1
 static const yytype_uint8 yytable[] =
 {
-      14,    28,    24,    34,    38,    17,    25,    27,    39,     1,
-      22,     2,    31,     3,    19,    20,     4,     5,     6,     7,
-      32,    33,    15,    29,     8,     9,    16,    30,    35,    18,
-      26,    10,    23,    36,    37,    40,    21,    41,    42,    43,
-      44,    45,    46
+      14,    28,     1,    17,     2,    24,     3,    19,    20,     4,
+       5,     6,     7,    22,    25,    34,    38,     8,     9,    27,
+      39,    31,    15,    29,    10,    18,    16,    30,    32,    21,
+      33,     0,    36,    37,    40,    23,    26,    35,    41,    42,
+      43,    44,    45,    46
 };
 
-static const yytype_uint8 yycheck[] =
+static const yytype_int8 yycheck[] =
 {
-      10,    10,    32,    10,    32,    10,    10,    10,    36,    10,
-      10,    12,     0,    14,    10,    11,    17,    18,    19,    20,
-      10,    10,    32,    32,    25,    26,    36,    36,    35,    34,
-      34,    32,    32,    10,    10,    10,    32,    10,    10,    10,
-      10,    10,    10
+      10,    10,    10,    10,    12,    32,    14,    10,    11,    17,
+      18,    19,    20,    10,    10,    10,    32,    25,    26,    10,
+      36,     0,    32,    32,    32,    32,    36,    36,    10,    32,
+      10,    -1,    10,    10,    10,    32,    32,    32,    10,    10,
+      10,    10,    10,    10
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -612,9 +612,9 @@ static const yytype_uint8 yycheck[] =
 static const yytype_uint8 yystos[] =
 {
        0,    10,    12,    14,    17,    18,    19,    20,    25,    26,
-      32,    39,    40,    41,    10,    32,    36,    10,    34,    10,
-      11,    32,    10,    32,    32,    10,    34,    10,    10,    32,
-      36,     0,    10,    10,    10,    35,    10,    10,    32,    36,
+      32,    39,    40,    41,    10,    32,    36,    10,    32,    10,
+      11,    32,    10,    32,    32,    10,    32,    10,    10,    32,
+      36,     0,    10,    10,    10,    32,    10,    10,    32,    36,
       10,    10,    10,    10,    10,    10,    10
 };
 
@@ -1541,13 +1541,12 @@ yyreduce:
                         builtin = 1; 
                         argv[0] = (yyvsp[(2) - (4)].word);
                         argv[1] = (yyvsp[(3) - (4)].word);
-                        argv[2] = NULL;
                         return 0;
                         }
     break;
 
   case 15:
-#line 121 "shellProject.y"
+#line 120 "shellProject.y"
     { 
                         bicmd = UNSETENV_CMD; 
                         builtin = 1; 
@@ -1556,7 +1555,7 @@ yyreduce:
     break;
 
   case 16:
-#line 127 "shellProject.y"
+#line 126 "shellProject.y"
     { 
                         bicmd = UNSETENV_CMD; 
                         builtin = 1; 
@@ -1566,7 +1565,7 @@ yyreduce:
     break;
 
   case 17:
-#line 134 "shellProject.y"
+#line 133 "shellProject.y"
     {
                         builtin = 1;
                         bicmd = PRINTENV_CMD;
@@ -1575,7 +1574,7 @@ yyreduce:
     break;
 
   case 18:
-#line 140 "shellProject.y"
+#line 139 "shellProject.y"
     { bicmd = ALIAS_CMD; 
                         builtin = 1; 
                         return 0; 
@@ -1583,7 +1582,7 @@ yyreduce:
     break;
 
   case 19:
-#line 145 "shellProject.y"
+#line 144 "shellProject.y"
     { 
                         bicmd = ALIAS_CMD; 
                         builtin = 1; 
@@ -1593,7 +1592,7 @@ yyreduce:
     break;
 
   case 20:
-#line 152 "shellProject.y"
+#line 151 "shellProject.y"
     { 
                         bicmd = ALIAS_CMD; 
                         builtin = 1; 
@@ -1603,7 +1602,7 @@ yyreduce:
     break;
 
   case 21:
-#line 159 "shellProject.y"
+#line 158 "shellProject.y"
     { 
                         bicmd = UNALIAS_CMD; 
                         builtin = 1; 
@@ -1613,7 +1612,7 @@ yyreduce:
     break;
 
   case 22:
-#line 169 "shellProject.y"
+#line 168 "shellProject.y"
     { 
                         bistr = (yyvsp[(1) - (2)].word); 
                         argv[0] = (yyvsp[(1) - (2)].word); 
@@ -1623,7 +1622,7 @@ yyreduce:
     break;
 
   case 23:
-#line 176 "shellProject.y"
+#line 175 "shellProject.y"
     { 
                         bistr = (yyvsp[(1) - (3)].word); 
                         argv[argc] = (yyvsp[(1) - (3)].word); 
@@ -1634,7 +1633,7 @@ yyreduce:
     break;
 
   case 24:
-#line 184 "shellProject.y"
+#line 183 "shellProject.y"
     { 
                         bistr = (yyvsp[(1) - (3)].word); 
                         argv[argc] = (yyvsp[(1) - (3)].word); 
@@ -1646,7 +1645,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1650 "y.tab.c"
+#line 1649 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1860,7 +1859,7 @@ yyreturn:
 }
 
 
-#line 192 "shellProject.y"
+#line 191 "shellProject.y"
 
 
 int yyerror(char *s){

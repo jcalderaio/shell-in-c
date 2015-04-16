@@ -61,9 +61,14 @@
             printEnvironment();
         }
         else if(argv[1] == NULL) {
-            setenv(argv[0], "", 0);
+            char* string_1 = argv[0];
+            while(isspace(*string_1)){ //removing preceeding 0 from the input
+                ++string_1;
+            }
+            setenv(string_1,"", 0);
         }
         else {
+            //setenv(argv[0], argv[1], 0);
             char* string_1 = argv[0];
             while(isspace(*string_1)){ //removing preceeding 0 from the input
                 ++string_1;
@@ -410,7 +415,7 @@
         }
     }
 
-    int main( int argc, char *argv[], char ** environ ){
+    int main( int argc, char *argv[] ){
         printf("=====================================================\n");
         printf("---------------Welcome to the shell------------------\n");
         printf("=====================================================\n\n");
