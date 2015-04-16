@@ -9,13 +9,11 @@
     #include <signal.h>
     #include "shellProject.h"
 
-
-    //This is Kenan's Comment
-
  
     //////////////////////////////////////////////////////
     ///////Builtin Functions//////////////////////////////
     //////////////////////////////////////////////////////
+    extern char **environ;
 
     void removeSpaces (char *str) {
         // Set up two pointers.
@@ -49,6 +47,33 @@
         strcpy(currLoc, home);
         printf("You are now being redirected to the home directory\n");
         chdir(home);
+    }
+
+    void printEnvironment() {
+        int i;
+        for(i = 0; environ[i] != NULL; ++i) {
+            printf("%s\n",environ[i]);
+        }
+    }
+
+    void setEnvironment() {
+        if(argv[0] == NULL) {
+            printEnvironment();
+        }
+        else if(argv[1] == NULL) {
+            setenv(argv[0], "", 0);
+        }
+        else {
+            char* string_1 = argv[0];
+            while(isspace(*string_1)){ //removing preceeding 0 from the input
+                ++string_1;
+            }
+            char* string_2 = argv[1];
+            while(isspace(*string_2)){ //removing preceeding 0 from the input
+                ++string_2;
+            }
+            setenv(string_1, string_2, 0);
+        }
     }
 
     void goPath(const char* thePathStr){
@@ -234,7 +259,7 @@
 
         //define (allocate storage) for some var/tables
         //struct alias aliastab[MAXALIAS];
-        //struct env envtab[MAXENV];
+        struct env envtab[MAXENV];
 
         //init all tables (e.g., alias table)
         //get PATH environment variable (use getenv())
@@ -247,7 +272,7 @@
         int i = 0;
         while(tok != NULL){
             pathtab[i] = tok;
-            i++;
+            ++i;
             tok = strtok(NULL, dlim);
         }
         pathtab[i] = NULL;
@@ -256,6 +281,7 @@
 
         //printf("%s", home);
         home = homePath;
+        currentLocation = home;
         //disable anything that can kill your shell
         //(the shell should never die; only can be exit)
         //do anything you feel should be done as init
@@ -300,10 +326,12 @@
 		        unaliasword(word5);
                 break;
           case SETENV_CMD:
+                setEnvironment();
                 break;
           case UNSETENV_CMD:
                 break;
           case PRINTENV_CMD:
+                printEnvironment();
                 break;
           case NEWLINE_CMD:
                 break;
@@ -382,23 +410,34 @@
         }
     }
 
-    int main( int argc, char *argv[] ){
+    int main( int argc, char *argv[], char ** environ ){
         printf("=====================================================\n");
         printf("---------------Welcome to the shell------------------\n");
         printf("=====================================================\n\n");
         shell_init();
+        int flag = 1;
         while (1) {
-            printPrompt();
+            if(flag) {
+                printPrompt();
+            }
+            else {
+                flag = 1;
+            }
             switch (CMD = getCommand()) {
-                case BYE_CMD:
-                    printf("Goodbye!\n\n");
-                    exit(0);
-                case ERRORS:
-                    recover_from_errors();
-                    break;
+                
                 case OK:
                     processCommand();
                     break;
+                
+                case ERRORS:
+                    recover_from_errors();
+                    flag = 1;
+                    break;
+
+                case BYE_CMD:
+                    printf("Goodbye!\n\n");
+                    exit(0);
+                
             }
         }
         return 0;

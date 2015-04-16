@@ -417,18 +417,18 @@ union yyalloc
 #endif
 
 /* YYFINAL -- State number of the termination state.  */
-#define YYFINAL  28
+#define YYFINAL  31
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   38
+#define YYLAST   42
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  38
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  4
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  22
+#define YYNRULES  24
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  43
+#define YYNSTATES  47
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
@@ -477,30 +477,31 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     5,     7,    10,    14,    16,    18,    21,
-      25,    29,    32,    36,    41,    44,    48,    51,    56,    61,
-      65,    68,    72
+       0,     0,     3,     5,     7,    10,    14,    18,    20,    22,
+      25,    29,    33,    36,    40,    45,    48,    52,    55,    58,
+      63,    68,    72,    75,    79
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
       39,     0,    -1,    40,    -1,    41,    -1,    17,    10,    -1,
-      17,    32,    10,    -1,    18,    -1,    10,    -1,    12,    10,
-      -1,    12,    32,    10,    -1,    12,    36,    10,    -1,    14,
-      10,    -1,    14,    34,    10,    -1,    14,    34,    35,    10,
-      -1,    25,    10,    -1,    25,    34,    10,    -1,    19,    10,
-      -1,    19,    32,    32,    10,    -1,    19,    32,    36,    10,
-      -1,    20,    32,    10,    -1,    32,    10,    -1,    32,    32,
-      10,    -1,    32,    36,    10,    -1
+      17,    11,    10,    -1,    17,    32,    10,    -1,    18,    -1,
+      10,    -1,    12,    10,    -1,    12,    32,    10,    -1,    12,
+      36,    10,    -1,    14,    10,    -1,    14,    34,    10,    -1,
+      14,    34,    35,    10,    -1,    25,    10,    -1,    25,    34,
+      10,    -1,    26,    10,    -1,    19,    10,    -1,    19,    32,
+      32,    10,    -1,    19,    32,    36,    10,    -1,    20,    32,
+      10,    -1,    32,    10,    -1,    32,    32,    10,    -1,    32,
+      36,    10,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    37,    37,    39,    44,    46,    48,    50,    52,    54,
-      56,    58,    60,    62,    64,    66,    68,    70,    72,    74,
-      79,    81,    83
+       0,    37,    37,    39,    44,    51,    58,    65,    70,    76,
+      82,    89,    96,   103,   111,   120,   126,   133,   139,   144,
+     151,   158,   168,   175,   183
 };
 #endif
 
@@ -536,15 +537,15 @@ static const yytype_uint8 yyr1[] =
 {
        0,    38,    39,    39,    40,    40,    40,    40,    40,    40,
       40,    40,    40,    40,    40,    40,    40,    40,    40,    40,
-      41,    41,    41
+      40,    40,    41,    41,    41
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     1,     1,     2,     3,     1,     1,     2,     3,
-       3,     2,     3,     4,     2,     3,     2,     4,     4,     3,
-       2,     3,     3
+       0,     2,     1,     1,     2,     3,     3,     1,     1,     2,
+       3,     3,     2,     3,     4,     2,     3,     2,     2,     4,
+       4,     3,     2,     3,     3
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -552,17 +553,17 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     7,     0,     0,     0,     6,     0,     0,     0,     0,
-       0,     2,     3,     8,     0,     0,    11,     0,     4,     0,
-      16,     0,     0,    14,     0,    20,     0,     0,     1,     9,
-      10,    12,     0,     5,     0,     0,    19,    15,    21,    22,
-      13,    17,    18
+       0,     8,     0,     0,     0,     7,     0,     0,     0,     0,
+       0,     0,     2,     3,     9,     0,     0,    12,     0,     4,
+       0,     0,    18,     0,     0,    15,     0,    17,    22,     0,
+       0,     1,    10,    11,    13,     0,     5,     6,     0,     0,
+      21,    16,    23,    24,    14,    19,    20
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-      -1,    10,    11,    12
+      -1,    11,    12,    13
 };
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
@@ -570,11 +571,11 @@ static const yytype_int8 yydefgoto[] =
 #define YYPACT_NINF -31
 static const yytype_int8 yypact[] =
 {
-      -1,   -31,   -10,    -5,     0,   -31,     2,   -30,    -4,    -9,
-       7,   -31,   -31,   -31,     4,     5,   -31,    -7,   -31,    10,
-     -31,   -28,    11,   -31,    15,   -31,    23,    25,   -31,   -31,
-     -31,   -31,    26,   -31,    27,    28,   -31,   -31,   -31,   -31,
-     -31,   -31,   -31
+      -1,   -31,   -10,    -5,     4,   -31,     0,   -30,    -4,    -3,
+      -9,    12,   -31,   -31,   -31,    10,    11,   -31,    -7,   -31,
+      23,    24,   -31,   -28,    25,   -31,    27,   -31,   -31,    28,
+      29,   -31,   -31,   -31,   -31,    30,   -31,   -31,    31,    32,
+     -31,   -31,   -31,   -31,   -31,   -31,   -31
 };
 
 /* YYPGOTO[NTERM-NUM].  */
@@ -590,29 +591,31 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -1
 static const yytype_uint8 yytable[] =
 {
-      13,    25,    22,    31,    34,    16,    23,    28,    35,     1,
-      18,     2,    20,     3,    29,    30,     4,     5,     6,     7,
-      33,    36,    14,    26,     8,    37,    15,    27,    32,    17,
-      24,     9,    19,    38,    21,    39,    40,    41,    42
+      14,    28,    24,    34,    38,    17,    25,    27,    39,     1,
+      22,     2,    31,     3,    19,    20,     4,     5,     6,     7,
+      32,    33,    15,    29,     8,     9,    16,    30,    35,    18,
+      26,    10,    23,    36,    37,    40,    21,    41,    42,    43,
+      44,    45,    46
 };
 
 static const yytype_uint8 yycheck[] =
 {
-      10,    10,    32,    10,    32,    10,    10,     0,    36,    10,
-      10,    12,    10,    14,    10,    10,    17,    18,    19,    20,
-      10,    10,    32,    32,    25,    10,    36,    36,    35,    34,
-      34,    32,    32,    10,    32,    10,    10,    10,    10
+      10,    10,    32,    10,    32,    10,    10,    10,    36,    10,
+      10,    12,     0,    14,    10,    11,    17,    18,    19,    20,
+      10,    10,    32,    32,    25,    26,    36,    36,    35,    34,
+      34,    32,    32,    10,    10,    10,    32,    10,    10,    10,
+      10,    10,    10
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    10,    12,    14,    17,    18,    19,    20,    25,    32,
-      39,    40,    41,    10,    32,    36,    10,    34,    10,    32,
-      10,    32,    32,    10,    34,    10,    32,    36,     0,    10,
-      10,    10,    35,    10,    32,    36,    10,    10,    10,    10,
-      10,    10,    10
+       0,    10,    12,    14,    17,    18,    19,    20,    25,    26,
+      32,    39,    40,    41,    10,    32,    36,    10,    34,    10,
+      11,    32,    10,    32,    32,    10,    34,    10,    10,    32,
+      36,     0,    10,    10,    10,    35,    10,    10,    32,    36,
+      10,    10,    10,    10,    10,    10,    10
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1438,102 +1441,212 @@ yyreduce:
 
   case 4:
 #line 45 "shellProject.y"
-    { bicmd = CDHome_CMD; builtin = 1; return 0;}
+    { 
+                        bicmd = CDHome_CMD; 
+                        builtin = 1; 
+                        return 0;
+                        }
     break;
 
   case 5:
-#line 47 "shellProject.y"
-    { bicmd = CDPath_CMD; builtin = 1; strPath = (yyvsp[(2) - (3)].word); return 0;}
+#line 52 "shellProject.y"
+    { 
+                        bicmd = CDHome_CMD; 
+                        builtin = 1; 
+                        return 0;
+                        }
     break;
 
   case 6:
-#line 49 "shellProject.y"
-    { bicmd = BYE_CMD; return 0; }
+#line 59 "shellProject.y"
+    { 
+                        bicmd = CDPath_CMD; 
+                        builtin = 1; 
+                        strPath = (yyvsp[(2) - (3)].word); 
+                        return 0;
+                        }
     break;
 
   case 7:
-#line 51 "shellProject.y"
-    { bicmd = NEWLINE_CMD; builtin = 1; return 0;}
+#line 66 "shellProject.y"
+    { 
+                        bicmd = BYE_CMD; 
+                        return 0; 
+                        }
     break;
 
   case 8:
-#line 53 "shellProject.y"
-    { bicmd = LS_CMD; builtin = 1; return 0; }
+#line 71 "shellProject.y"
+    { 
+                        bicmd = NEWLINE_CMD; 
+                        builtin = 1; 
+                        return 0;
+                        }
     break;
 
   case 9:
-#line 55 "shellProject.y"
-    { bicmd = LSWord_CMD; builtin = 1; fileName = (yyvsp[(2) - (3)].word); return 0; }
+#line 77 "shellProject.y"
+    { 
+                        bicmd = LS_CMD; 
+                        builtin = 1; 
+                        return 0; 
+                        }
     break;
 
   case 10:
-#line 57 "shellProject.y"
-    { bicmd = LSWord_CMD; builtin = 1; fileName = (yyvsp[(3) - (3)].integer); return 0; }
+#line 83 "shellProject.y"
+    { 
+                        bicmd = LSWord_CMD; 
+                        builtin = 1; 
+                        fileName = (yyvsp[(2) - (3)].word); 
+                        return 0; 
+                        }
     break;
 
   case 11:
-#line 59 "shellProject.y"
-    { bicmd = SETENV_CMD; builtin = 2; return 0; }
+#line 90 "shellProject.y"
+    { 
+                        bicmd = LSWord_CMD; 
+                        builtin = 1; 
+                        fileName = (yyvsp[(3) - (3)].integer); 
+                        return 0; 
+                        }
     break;
 
   case 12:
-#line 61 "shellProject.y"
-    { bicmd = SETENV_CMD; builtin = 1; var = (yyvsp[(2) - (3)].word); return 0; }
+#line 97 "shellProject.y"
+    { 
+                        bicmd = SETENV_CMD; 
+                        builtin = 1; 
+                        argv[0] = NULL;
+                        return 0; 
+                        }
     break;
 
   case 13:
-#line 63 "shellProject.y"
-    { bicmd = SETENV_CMD; builtin = 1; var = (yyvsp[(2) - (4)].word); value = (yyvsp[(3) - (4)].word); return 0; }
+#line 104 "shellProject.y"
+    { 
+                        bicmd = SETENV_CMD; 
+                        builtin = 1; 
+                        argv[0] = (yyvsp[(2) - (3)].word);
+                        argv[1] = NULL;
+                        return 0;
+                        }
     break;
 
   case 14:
-#line 65 "shellProject.y"
-    { bicmd = UNSETENV_CMD; builtin = 1; return 0; }
+#line 112 "shellProject.y"
+    { 
+                        bicmd = SETENV_CMD; 
+                        builtin = 1; 
+                        argv[0] = (yyvsp[(2) - (4)].word);
+                        argv[1] = (yyvsp[(3) - (4)].word);
+                        argv[2] = NULL;
+                        return 0;
+                        }
     break;
 
   case 15:
-#line 67 "shellProject.y"
-    { bicmd = UNSETENV_CMD; builtin = 1; var = (yyvsp[(2) - (3)].word); return 0; }
+#line 121 "shellProject.y"
+    { 
+                        bicmd = UNSETENV_CMD; 
+                        builtin = 1; 
+                        return 0; 
+                        }
     break;
 
   case 16:
-#line 69 "shellProject.y"
-    { bicmd = ALIAS_CMD; builtin = 1; return 0; }
+#line 127 "shellProject.y"
+    { 
+                        bicmd = UNSETENV_CMD; 
+                        builtin = 1; 
+                        var = (yyvsp[(2) - (3)].word); 
+                        return 0; 
+                        }
     break;
 
   case 17:
-#line 71 "shellProject.y"
-    { bicmd = ALIAS_CMD; builtin = 1; word1 = (yyvsp[(2) - (4)].word); word2 = (yyvsp[(3) - (4)].word); return 0; }
+#line 134 "shellProject.y"
+    {
+                        builtin = 1;
+                        bicmd = PRINTENV_CMD;
+                        return 0;
+                        }
     break;
 
   case 18:
-#line 73 "shellProject.y"
-    { bicmd = ALIAS_CMD; builtin = 1; al = (yyvsp[(2) - (4)].word); alWord = (yyvsp[(3) - (4)].string); return 0; }
+#line 140 "shellProject.y"
+    { bicmd = ALIAS_CMD; 
+                        builtin = 1; 
+                        return 0; 
+                        }
     break;
 
   case 19:
-#line 75 "shellProject.y"
-    { bicmd = UNALIAS_CMD; builtin = 1; word5 = (yyvsp[(2) - (3)].word); return 0; }
+#line 145 "shellProject.y"
+    { 
+                        bicmd = ALIAS_CMD; 
+                        builtin = 1; 
+                        word1 = (yyvsp[(2) - (4)].word); 
+                        word2 = (yyvsp[(3) - (4)].word); 
+                        return 0; }
     break;
 
   case 20:
-#line 80 "shellProject.y"
-    { bistr = (yyvsp[(1) - (2)].word); argv[0] = (yyvsp[(1) - (2)].word); argv[1] = NULL; return 0; }
+#line 152 "shellProject.y"
+    { 
+                        bicmd = ALIAS_CMD; 
+                        builtin = 1; 
+                        al = (yyvsp[(2) - (4)].word); 
+                        alWord = (yyvsp[(3) - (4)].string); 
+                        return 0; }
     break;
 
   case 21:
-#line 82 "shellProject.y"
-    { bistr = (yyvsp[(1) - (3)].word); argv[argc] = (yyvsp[(1) - (3)].word); argv[++argc] = (yyvsp[(2) - (3)].word); argv[++argc] = NULL; return 0; }
+#line 159 "shellProject.y"
+    { 
+                        bicmd = UNALIAS_CMD; 
+                        builtin = 1; 
+                        word5 = (yyvsp[(2) - (3)].word); 
+                        return 0; 
+                        }
     break;
 
   case 22:
-#line 84 "shellProject.y"
-    { bistr = (yyvsp[(1) - (3)].word); argv[argc] = (yyvsp[(1) - (3)].word); argv[++argc] = (yyvsp[(2) - (3)].string); argv[++argc] = NULL; return 0; }
+#line 169 "shellProject.y"
+    { 
+                        bistr = (yyvsp[(1) - (2)].word); 
+                        argv[0] = (yyvsp[(1) - (2)].word); 
+                        argv[1] = NULL; 
+                        return 0; 
+                        }
+    break;
+
+  case 23:
+#line 176 "shellProject.y"
+    { 
+                        bistr = (yyvsp[(1) - (3)].word); 
+                        argv[argc] = (yyvsp[(1) - (3)].word); 
+                        argv[++argc] = (yyvsp[(2) - (3)].word); 
+                        argv[++argc] = NULL; 
+                        return 0; 
+                        }
+    break;
+
+  case 24:
+#line 184 "shellProject.y"
+    { 
+                        bistr = (yyvsp[(1) - (3)].word); 
+                        argv[argc] = (yyvsp[(1) - (3)].word); 
+                        argv[++argc] = (yyvsp[(2) - (3)].string); 
+                        argv[++argc] = NULL; 
+                        return 0; 
+                        }
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 1537 "y.tab.c"
+#line 1650 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1747,7 +1860,7 @@ yyreturn:
 }
 
 
-#line 86 "shellProject.y"
+#line 192 "shellProject.y"
 
 
 int yyerror(char *s){
