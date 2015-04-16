@@ -373,22 +373,24 @@
         /*
          * Check Command Accessability and Executability
          */
-        if(isExe == 0) {
-            //use access() system call with X_OK
-            return;
-        }
+        // if(isExe == 0) {
+        //     //use access() system call with X_OK
+        //     return;
+        // }
 
-        /*
-         * Check io file existence in case of io-redirection.
-         */
-        if( check_in_file() == SYSERR ) {
-            //nuterr("Cann't read from : %s",srcf);
-            return;
-        }
-        if( check_out_file() == SYSERR ) {
-            //nuterr("Cann't write to : %s",distf);
-            return;
-        }
+        // /*
+        //  * Check io file existence in case of io-redirection.
+        //  */
+        // if( check_in_file() == SYSERR ) {
+        //     //nuterr("Cann't read from : %s",srcf);
+        //     return;
+        // }
+        // if( check_out_file() == SYSERR ) {
+        //     //nuterr("Cann't write to : %s",distf);
+        //     return;
+        // }
+
+         printf("%s\n","command not found");
 
         //Build up the pipeline (create and set up pipe end points (using pipe, dup)
         //Process background
