@@ -149,34 +149,46 @@ void createAlias(char* word3,char* word4){
         dec=aliasHead;
         aliasHead3=aliasHead;
         aliasHead4=aliasHead;
-        aliasHead5=aliasHead;
-        printf ("%s added as alias \n", word3);
+        printf ("\"%s\" added as alias \n", word3);
     }
     else{
-        while(aliasHead1->next!=NULL)
-        {
+        if(aliasHead->next == NULL) {
             if(strcmp((aliasHead1->key),(aliasHead->key)) == 0)
             {
-                printf("Already exists");
+                printf ("\"%s\" already exists as alias \n", word3);
                 aliasHead->key=NULL;
                 aliasHead->value=NULL;
                 aliasHead->next=NULL;
                 free(aliasHead);
             }
-            else
-            {
-                if(strcmp((aliasHead1->value),(aliasHead->key)) == 0)
-                {
-                    printf("changing values");
-                    aliasHead1->value=aliasHead->value;
-                }
-            }
-            aliasHead1=aliasHead1->next;
-            
         }
-        if((aliasHead->key)!= NULL) {
-            aliasHead1->next=aliasHead;
-            printf ("%s added as alias \n", word3);
+        else {
+            
+            while(aliasHead1->next!=NULL)
+            {
+                if(strcmp((aliasHead1->key),(aliasHead->key)) == 0)
+                {
+                    printf ("\"%s\" already exists as alias \n", word3);
+                    aliasHead->key=NULL;
+                    aliasHead->value=NULL;
+                    aliasHead->next=NULL;
+                    free(aliasHead);
+                }
+                else
+                {
+                    if(strcmp((aliasHead1->value),(aliasHead->key)) == 0)
+                    {
+                        printf("changing values");
+                        aliasHead1->value=aliasHead->value;
+                    }
+                }
+                aliasHead1=aliasHead1->next;
+                
+            }
+            if((aliasHead->key)!= NULL) {
+                aliasHead1->next=aliasHead;
+                printf ("\"%s\" added as alias \n", word3);
+            }
         }
     }
 }
@@ -206,6 +218,43 @@ void unaliasword(char* word6)
         free(aliasHead4);
         printf ("%s removed as alias \n", word6);
     }
+}
+
+void check_alias(char * name) {
+
+    struct AliasNode *currNode = aliasHead5;
+
+    while(1) {
+        if(currNode == NULL) {
+            return;
+        }
+        if(strcmp(currNode->key, name) == 0){
+            break;
+        }
+        currNode = currNode->next;
+    }
+
+    char* saved_argv = argv[1];
+    char* str = malloc(strlen(currNode->value));
+    strcpy(str, currNode->value);
+    char* reserve;
+    char* tok = strtok_r(str, " ", &reserve);
+    int i = 0;
+    while (tok != NULL){
+        argv[i] = tok;
+        ++i;
+        tok = strtok_r(NULL, " ", &reserve);
+    }
+    if(saved_argv == NULL)
+        argv[i] = NULL;
+    else{
+        argv[i] = saved_argv;
+        argv[++i] = NULL;
+    }
+    memset(input_command,0,strlen(input_command));
+    input_command = argv[0];
+    return;
+
 }
 
 void goLS(){
@@ -356,10 +405,10 @@ void do_it(){
             printAlias(dec);
             break;
         case ALIAS_CMD_CREATE:
-            createAlias(argv[0],argv[1]);
+            createAlias(remove_white(argv[0]),remove_white(argv[1]));
             break;
         case UNALIAS_CMD:
-            unaliasword(word5);
+            unaliasword(remove_white(word5));
             break;
         case SETENV_CMD:
             setEnvironment();
@@ -384,6 +433,8 @@ void undoit(){
 void execute_it(){
     // Handle  command execution, pipelining, i/o redirection, and background processing.
     // Utilize a command table whose components are plugged in during parsing by yacc.
+
+    check_alias(input_command);
     
     /*
      * Check Command Accessability and Executability
@@ -405,7 +456,7 @@ void execute_it(){
     //     return;
     // }
     
-    printf("%s\n","command not found");
+    printf("%s :command not found\n", input_command);
     
     //Build up the pipeline (create and set up pipe end points (using pipe, dup)
     //Process background

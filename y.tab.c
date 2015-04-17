@@ -1605,7 +1605,7 @@ yyreduce:
   case 22:
 #line 169 "shellProject.y"
     { 
-                        bistr = (yyvsp[(1) - (2)].word); 
+                        input_command = (yyvsp[(1) - (2)].word); 
                         argv[0] = (yyvsp[(1) - (2)].word); 
                         argv[1] = NULL; 
                         return 0; 

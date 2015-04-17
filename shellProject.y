@@ -167,7 +167,7 @@ builtin.cmd:      CD NEWLINE
 
 simple.cmd:       WORD NEWLINE
                         { 
-                        bistr = $1; 
+                        input_command = $1; 
                         argv[0] = $1; 
                         argv[1] = NULL; 
                         return 0; 
