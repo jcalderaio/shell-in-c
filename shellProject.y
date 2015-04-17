@@ -24,8 +24,8 @@ int eventcount = 0;
     char *option;
 }
 
-%token <integer> LT GT AMP LPAREN VBAR DOT DEBUG NEWLINE TILDE LS
-%token <integer> SETENV PATH PROMPT CD BYE ALIAS UNALIAS PWD EXTEND
+%token <integer> LT GT AMP LPAREN VBAR DOT DEBUG NEWLINE TILDE LS PERIODPERIOD
+%token <integer> SETENV PATH PROMPT CD BYE ALIAS UNALIAS PWD EXTEND PERIOD
 %token <integer> ALIASLOOP UNSETENV PRINTENV QUOTE PIPE BACKGROUND BACKSLASH
 %token <integer> LEFTBRACE RIGHTBRACE DOLLARSIGN
 %token <word>    WORD SPACE VARIABLE VALUE
@@ -69,6 +69,38 @@ builtin.cmd:      CD NEWLINE
                         strPath = $3;
                         return 0;
                         }
+                | CD PERIODPERIOD NEWLINE
+                        {
+                        bicmd = CDPath_CMD;
+                        builtin = 1;
+                        strPath = "..";
+                        return 0;
+                        }
+                | CD PERIOD NEWLINE
+                        {
+                        bicmd = CDPath_CMD;
+                        builtin = 1;
+                        strPath = ".";
+                        return 0;
+                        }
+                | CD PERIODPERIOD WORD NEWLINE
+                        {
+                        bicmd = CDPath_CMD;
+                        printf("\n\nI am a double dot\n\n");
+                        builtin = 1;
+                        dotdot = 1;
+                        strPath = $3;
+                        return 0;
+                        }
+                | CD PERIOD WORD NEWLINE
+                        {
+                        bicmd = CDPath_CMD;
+                        printf("\n\nI am only one dot\n\n");
+                        dotdot = 0;
+                        builtin = 1;
+                        strPath = $3;
+                        return 0;
+                        }
                 | BYE
                         {
                         bicmd = BYE_CMD;
@@ -88,7 +120,6 @@ builtin.cmd:      CD NEWLINE
                         }
                 | LS WORD NEWLINE
                         {
-                        printf("\n\nWE ARE NOT A STRING WE ARE WORD\n\n");
                         bicmd = LSWord_CMD;
                         builtin = 1;
                         fileName = $2;
@@ -96,7 +127,6 @@ builtin.cmd:      CD NEWLINE
                         }
                 | LS STRING NEWLINE
                         {
-                        printf("\n\nWE ARE NOT A WORD WE ARE STRING\n\n");
                         bicmd = LSWord_CMD;
                         builtin = 1;
                         fileName = $2;

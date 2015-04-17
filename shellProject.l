@@ -16,19 +16,19 @@ unsetenv            return UNSETENV;
 printenv            return PRINTENV;
 bye                 return BYE;
 ls                  return LS;
-[-][a-z]                                        { yylval.option = strdup(yytext); return OPTION; }
-[a-zA-Z][a-zA-Z0-9\/.-_]*                       { yylval.word   = strdup(yytext); return WORD; }
-\"[^"\n]*["\n]                                  {
-                                                  yylval.string = strdup(yytext+1);
-                                                  if (yylval.string[yyleng-2] != '"'){
-                                                    recover_from_errors();
-                                                    break;
-                                                  }
-                                                  else{
-                                                    yylval.string[yyleng-2] = 0;
-                                                    return STRING;
-                                                  }
-                                                }
+[-][a-z]                            { yylval.option = strdup(yytext); return OPTION; }
+[a-zA-Z][a-zA-Z0-9\/-_]*            { yylval.word   = strdup(yytext); return WORD; }
+\"[^"\n]*["\n]                      {
+                                       yylval.string = strdup(yytext+1);
+                                       if (yylval.string[yyleng-2] != '"'){
+                                          recover_from_errors();
+                                          break;
+                                       }
+                                       else{
+                                          yylval.string[yyleng-2] = 0;
+                                          return STRING;
+                                       }
+                                    }
 \"                  return QUOTE;
 \{                  return LEFTBRACE;
 \}                  return RIGHTBRACE;
@@ -40,6 +40,8 @@ ls                  return LS;
 \\                  return BACKSLASH;
 \~                  return TILDE;
 \n                  return NEWLINE;
+\.\.                return PERIODPERIOD;
+\.                  return PERIOD;
 [ \t\r]+            ;
 
 %%

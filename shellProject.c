@@ -9,10 +9,10 @@
 #include <signal.h>
 #include "shellProject.h"
 
-
 //////////////////////////////////////////////////////
 ///////Builtin Functions//////////////////////////////
 //////////////////////////////////////////////////////
+
 extern char **environ;
 
 void removeSpaces (char *str) {
@@ -70,25 +70,57 @@ void goPath(const char* thePathStr){
             if(isDir){
                 printf("%s is not a valid directory name.\n", thePathStr);
             }
+            isTilde = 0;
         }
         else{
-            printf("\n\nI am here now2222\n\n");
-            getCurrentPath();
-            strcpy(currLoc, currentWorkDir);
-            if(!(thePathStr[0] == '/')){
-                strcat(currLoc, "/");
+            //printf("\n\nI am here now2222\n\n");
+            if(dotdot == 1){
+                getCurrentPath();
+                strcpy(currLoc, currentWorkDir);
+                if(!(thePathStr[0] == '/')){
+                    strcat(currLoc, "/");
+                }
+                strcat(currLoc, "..");
+                currentWorkDir = currLoc;
+                removeSpaces(currentWorkDir);
+                int isDir = chdir(currentWorkDir);
+                if(isDir){
+                    printf("%s is not a valid directory name.\n", thePathStr);
+                }
+
+                getCurrentPath();
+                strcpy(currLoc, currentWorkDir);
+                if(!(thePathStr[0] == '/')){
+                    strcat(currLoc, "/");
+                }
+                strcat(currLoc, thePathStr);
+                currentWorkDir = currLoc;
+                removeSpaces(currentWorkDir);
+                isDir = chdir(currentWorkDir);
+                if(isDir){
+                    printf("%s is not a valid directory name.\n", thePathStr);
+                }
+
+                dotdot = 0;
             }
-            strcat(currLoc, thePathStr);
-            currentWorkDir = currLoc;
-            removeSpaces(currentWorkDir);
-            int isDir = chdir(currentWorkDir);
-            if(isDir){
-                printf("%s is not a valid directory name.\n", thePathStr);
+            else{
+                getCurrentPath();
+                strcpy(currLoc, currentWorkDir);
+                if(!(thePathStr[0] == '/')){
+                    strcat(currLoc, "/");
+                }
+                strcat(currLoc, thePathStr);
+                currentWorkDir = currLoc;
+                removeSpaces(currentWorkDir);
+                int isDir = chdir(currentWorkDir);
+                if(isDir){
+                    printf("%s is not a valid directory name.\n", thePathStr);
+                }
             }
         }
 
         thePathStr = "";
-    }
+}
 
 void printEnvironment() {
     int i;
@@ -156,7 +188,6 @@ void printAlias(char* dec1) {
 }
 
 void createAlias(char* word3,char* word4){
-
     aliasHead=(struct AliasNode *)malloc(sizeof(struct AliasNode));
     aliasHead->key=word3;
     aliasHead->value=word4;
@@ -211,8 +242,7 @@ void createAlias(char* word3,char* word4){
     }
 }
 
-void unaliasword(char* word6)
-{
+void unaliasword(char* word6){
     aliasHead3=aliasHead5;
     char* temp = aliasHead3->key;
     if(strcmp(temp,word6) == 0)
@@ -239,9 +269,7 @@ void unaliasword(char* word6)
 }
 
 void check_alias(char * name) {
-
     struct AliasNode *currNode = aliasHead5;
-
     while(1) {
         if(currNode == NULL) {
             return;
@@ -272,11 +300,7 @@ void check_alias(char * name) {
     memset(input_command,0,strlen(input_command));
     input_command = argv[0];
     return;
-
 }
-
-
-
 
 void goLS(){
     DIR *dirp;
@@ -364,7 +388,6 @@ void printPrompt(){
 void shell_init(){
     //init all variables
     currcmd = 0;
-
     //define (allocate storage) for some var/tables
     //struct alias aliastab[MAXALIAS];
     struct env envtab[MAXENV];
@@ -396,7 +419,6 @@ void shell_init(){
     signal(SIGINT, SIG_IGN);
     return;
 
-
     // init all variables.
     // define (allocate storage) for some var/tables
     // init all tables (e.g., alias table)
@@ -409,7 +431,6 @@ void shell_init(){
     // (the shell should never die; only can be exit)
     // do anything you feel should be done as init
 }
-
 
 void do_it(){
     switch (bicmd) {

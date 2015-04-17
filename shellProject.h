@@ -159,6 +159,8 @@ char* word5;
 char* al;
 char* alWord;
 int isQuote;
+char* strPathConCat;
+int dotdot;
 
 ////////////////////////////////////
 

@@ -49,31 +49,33 @@
      NEWLINE = 265,
      TILDE = 266,
      LS = 267,
-     SETENV = 268,
-     PATH = 269,
-     PROMPT = 270,
-     CD = 271,
-     BYE = 272,
-     ALIAS = 273,
-     UNALIAS = 274,
-     PWD = 275,
-     EXTEND = 276,
-     ALIASLOOP = 277,
-     UNSETENV = 278,
-     PRINTENV = 279,
-     QUOTE = 280,
-     PIPE = 281,
-     BACKGROUND = 282,
-     BACKSLASH = 283,
-     LEFTBRACE = 284,
-     RIGHTBRACE = 285,
-     DOLLARSIGN = 286,
-     WORD = 287,
-     SPACE = 288,
-     VARIABLE = 289,
-     VALUE = 290,
-     STRING = 291,
-     OPTION = 292
+     PERIODPERIOD = 268,
+     SETENV = 269,
+     PATH = 270,
+     PROMPT = 271,
+     CD = 272,
+     BYE = 273,
+     ALIAS = 274,
+     UNALIAS = 275,
+     PWD = 276,
+     EXTEND = 277,
+     PERIOD = 278,
+     ALIASLOOP = 279,
+     UNSETENV = 280,
+     PRINTENV = 281,
+     QUOTE = 282,
+     PIPE = 283,
+     BACKGROUND = 284,
+     BACKSLASH = 285,
+     LEFTBRACE = 286,
+     RIGHTBRACE = 287,
+     DOLLARSIGN = 288,
+     WORD = 289,
+     SPACE = 290,
+     VARIABLE = 291,
+     VALUE = 292,
+     STRING = 293,
+     OPTION = 294
    };
 #endif
 /* Tokens.  */
@@ -87,31 +89,33 @@
 #define NEWLINE 265
 #define TILDE 266
 #define LS 267
-#define SETENV 268
-#define PATH 269
-#define PROMPT 270
-#define CD 271
-#define BYE 272
-#define ALIAS 273
-#define UNALIAS 274
-#define PWD 275
-#define EXTEND 276
-#define ALIASLOOP 277
-#define UNSETENV 278
-#define PRINTENV 279
-#define QUOTE 280
-#define PIPE 281
-#define BACKGROUND 282
-#define BACKSLASH 283
-#define LEFTBRACE 284
-#define RIGHTBRACE 285
-#define DOLLARSIGN 286
-#define WORD 287
-#define SPACE 288
-#define VARIABLE 289
-#define VALUE 290
-#define STRING 291
-#define OPTION 292
+#define PERIODPERIOD 268
+#define SETENV 269
+#define PATH 270
+#define PROMPT 271
+#define CD 272
+#define BYE 273
+#define ALIAS 274
+#define UNALIAS 275
+#define PWD 276
+#define EXTEND 277
+#define PERIOD 278
+#define ALIASLOOP 279
+#define UNSETENV 280
+#define PRINTENV 281
+#define QUOTE 282
+#define PIPE 283
+#define BACKGROUND 284
+#define BACKSLASH 285
+#define LEFTBRACE 286
+#define RIGHTBRACE 287
+#define DOLLARSIGN 288
+#define WORD 289
+#define SPACE 290
+#define VARIABLE 291
+#define VALUE 292
+#define STRING 293
+#define OPTION 294
 
 
 
@@ -126,7 +130,7 @@ typedef union YYSTYPE
     char *option;
 }
 /* Line 1529 of yacc.c.  */
-#line 130 "y.tab.h"
+#line 134 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
