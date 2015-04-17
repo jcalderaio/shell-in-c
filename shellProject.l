@@ -29,6 +29,7 @@ ls                  return LS;
                                           return STRING;
                                        }
                                     }
+
 \"                  return QUOTE;
 \{                  return LEFTBRACE;
 \}                  return RIGHTBRACE;

@@ -7,6 +7,9 @@
 #include <dirent.h>
 #include <errno.h>
 #include <signal.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include "shellProject.h"
 
 //////////////////////////////////////////////////////
@@ -493,9 +496,9 @@ int getCommand(){
     }
 }
 
-int main( int argc, char *argv[] ){
+int main( int argc, char *argv[], char ** environ ){
     printf("=====================================================\n");
-    printf("---------------Welcome to the shell------------------\n");
+    printf("------------<{(Welcome to the SHELL)}>---------------\n");
     printf("=====================================================\n\n");
     shell_init();
     int flag = 1;
