@@ -160,6 +160,11 @@ void unsetEnvironment() {
 }
 
 void printAlias() {
+
+    if(alias_count == 0) {
+        printf("No aliases!\n");
+        return;
+    }
     int count = 0;
     while(count < alias_count){
         printf("%s: %s\n", aliasTable[count].key, aliasTable[count].value);
@@ -213,6 +218,45 @@ void createAlias(char* key, char* value){
 
 void unaliasword(char* key){
     
+    int count = 0;
+    if(alias_count != 0) {
+        
+        while(alias_count > count){
+            if(!strcmp(key, aliasTable[count].key)){
+                int i = 0;
+                while(i < count){
+                    if(strcmp(key, aliasTable[i].value) == 0)
+                        aliasTable[i].nested = -1;
+                    ++i;
+                }
+                break;
+            }
+            ++count;
+        }
+        
+        int count2 = count + 1;
+        while(alias_count -1 > count)
+        {
+            aliasTable[count] = aliasTable[count2];
+            int i = 0;
+            while(count > i){
+                if (!strcmp(aliasTable[i].value, aliasTable[count].key))
+                    aliasTable[i].nested = count;
+                ++i;
+            }
+            ++count;
+            ++count2;
+        }
+        --alias_count;
+        printf("\"%s\" alias removed!\n", key);
+        return;
+    }
+
+    else {
+        printf("No aliases to remove\n");
+        return;
+    }
+
 }
 
 // void check_alias(char * name) {
