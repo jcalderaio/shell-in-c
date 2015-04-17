@@ -9,3 +9,4 @@ shellProject
 lex.yy.o
 lex.yy.c
 lex&yacc.txt
+workspace.xml
