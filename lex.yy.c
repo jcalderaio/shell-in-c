@@ -833,78 +833,78 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 32 "shellProject.l"
+#line 33 "shellProject.l"
 return QUOTE;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 33 "shellProject.l"
+#line 34 "shellProject.l"
 return LEFTBRACE;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 34 "shellProject.l"
+#line 35 "shellProject.l"
 return RIGHTBRACE;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 35 "shellProject.l"
+#line 36 "shellProject.l"
 return DOLLARSIGN;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 36 "shellProject.l"
+#line 37 "shellProject.l"
 return LT;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 37 "shellProject.l"
+#line 38 "shellProject.l"
 return GT;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 38 "shellProject.l"
+#line 39 "shellProject.l"
 return PIPE;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 39 "shellProject.l"
+#line 40 "shellProject.l"
 return BACKGROUND;
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 40 "shellProject.l"
+#line 41 "shellProject.l"
 return BACKSLASH;
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 41 "shellProject.l"
+#line 42 "shellProject.l"
 return TILDE;
 	YY_BREAK
 case 22:
 /* rule 22 can match eol */
 YY_RULE_SETUP
-#line 42 "shellProject.l"
+#line 43 "shellProject.l"
 return NEWLINE;
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 43 "shellProject.l"
+#line 44 "shellProject.l"
 return PERIODPERIOD;
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 44 "shellProject.l"
+#line 45 "shellProject.l"
 return PERIOD;
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 45 "shellProject.l"
+#line 46 "shellProject.l"
 ;
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 47 "shellProject.l"
+#line 48 "shellProject.l"
 ECHO;
 	YY_BREAK
 #line 911 "lex.yy.c"
@@ -1904,7 +1904,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 47 "shellProject.l"
+#line 48 "shellProject.l"
 
 
 
