@@ -198,7 +198,7 @@ builtin.cmd:      CD NEWLINE
                         {
                         bicmd = UNALIAS_CMD;
                         builtin = 1;
-                        word5 = $2;
+                        argv[0] = $2;
                         return 0;
                         }
                 ;

@@ -159,148 +159,95 @@ void unsetEnvironment() {
     }
 }
 
-
-void do_print_Alias(struct AliasNode* alias) {
-    char* toPrint = alias->key;
-    printf("%s", toPrint);
-    printf(": ");
-    toPrint = alias->value;
-    printf("%s", toPrint);
-    printf("\n");
-
+void printAlias() {
+    int count = 0;
+    while(count < alias_count){
+        printf("%s: %s\n", aliasTable[count].key, aliasTable[count].value);
+        ++count;
+    }
 }
 
-void printAlias(char* dec1) {
-    if (dec1 == 0) {
-        printf("No aliases have been created \n");
+void createAlias(char* key, char* value){
+        
+    int count = 0;
+    //If max alias count reached
+    if(alias_count == MAXALIAS) {
+        printf("Max number of aliases created!\n");
         return;
     }
-    else {
-        struct AliasNode* current = dec1;
-        // printf("hgdsgbvhfdsgv",aliasHead2->key,aliasHead2->value);
-        printf("Current Aliases: \n");
-        while (current != NULL) {
-            do_print_Alias(current);
-            current = current->next;
 
-        }
+    //If no aliases created yet
+    if(alias_count == 0){
+        aliasTable[0].key = key;
+        aliasTable[0].value = value;
+        aliasTable[0].nested = -1;
+        ++alias_count;
+        printf("\"%s\" added as an alias!\n", key);
+        return;
     }
-}
 
-void createAlias(char* word3,char* word4){
-    aliasHead=(struct AliasNode *)malloc(sizeof(struct AliasNode));
-    aliasHead->key=word3;
-    aliasHead->value=word4;
-    aliasHead->next=NULL;
-    if(aliasHead1==NULL) {
-        aliasHead1=aliasHead;
-        aliasHead2=aliasHead;
-        dec=aliasHead;
-        aliasHead3=aliasHead;
-        aliasHead4=aliasHead;
-        printf ("\"%s\" added as alias \n", word3);
-    }
-    else{
-        if(aliasHead->next == NULL) {
-            if(strcmp((aliasHead1->key),(aliasHead->key)) == 0)
-            {
-                printf ("\"%s\" already exists as alias \n", word3);
-                aliasHead->key=NULL;
-                aliasHead->value=NULL;
-                aliasHead->next=NULL;
-                free(aliasHead);
-            }
-        }
-        else {
-
-            while(aliasHead1->next!=NULL)
-            {
-                if(strcmp((aliasHead1->key),(aliasHead->key)) == 0)
-                {
-                    printf ("\"%s\" already exists as alias \n", word3);
-                    aliasHead->key=NULL;
-                    aliasHead->value=NULL;
-                    aliasHead->next=NULL;
-                    free(aliasHead);
-                }
-                else
-                {
-                    if(strcmp((aliasHead1->value),(aliasHead->key)) == 0)
-                    {
-                        printf("changing values");
-                        aliasHead1->value=aliasHead->value;
-                    }
-                }
-                aliasHead1=aliasHead1->next;
-
-            }
-            if((aliasHead->key)!= NULL) {
-                aliasHead1->next=aliasHead;
-                printf ("\"%s\" added as alias \n", word3);
-            }
-        }
-    }
-}
-
-void unaliasword(char* word6){
-    aliasHead3=aliasHead5;
-    char* temp = aliasHead3->key;
-    if(strcmp(temp,word6) == 0)
-    {
-
-        aliasHead3=aliasHead4->next;
-        aliasHead4->next=NULL;
-        free(aliasHead4);
-        aliasHead4=aliasHead3;
-        printf ("%s removed as alias \n", word6);
-    }
-    else{
-        while(strcmp((aliasHead3->next->key),word6) != 0)
-        {
-            aliasHead3=aliasHead3->next;
-        }
-        //printf("vbhvbv",aliasHead3->next->key);
-        aliasHead4=aliasHead3->next;
-        aliasHead3->next=aliasHead4->next;
-        aliasHead4->next=NULL;
-        free(aliasHead4);
-        printf ("%s removed as alias \n", word6);
-    }
-}
-
-void check_alias(char * name) {
-    struct AliasNode *currNode = aliasHead5;
-    while(1) {
-        if(currNode == NULL) {
+    while(count < alias_count){
+        if(!strcmp(aliasTable[count].key, key)){
+            printf("\"%s\" is already an alias!\n", key);
             return;
         }
-        if(strcmp(currNode->key, name) == 0){
-            break;
-        }
-        currNode = currNode->next;
+        ++count;
     }
 
-    char* saved_argv = argv[1];
-    char* str = malloc(strlen(currNode->value));
-    strcpy(str, currNode->value);
-    char* reserve;
-    char* tok = strtok_r(str, " ", &reserve);
-    int i = 0;
-    while (tok != NULL){
-        argv[i] = tok;
-        ++i;
-        tok = strtok_r(NULL, " ", &reserve);
+    aliasTable[alias_count].key = key;
+    aliasTable[alias_count].value = value;
+    aliasTable[alias_count].nested = -1;
+
+    printf("\"%s\" added as an alias!\n", key);
+
+    int count2 = 0;
+    while(count2 < alias_count){
+        if(!strcmp(aliasTable[count2].value, key)) {
+            aliasTable[count2].nested = alias_count;
+        }
+        ++count2;
     }
-    if(saved_argv == NULL)
-        argv[i] = NULL;
-    else{
-        argv[i] = saved_argv;
-        argv[++i] = NULL;
-    }
-    memset(input_command,0,strlen(input_command));
-    input_command = argv[0];
+     ++alias_count;
     return;
 }
+
+void unaliasword(char* key){
+    
+}
+
+// void check_alias(char * name) {
+//     struct AliasNode *currNode = aliasHead5;
+//     while(1) {
+//         if(currNode == NULL) {
+//             return;
+//         }
+//         if(strcmp(currNode->key, name) == 0){
+//             break;
+//         }
+//         currNode = currNode->next;
+//     }
+
+//     char* saved_argv = argv[1];
+//     char* str = malloc(strlen(currNode->value));
+//     strcpy(str, currNode->value);
+//     char* reserve;
+//     char* tok = strtok_r(str, " ", &reserve);
+//     int i = 0;
+//     while (tok != NULL){
+//         argv[i] = tok;
+//         ++i;
+//         tok = strtok_r(NULL, " ", &reserve);
+//     }
+//     if(saved_argv == NULL)
+//         argv[i] = NULL;
+//     else{
+//         argv[i] = saved_argv;
+//         argv[++i] = NULL;
+//     }
+//     memset(input_command,0,strlen(input_command));
+//     input_command = argv[0];
+//     return;
+// }
 
 void goLS(){
     DIR *dirp;
@@ -407,6 +354,7 @@ void shell_init(){
         tok = strtok(NULL, dlim);
     }
     pathtab[i] = NULL;
+    alias_count = 0;
     //printf("two: %d\n", strlen(pathtab));
     //get HOME env variable (also use getenv())
 
@@ -447,13 +395,13 @@ void do_it(){
             goLSWord();
             break;
         case ALIAS_CMD:
-            printAlias(dec);
+            printAlias();
             break;
         case ALIAS_CMD_CREATE:
             createAlias(remove_white(argv[0]),remove_white(argv[1]));
             break;
         case UNALIAS_CMD:
-            unaliasword(remove_white(word5));
+            unaliasword(remove_white(argv[0]));
             break;
         case SETENV_CMD:
             setEnvironment();
@@ -479,7 +427,7 @@ void execute_it(){
     // Handle  command execution, pipelining, i/o redirection, and background processing.
     // Utilize a command table whose components are plugged in during parsing by yacc.
 
-    check_alias(input_command);
+   // check_alias(input_command);
 
     /*
      * Check Command Accessability and Executability

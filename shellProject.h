@@ -55,13 +55,6 @@ typedef struct com{
 
 } COMMAND;
 
-/////////*Alias structure*//////////
-struct alias{
-    int used;
-    char *alname;
-    char *alstr;
-};
-
 struct env {
     int used; //number of usage times?
     char *envname; //pointer to alias name?
@@ -74,25 +67,17 @@ typedef struct cache{
 } CACHE;
 
 struct AliasNode {
-        struct AliasNode* next;
+        int nested;
         char* key;
         char* value;
 };
 
-struct AliasNode* aliasHead;
-struct AliasNode* aliasHead1;
-struct AliasNode* aliasHead2;
-struct AliasNode* aliasHead3;
-struct AliasNode* aliasHead4;
-struct AliasNode* aliasHead5;
-struct AliasNode* dec;
-
 ///////*Externals*/////////////
 
-struct alias aliastab[];
-COMMAND camtab[];
-CACHE cachetab[];
-char *pathtab[];
+struct AliasNode aliasTable[MAXALIAS];
+int alias_count;
+COMMAND camtab[MAXCMDS];
+CACHE cachetab[MAXCACHE];
 int currcmd;
 int currcache;
 int lastcurrcmd;
@@ -118,8 +103,6 @@ char *home;
 char *shname;
 char *prompt_string;
 int user_defined_prompt;
-char srcf[];
-char distf[];
 int append;
 int loop;
 
@@ -133,7 +116,6 @@ int SETPROMPT;
 int CMD;
 int yylex();
 int yyparse();
-int currcmd;
 char* pathtab[MAXPATH];
 char* command_path;
 int argc;

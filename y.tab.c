@@ -1664,7 +1664,7 @@ yyreduce:
     {
                         bicmd = UNALIAS_CMD;
                         builtin = 1;
-                        word5 = (yyvsp[(2) - (3)].word);
+                        argv[0] = (yyvsp[(2) - (3)].word);
                         return 0;
                         }
     break;
