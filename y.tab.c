@@ -76,25 +76,25 @@
      NEWLINE = 265,
      TILDE = 266,
      LS = 267,
-     SINGLEPERIOD = 268,
-     SETENV = 269,
-     PATH = 270,
-     PROMPT = 271,
-     CD = 272,
-     BYE = 273,
-     ALIAS = 274,
-     UNALIAS = 275,
-     PWD = 276,
-     EXTEND = 277,
-     FORWARDSLASH = 278,
-     ALIASLOOP = 279,
-     UNSETENV = 280,
-     PRINTENV = 281,
-     QUOTE = 282,
-     PIPE = 283,
-     BACKGROUND = 284,
-     BACKSLASH = 285,
-     DOUBLEPERIOD = 286,
+     SETENV = 268,
+     PATH = 269,
+     PROMPT = 270,
+     CD = 271,
+     BYE = 272,
+     ALIAS = 273,
+     UNALIAS = 274,
+     PWD = 275,
+     EXTEND = 276,
+     ALIASLOOP = 277,
+     UNSETENV = 278,
+     PRINTENV = 279,
+     QUOTE = 280,
+     PIPE = 281,
+     BACKGROUND = 282,
+     BACKSLASH = 283,
+     LEFTBRACE = 284,
+     RIGHTBRACE = 285,
+     DOLLARSIGN = 286,
      WORD = 287,
      SPACE = 288,
      VARIABLE = 289,
@@ -114,25 +114,25 @@
 #define NEWLINE 265
 #define TILDE 266
 #define LS 267
-#define SINGLEPERIOD 268
-#define SETENV 269
-#define PATH 270
-#define PROMPT 271
-#define CD 272
-#define BYE 273
-#define ALIAS 274
-#define UNALIAS 275
-#define PWD 276
-#define EXTEND 277
-#define FORWARDSLASH 278
-#define ALIASLOOP 279
-#define UNSETENV 280
-#define PRINTENV 281
-#define QUOTE 282
-#define PIPE 283
-#define BACKGROUND 284
-#define BACKSLASH 285
-#define DOUBLEPERIOD 286
+#define SETENV 268
+#define PATH 269
+#define PROMPT 270
+#define CD 271
+#define BYE 272
+#define ALIAS 273
+#define UNALIAS 274
+#define PWD 275
+#define EXTEND 276
+#define ALIASLOOP 277
+#define UNSETENV 278
+#define PRINTENV 279
+#define QUOTE 280
+#define PIPE 281
+#define BACKGROUND 282
+#define BACKSLASH 283
+#define LEFTBRACE 284
+#define RIGHTBRACE 285
+#define DOLLARSIGN 286
 #define WORD 287
 #define SPACE 288
 #define VARIABLE 289
@@ -163,6 +163,7 @@ int eventcount = 0;
  int pfd[2];
 
 
+
 /* Enabling traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
@@ -183,7 +184,7 @@ int eventcount = 0;
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 19 "shellProject.y"
+#line 20 "shellProject.y"
 {
     int integer;
     char *string;
@@ -191,7 +192,7 @@ typedef union YYSTYPE
     char *option;
 }
 /* Line 193 of yacc.c.  */
-#line 195 "y.tab.c"
+#line 196 "y.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -204,7 +205,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 208 "y.tab.c"
+#line 209 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -419,16 +420,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  31
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   43
+#define YYLAST   45
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  38
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  4
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  24
+#define YYNRULES  25
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  47
+#define YYNSTATES  49
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
@@ -477,31 +478,31 @@ static const yytype_uint8 yytranslate[] =
    YYRHS.  */
 static const yytype_uint8 yyprhs[] =
 {
-       0,     0,     3,     5,     7,    10,    14,    18,    20,    22,
-      25,    29,    33,    36,    40,    45,    48,    52,    55,    58,
-      63,    68,    72,    75,    79
+       0,     0,     3,     5,     7,    10,    14,    18,    23,    25,
+      27,    30,    34,    38,    41,    45,    50,    53,    57,    60,
+      63,    68,    73,    77,    80,    84
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
 static const yytype_int8 yyrhs[] =
 {
-      39,     0,    -1,    40,    -1,    41,    -1,    17,    10,    -1,
-      17,    11,    10,    -1,    17,    32,    10,    -1,    18,    -1,
-      10,    -1,    12,    10,    -1,    12,    32,    10,    -1,    12,
-      36,    10,    -1,    14,    10,    -1,    14,    32,    10,    -1,
-      14,    32,    32,    10,    -1,    25,    10,    -1,    25,    32,
-      10,    -1,    26,    10,    -1,    19,    10,    -1,    19,    32,
-      32,    10,    -1,    19,    32,    36,    10,    -1,    20,    32,
-      10,    -1,    32,    10,    -1,    32,    32,    10,    -1,    32,
-      36,    10,    -1
+      39,     0,    -1,    40,    -1,    41,    -1,    16,    10,    -1,
+      16,    32,    10,    -1,    16,    11,    10,    -1,    16,    11,
+      32,    10,    -1,    17,    -1,    10,    -1,    12,    10,    -1,
+      12,    32,    10,    -1,    12,    36,    10,    -1,    13,    10,
+      -1,    13,    32,    10,    -1,    13,    32,    32,    10,    -1,
+      23,    10,    -1,    23,    32,    10,    -1,    24,    10,    -1,
+      18,    10,    -1,    18,    32,    32,    10,    -1,    18,    32,
+      36,    10,    -1,    19,    32,    10,    -1,    32,    10,    -1,
+      32,    32,    10,    -1,    32,    36,    10,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    37,    37,    39,    44,    51,    58,    65,    70,    76,
-      82,    89,    96,   103,   111,   119,   126,   133,   139,   144,
-     151,   158,   168,   175,   183
+       0,    39,    39,    41,    46,    52,    59,    65,    73,    78,
+      84,    90,    98,   106,   113,   121,   129,   136,   143,   149,
+     154,   161,   168,   178,   185,   193
 };
 #endif
 
@@ -511,10 +512,10 @@ static const yytype_uint8 yyrline[] =
 static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "LT", "GT", "AMP", "LPAREN", "VBAR",
-  "DOT", "DEBUG", "NEWLINE", "TILDE", "LS", "SINGLEPERIOD", "SETENV",
-  "PATH", "PROMPT", "CD", "BYE", "ALIAS", "UNALIAS", "PWD", "EXTEND",
-  "FORWARDSLASH", "ALIASLOOP", "UNSETENV", "PRINTENV", "QUOTE", "PIPE",
-  "BACKGROUND", "BACKSLASH", "DOUBLEPERIOD", "WORD", "SPACE", "VARIABLE",
+  "DOT", "DEBUG", "NEWLINE", "TILDE", "LS", "SETENV", "PATH", "PROMPT",
+  "CD", "BYE", "ALIAS", "UNALIAS", "PWD", "EXTEND", "ALIASLOOP",
+  "UNSETENV", "PRINTENV", "QUOTE", "PIPE", "BACKGROUND", "BACKSLASH",
+  "LEFTBRACE", "RIGHTBRACE", "DOLLARSIGN", "WORD", "SPACE", "VARIABLE",
   "VALUE", "STRING", "OPTION", "$accept", "cmd", "builtin.cmd",
   "simple.cmd", 0
 };
@@ -537,15 +538,15 @@ static const yytype_uint8 yyr1[] =
 {
        0,    38,    39,    39,    40,    40,    40,    40,    40,    40,
       40,    40,    40,    40,    40,    40,    40,    40,    40,    40,
-      40,    40,    41,    41,    41
+      40,    40,    40,    41,    41,    41
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     1,     1,     2,     3,     3,     1,     1,     2,
-       3,     3,     2,     3,     4,     2,     3,     2,     2,     4,
-       4,     3,     2,     3,     3
+       0,     2,     1,     1,     2,     3,     3,     4,     1,     1,
+       2,     3,     3,     2,     3,     4,     2,     3,     2,     2,
+       4,     4,     3,     2,     3,     3
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -553,11 +554,11 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     8,     0,     0,     0,     7,     0,     0,     0,     0,
-       0,     0,     2,     3,     9,     0,     0,    12,     0,     4,
-       0,     0,    18,     0,     0,    15,     0,    17,    22,     0,
-       0,     1,    10,    11,    13,     0,     5,     6,     0,     0,
-      21,    16,    23,    24,    14,    19,    20
+       0,     9,     0,     0,     0,     8,     0,     0,     0,     0,
+       0,     0,     2,     3,    10,     0,     0,    13,     0,     4,
+       0,     0,    19,     0,     0,    16,     0,    18,    23,     0,
+       0,     1,    11,    12,    14,     0,     6,     0,     5,     0,
+       0,    22,    17,    24,    25,    15,     7,    20,    21
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -568,20 +569,20 @@ static const yytype_int8 yydefgoto[] =
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-#define YYPACT_NINF -28
+#define YYPACT_NINF -15
 static const yytype_int8 yypact[] =
 {
-      -8,   -28,   -10,    -7,    -3,   -28,     3,   -27,     4,     9,
-      -9,    21,   -28,   -28,   -28,    18,    20,   -28,     5,   -28,
-      22,    23,   -28,   -16,    24,   -28,    28,   -28,   -28,    29,
-      30,   -28,   -28,   -28,   -28,    31,   -28,   -28,    32,    33,
-     -28,   -28,   -28,   -28,   -28,   -28,   -28
+      -8,   -15,   -10,    -7,    -4,   -15,     2,   -14,     3,     9,
+      -9,    20,   -15,   -15,   -15,    11,    21,   -15,     4,   -15,
+       7,    22,   -15,    -3,    27,   -15,    28,   -15,   -15,    30,
+      31,   -15,   -15,   -15,   -15,    32,   -15,    33,   -15,    34,
+      35,   -15,   -15,   -15,   -15,   -15,   -15,   -15,   -15
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -28,   -28,   -28,   -28
+     -15,   -15,   -15,   -15
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -591,31 +592,31 @@ static const yytype_int8 yypgoto[] =
 #define YYTABLE_NINF -1
 static const yytype_uint8 yytable[] =
 {
-      14,    28,     1,    17,     2,    24,     3,    19,    20,     4,
-       5,     6,     7,    22,    25,    34,    38,     8,     9,    27,
-      39,    31,    15,    29,    10,    18,    16,    30,    32,    21,
-      33,     0,    36,    37,    40,    23,    26,    35,    41,    42,
-      43,    44,    45,    46
+      14,    28,     1,    17,     2,     3,    19,    20,     4,     5,
+       6,     7,    22,    25,    34,     8,     9,    36,    24,    27,
+      31,    32,    15,    29,    10,    18,    16,    30,    21,    39,
+       0,    33,    38,    40,    23,    26,    35,    41,    42,    37,
+      43,    44,    45,    46,    47,    48
 };
 
 static const yytype_int8 yycheck[] =
 {
-      10,    10,    10,    10,    12,    32,    14,    10,    11,    17,
-      18,    19,    20,    10,    10,    10,    32,    25,    26,    10,
-      36,     0,    32,    32,    32,    32,    36,    36,    10,    32,
-      10,    -1,    10,    10,    10,    32,    32,    32,    10,    10,
-      10,    10,    10,    10
+      10,    10,    10,    10,    12,    13,    10,    11,    16,    17,
+      18,    19,    10,    10,    10,    23,    24,    10,    32,    10,
+       0,    10,    32,    32,    32,    32,    36,    36,    32,    32,
+      -1,    10,    10,    36,    32,    32,    32,    10,    10,    32,
+      10,    10,    10,    10,    10,    10
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,    10,    12,    14,    17,    18,    19,    20,    25,    26,
+       0,    10,    12,    13,    16,    17,    18,    19,    23,    24,
       32,    39,    40,    41,    10,    32,    36,    10,    32,    10,
       11,    32,    10,    32,    32,    10,    32,    10,    10,    32,
-      36,     0,    10,    10,    10,    32,    10,    10,    32,    36,
-      10,    10,    10,    10,    10,    10,    10
+      36,     0,    10,    10,    10,    32,    10,    32,    10,    32,
+      36,    10,    10,    10,    10,    10,    10,    10,    10
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1429,134 +1430,165 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
+<<<<<<< Updated upstream
         case 4:
 #line 45 "shellProject.y"
     { 
                         bicmd = CDHome_CMD; 
                         builtin = 1; 
+=======
+        case 2:
+#line 40 "shellProject.y"
+    { eventcount++; }
+    break;
+
+  case 3:
+#line 42 "shellProject.y"
+    { eventcount++; }
+    break;
+
+  case 4:
+#line 47 "shellProject.y"
+    {
+                        bicmd = CDHome_CMD;
+                        builtin = 1;
+>>>>>>> Stashed changes
                         return 0;
                         }
     break;
 
   case 5:
-#line 52 "shellProject.y"
-    { 
-                        bicmd = CDHome_CMD; 
-                        builtin = 1; 
+#line 53 "shellProject.y"
+    {
+                        bicmd = CDPath_CMD;
+                        builtin = 1;
+                        strPath = (yyvsp[(2) - (3)].word);
                         return 0;
                         }
     break;
 
   case 6:
-#line 59 "shellProject.y"
-    { 
-                        bicmd = CDPath_CMD; 
-                        builtin = 1; 
-                        strPath = (yyvsp[(2) - (3)].word); 
+#line 60 "shellProject.y"
+    {
+                        bicmd = CDHome_CMD;
+                        builtin = 1;
                         return 0;
                         }
     break;
 
   case 7:
 #line 66 "shellProject.y"
-    { 
-                        bicmd = BYE_CMD; 
-                        return 0; 
+    {
+                        bicmd = CDPath_CMD;
+                        isTilde = 1;
+                        builtin = 1;
+                        strPath = (yyvsp[(3) - (4)].word);
+                        return 0;
                         }
     break;
 
   case 8:
-#line 71 "shellProject.y"
-    { 
-                        bicmd = NEWLINE_CMD; 
-                        builtin = 1; 
+#line 74 "shellProject.y"
+    {
+                        bicmd = BYE_CMD;
                         return 0;
                         }
     break;
 
   case 9:
-#line 77 "shellProject.y"
-    { 
-                        bicmd = LS_CMD; 
-                        builtin = 1; 
-                        return 0; 
+#line 79 "shellProject.y"
+    {
+                        bicmd = NEWLINE_CMD;
+                        builtin = 1;
+                        return 0;
                         }
     break;
 
   case 10:
-#line 83 "shellProject.y"
-    { 
-                        bicmd = LSWord_CMD; 
-                        builtin = 1; 
-                        fileName = (yyvsp[(2) - (3)].word); 
-                        return 0; 
+#line 85 "shellProject.y"
+    {
+                        bicmd = LS_CMD;
+                        builtin = 1;
+                        return 0;
                         }
     break;
 
   case 11:
-#line 90 "shellProject.y"
-    { 
-                        bicmd = LSWord_CMD; 
-                        builtin = 1; 
-                        fileName = (yyvsp[(3) - (3)].integer); 
-                        return 0; 
+#line 91 "shellProject.y"
+    {
+                        printf("\n\nWE ARE NOT A STRING WE ARE WORD\n\n");
+                        bicmd = LSWord_CMD;
+                        builtin = 1;
+                        fileName = (yyvsp[(2) - (3)].word);
+                        return 0;
                         }
     break;
 
   case 12:
-#line 97 "shellProject.y"
-    { 
-                        bicmd = SETENV_CMD; 
-                        builtin = 1; 
-                        argv[0] = NULL;
-                        return 0; 
+#line 99 "shellProject.y"
+    {
+                        printf("\n\nWE ARE NOT A WORD WE ARE STRING\n\n");
+                        bicmd = LSWord_CMD;
+                        builtin = 1;
+                        fileName = (yyvsp[(2) - (3)].string);
+                        return 0;
                         }
     break;
 
   case 13:
-#line 104 "shellProject.y"
-    { 
-                        bicmd = SETENV_CMD; 
-                        builtin = 1; 
+#line 107 "shellProject.y"
+    {
+                        bicmd = SETENV_CMD;
+                        builtin = 1;
+                        argv[0] = NULL;
+                        return 0;
+                        }
+    break;
+
+  case 14:
+#line 114 "shellProject.y"
+    {
+                        bicmd = SETENV_CMD;
+                        builtin = 1;
                         argv[0] = (yyvsp[(2) - (3)].word);
                         argv[1] = NULL;
                         return 0;
                         }
     break;
 
-  case 14:
-#line 112 "shellProject.y"
-    { 
-                        bicmd = SETENV_CMD; 
-                        builtin = 1; 
+  case 15:
+#line 122 "shellProject.y"
+    {
+                        bicmd = SETENV_CMD;
+                        builtin = 1;
                         argv[0] = (yyvsp[(2) - (4)].word);
                         argv[1] = (yyvsp[(3) - (4)].word);
                         return 0;
                         }
     break;
 
-  case 15:
-#line 120 "shellProject.y"
-    { 
-                        bicmd = UNSETENV_CMD; 
-                        builtin = 1; 
-                        argv[0] = NULL;
-                        return 0; 
-                        }
-    break;
-
   case 16:
-#line 127 "shellProject.y"
-    { 
-                        bicmd = UNSETENV_CMD; 
-                        builtin = 1; 
-                        argv[0] = (yyvsp[(2) - (3)].word); 
-                        return 0; 
+#line 130 "shellProject.y"
+    {
+                        bicmd = UNSETENV_CMD;
+                        builtin = 1;
+                        argv[0] = NULL;
+                        return 0;
                         }
     break;
 
   case 17:
-#line 134 "shellProject.y"
+#line 137 "shellProject.y"
+    {
+                        bicmd = UNSETENV_CMD;
+                        builtin = 1;
+                        argv[0] = (yyvsp[(2) - (3)].word);
+                        return 0;
+                        }
+    break;
+
+  case 18:
+#line 144 "shellProject.y"
     {
                         builtin = 1;
                         bicmd = PRINTENV_CMD;
@@ -1564,15 +1596,8 @@ yyreduce:
                         }
     break;
 
-  case 18:
-#line 140 "shellProject.y"
-    { bicmd = ALIAS_CMD; 
-                        builtin = 1; 
-                        return 0; 
-                        }
-    break;
-
   case 19:
+<<<<<<< Updated upstream
 #line 145 "shellProject.y"
     { 
                         bicmd = ALIAS_CMD_CREATE; 
@@ -1589,54 +1614,92 @@ yyreduce:
                         builtin = 1; 
                         argv[0] = (yyvsp[(2) - (4)].word); 
                         argv[1] = (yyvsp[(3) - (4)].string); 
+=======
+#line 150 "shellProject.y"
+    { bicmd = ALIAS_CMD;
+                        builtin = 1;
+                        return 0;
+                        }
+    break;
+
+  case 20:
+#line 155 "shellProject.y"
+    {
+                        bicmd = ALIAS_CMD;
+                        builtin = 1;
+                        word1 = (yyvsp[(2) - (4)].word);
+                        word2 = (yyvsp[(3) - (4)].word);
+>>>>>>> Stashed changes
                         return 0; }
     break;
 
   case 21:
-#line 159 "shellProject.y"
-    { 
-                        bicmd = UNALIAS_CMD; 
-                        builtin = 1; 
-                        word5 = (yyvsp[(2) - (3)].word); 
-                        return 0; 
-                        }
+#line 162 "shellProject.y"
+    {
+                        bicmd = ALIAS_CMD;
+                        builtin = 1;
+                        al = (yyvsp[(2) - (4)].word);
+                        alWord = (yyvsp[(3) - (4)].string);
+                        return 0; }
     break;
 
   case 22:
 #line 169 "shellProject.y"
+<<<<<<< Updated upstream
     { 
                         input_command = (yyvsp[(1) - (2)].word); 
                         argv[0] = (yyvsp[(1) - (2)].word); 
                         argv[1] = NULL; 
                         return 0; 
+=======
+    {
+                        bicmd = UNALIAS_CMD;
+                        builtin = 1;
+                        word5 = (yyvsp[(2) - (3)].word);
+                        return 0;
+>>>>>>> Stashed changes
                         }
     break;
 
   case 23:
-#line 176 "shellProject.y"
-    { 
-                        bistr = (yyvsp[(1) - (3)].word); 
-                        argv[argc] = (yyvsp[(1) - (3)].word); 
-                        argv[++argc] = (yyvsp[(2) - (3)].word); 
-                        argv[++argc] = NULL; 
-                        return 0; 
+#line 179 "shellProject.y"
+    {
+                        bistr = (yyvsp[(1) - (2)].word);
+                        argv[0] = (yyvsp[(1) - (2)].word);
+                        argv[1] = NULL;
+                        return 0;
                         }
     break;
 
   case 24:
-#line 184 "shellProject.y"
-    { 
-                        bistr = (yyvsp[(1) - (3)].word); 
-                        argv[argc] = (yyvsp[(1) - (3)].word); 
-                        argv[++argc] = (yyvsp[(2) - (3)].string); 
-                        argv[++argc] = NULL; 
-                        return 0; 
+#line 186 "shellProject.y"
+    {
+                        bistr = (yyvsp[(1) - (3)].word);
+                        argv[argc] = (yyvsp[(1) - (3)].word);
+                        argv[++argc] = (yyvsp[(2) - (3)].word);
+                        argv[++argc] = NULL;
+                        return 0;
+                        }
+    break;
+
+  case 25:
+#line 194 "shellProject.y"
+    {
+                        bistr = (yyvsp[(1) - (3)].word);
+                        argv[argc] = (yyvsp[(1) - (3)].word);
+                        argv[++argc] = (yyvsp[(2) - (3)].string);
+                        argv[++argc] = NULL;
+                        return 0;
                         }
     break;
 
 
 /* Line 1267 of yacc.c.  */
+<<<<<<< Updated upstream
 #line 1640 "y.tab.c"
+=======
+#line 1664 "y.tab.c"
+>>>>>>> Stashed changes
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1850,7 +1913,7 @@ yyreturn:
 }
 
 
-#line 192 "shellProject.y"
+#line 202 "shellProject.y"
 
 
 int yyerror(char *s){

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-//cool
+
 #define FALSE 0
 #define TRUE !FALSE
 
@@ -152,9 +152,13 @@ char* currentWorkDir;
 char* fileName;
 char* var;
 char* value;
+char* word1;
+char* word2;
+int isTilde;
 char* word5;
-
-
+char* al;
+char* alWord;
+int isQuote;
 
 ////////////////////////////////////
 

@@ -1,6 +1,7 @@
 %{
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 #include "y.tab.h"
 extern YYSTYPE yylval;
 %}
@@ -15,30 +16,31 @@ unsetenv            return UNSETENV;
 printenv            return PRINTENV;
 bye                 return BYE;
 ls                  return LS;
-[-][a-z]            {
-                        yylval.option = strdup(yytext);
-                        return OPTION;
-                    }
-[^\|\>\<\&\t\n\r][^\|\>\<\& \t\n]*  {
-                                        yylval.word = strdup(yytext);
-                                        return WORD;
-                                    }
-["][^\|\>\<\&\t\n\r][^\|\>\<\&\t\n]*["] {
-                                            yylval.string = strdup(yytext);
-                                            return STRING;
-                                        }
-\"                 return QUOTE;
-\<                 return LT;
-\>                 return GT;
-\|                 return PIPE;
-\&                 return BACKGROUND;
-\\                 return BACKSLASH;
-"/"                return FORWARDSLASH;
-"~"                return TILDE;
-"."                return SINGLEPERIOD;
-".."               return DOUBLEPERIOD;
-\n                 return NEWLINE;
-[ \t\r]+           ;
+[-][a-z]                                        { yylval.option = strdup(yytext); return OPTION; }
+[a-zA-Z][a-zA-Z0-9\/.-_]*                       { yylval.word   = strdup(yytext); return WORD; }
+\"[^"\n]*["\n]                                  {
+                                                  yylval.string = strdup(yytext+1);
+                                                  if (yylval.string[yyleng-2] != '"'){
+                                                    warning("improperly terminated string");
+                                                    return NEWLINE;
+                                                  }
+                                                  else{
+                                                    yylval.string[yyleng-2] = 0;
+                                                    return STRING;
+                                                  }
+                                                }
+\"                  return QUOTE;
+\{                  return LEFTBRACE;
+\}                  return RIGHTBRACE;
+\$                  return DOLLARSIGN;
+\<                  return LT;
+\>                  return GT;
+\|                  return PIPE;
+\&                  return BACKGROUND;
+\\                  return BACKSLASH;
+\~                  return TILDE;
+\n                  return NEWLINE;
+[ \t\r]+            ;
 
 %%
 

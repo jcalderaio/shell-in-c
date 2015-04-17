@@ -14,6 +14,7 @@ int eventcount = 0;
  COMMAND *q, *p;
 
  int pfd[2];
+
 %}
 
 %union{
@@ -23,9 +24,10 @@ int eventcount = 0;
     char *option;
 }
 
-%token <integer> LT GT AMP LPAREN VBAR DOT DEBUG NEWLINE TILDE LS SINGLEPERIOD
-%token <integer> SETENV PATH PROMPT CD BYE ALIAS UNALIAS PWD EXTEND FORWARDSLASH
-%token <integer> ALIASLOOP UNSETENV PRINTENV QUOTE PIPE BACKGROUND BACKSLASH DOUBLEPERIOD
+%token <integer> LT GT AMP LPAREN VBAR DOT DEBUG NEWLINE TILDE LS
+%token <integer> SETENV PATH PROMPT CD BYE ALIAS UNALIAS PWD EXTEND
+%token <integer> ALIASLOOP UNSETENV PRINTENV QUOTE PIPE BACKGROUND BACKSLASH
+%token <integer> LEFTBRACE RIGHTBRACE DOLLARSIGN
 %token <word>    WORD SPACE VARIABLE VALUE
 %token <string>  STRING
 %token <option>  OPTION
@@ -42,106 +44,115 @@ cmd:              builtin.cmd
 
 
 builtin.cmd:      CD NEWLINE
-                        { 
-                        bicmd = CDHome_CMD; 
-                        builtin = 1; 
+                        {
+                        bicmd = CDHome_CMD;
+                        builtin = 1;
                         return 0;
                         }
-
-                | CD TILDE NEWLINE
-                        { 
-                        bicmd = CDHome_CMD; 
-                        builtin = 1; 
-                        return 0;
-                        }
-
                 | CD WORD NEWLINE
-                        { 
-                        bicmd = CDPath_CMD; 
-                        builtin = 1; 
-                        strPath = $2; 
+                        {
+                        bicmd = CDPath_CMD;
+                        builtin = 1;
+                        strPath = $2;
+                        return 0;
+                        }
+                | CD TILDE NEWLINE
+                        {
+                        bicmd = CDHome_CMD;
+                        builtin = 1;
+                        return 0;
+                        }
+                | CD TILDE WORD NEWLINE
+                        {
+                        bicmd = CDPath_CMD;
+                        isTilde = 1;
+                        builtin = 1;
+                        strPath = $3;
                         return 0;
                         }
                 | BYE
-                        { 
-                        bicmd = BYE_CMD; 
-                        return 0; 
+                        {
+                        bicmd = BYE_CMD;
+                        return 0;
                         }
                 | NEWLINE
-                        { 
-                        bicmd = NEWLINE_CMD; 
-                        builtin = 1; 
+                        {
+                        bicmd = NEWLINE_CMD;
+                        builtin = 1;
                         return 0;
                         }
                 | LS NEWLINE
-                        { 
-                        bicmd = LS_CMD; 
-                        builtin = 1; 
-                        return 0; 
+                        {
+                        bicmd = LS_CMD;
+                        builtin = 1;
+                        return 0;
                         }
                 | LS WORD NEWLINE
-                        { 
-                        bicmd = LSWord_CMD; 
-                        builtin = 1; 
-                        fileName = $2; 
-                        return 0; 
+                        {
+                        printf("\n\nWE ARE NOT A STRING WE ARE WORD\n\n");
+                        bicmd = LSWord_CMD;
+                        builtin = 1;
+                        fileName = $2;
+                        return 0;
                         }
                 | LS STRING NEWLINE
-                        { 
-                        bicmd = LSWord_CMD; 
-                        builtin = 1; 
-                        fileName = $3; 
-                        return 0; 
+                        {
+                        printf("\n\nWE ARE NOT A WORD WE ARE STRING\n\n");
+                        bicmd = LSWord_CMD;
+                        builtin = 1;
+                        fileName = $2;
+                        return 0;
                         }
                 | SETENV NEWLINE
-                        { 
-                        bicmd = SETENV_CMD; 
-                        builtin = 1; 
+                        {
+                        bicmd = SETENV_CMD;
+                        builtin = 1;
                         argv[0] = NULL;
-                        return 0; 
+                        return 0;
                         }
                 | SETENV WORD NEWLINE
-                        { 
-                        bicmd = SETENV_CMD; 
-                        builtin = 1; 
+                        {
+                        bicmd = SETENV_CMD;
+                        builtin = 1;
                         argv[0] = $2;
                         argv[1] = NULL;
                         return 0;
                         }
                 | SETENV WORD WORD NEWLINE
-                        { 
-                        bicmd = SETENV_CMD; 
-                        builtin = 1; 
+                        {
+                        bicmd = SETENV_CMD;
+                        builtin = 1;
                         argv[0] = $2;
                         argv[1] = $3;
                         return 0;
                         }
                 | UNSETENV NEWLINE
-                        { 
-                        bicmd = UNSETENV_CMD; 
-                        builtin = 1; 
+                        {
+                        bicmd = UNSETENV_CMD;
+                        builtin = 1;
                         argv[0] = NULL;
-                        return 0; 
+                        return 0;
                         }
                 | UNSETENV WORD NEWLINE
-                        { 
-                        bicmd = UNSETENV_CMD; 
-                        builtin = 1; 
-                        argv[0] = $2; 
-                        return 0; 
+                        {
+                        bicmd = UNSETENV_CMD;
+                        builtin = 1;
+                        argv[0] = $2;
+                        return 0;
                         }
-                | PRINTENV NEWLINE 
+                | PRINTENV NEWLINE
                         {
                         builtin = 1;
                         bicmd = PRINTENV_CMD;
                         return 0;
                         }
                 | ALIAS NEWLINE
-                        { bicmd = ALIAS_CMD; 
-                        builtin = 1; 
-                        return 0; 
+                        { bicmd = ALIAS_CMD;
+                        builtin = 1;
+                        return 0;
                         }
                 | ALIAS WORD WORD NEWLINE
+<<<<<<< Updated upstream
                         { 
                         bicmd = ALIAS_CMD_CREATE; 
                         builtin = 1; 
@@ -154,39 +165,61 @@ builtin.cmd:      CD NEWLINE
                         builtin = 1; 
                         argv[0] = $2; 
                         argv[1] = $3; 
+=======
+                        {
+                        bicmd = ALIAS_CMD;
+                        builtin = 1;
+                        word1 = $2;
+                        word2 = $3;
+                        return 0; }
+                | ALIAS WORD STRING NEWLINE
+                        {
+                        bicmd = ALIAS_CMD;
+                        builtin = 1;
+                        al = $2;
+                        alWord = $3;
+>>>>>>> Stashed changes
                         return 0; }
                 | UNALIAS WORD NEWLINE
-                        { 
-                        bicmd = UNALIAS_CMD; 
-                        builtin = 1; 
-                        word5 = $2; 
-                        return 0; 
+                        {
+                        bicmd = UNALIAS_CMD;
+                        builtin = 1;
+                        word5 = $2;
+                        return 0;
                         }
 
                 ;
 
 simple.cmd:       WORD NEWLINE
+<<<<<<< Updated upstream
                         { 
                         input_command = $1; 
                         argv[0] = $1; 
                         argv[1] = NULL; 
                         return 0; 
+=======
+                        {
+                        bistr = $1;
+                        argv[0] = $1;
+                        argv[1] = NULL;
+                        return 0;
+>>>>>>> Stashed changes
                         }
                 | WORD WORD NEWLINE
-                        { 
-                        bistr = $1; 
-                        argv[argc] = $1; 
-                        argv[++argc] = $2; 
-                        argv[++argc] = NULL; 
-                        return 0; 
+                        {
+                        bistr = $1;
+                        argv[argc] = $1;
+                        argv[++argc] = $2;
+                        argv[++argc] = NULL;
+                        return 0;
                         }
                 | WORD STRING NEWLINE
-                        { 
-                        bistr = $1; 
-                        argv[argc] = $1; 
-                        argv[++argc] = $2; 
-                        argv[++argc] = NULL; 
-                        return 0; 
+                        {
+                        bistr = $1;
+                        argv[argc] = $1;
+                        argv[++argc] = $2;
+                        argv[++argc] = NULL;
+                        return 0;
                         }
                 ;
 %%
