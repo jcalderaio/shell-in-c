@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -33,51 +32,9 @@ void removeSpaces (char *str) {
 }
 
 char * remove_white(char * source) {
-
     while(isspace(*source)){ //removing preceeding 0 from the input
         ++source;
-=======
-    #include <stdio.h>
-    #include <stdlib.h>
-    #include <string.h>
-    #include <unistd.h>
-    #include <ctype.h>
-    #include <string.h>
-    #include <dirent.h>
-    #include <errno.h>
-    #include <signal.h>
-    #include "shellProject.h"
-
-
-    //////////////////////////////////////////////////////
-    ///////Builtin Functions//////////////////////////////
-    //////////////////////////////////////////////////////
-    extern char **environ;
-
-    void removeSpaces (char *str) {
-        // Set up two pointers.
-        char *src = str;
-        char *dst = src;
-        // Process all characters to end of string.
-        while (*src != '\0') {
-            // If it's not a space, transfer and increment destination.
-            if (*src != ' ')
-                *dst++ = *src;
-            // Increment source no matter what.
-            src++;
-        }
-        // Terminate the new string.
-        *dst = '\0';
     }
-
-    char * remove_white(char * source) {
-        while(isspace(*source)){ //removing preceeding 0 from the input
-            ++source;
-        }
-        return source;
->>>>>>> Stashed changes
-    }
-
     return source;
 }
 
@@ -91,7 +48,6 @@ void getCurrentPath(){
         currentWorkDir = cwd;
         free(cwd);
     }
-<<<<<<< Updated upstream
 }
 
 void goHome(){
@@ -100,14 +56,8 @@ void goHome(){
     chdir(home);
 }
 
-void printEnvironment() {
-    int i;
-    for(i = 0; environ[i] != NULL; ++i) {
-        printf("%s\n",environ[i]);
-=======
-
-    void goPath(const char* thePathStr){
-        if(isTilde == 1){
+void goPath(const char* thePathStr){
+    if(isTilde == 1){
             getCurrentPath();
             strcpy(currLoc, home);
             if(!(thePathStr[0] == '/')){
@@ -140,12 +90,10 @@ void printEnvironment() {
         thePathStr = "";
     }
 
-    void printEnvironment() {
-        int i;
-        for(i = 0; environ[i] != NULL; ++i) {
-            printf("%s\n",environ[i]);
-        }
->>>>>>> Stashed changes
+void printEnvironment() {
+    int i;
+    for(i = 0; environ[i] != NULL; ++i) {
+        printf("%s\n",environ[i]);
     }
 }
 
@@ -158,7 +106,6 @@ void setEnvironment() {
         setenv(string_1, "", 0);
         printf("\"%s\" added to environment variables!\n", string_1);
     }
-<<<<<<< Updated upstream
     else {
         char* string_1 = remove_white(argv[0]);
         setenv(string_1, remove_white(argv[1]), 0);
@@ -169,17 +116,6 @@ void setEnvironment() {
 void unsetEnvironment() {
     if(argv[0] == NULL) {
         printf("%s\n", "unsetenv: you didn't include anything to unset!");
-=======
-
-    void do_print_Alias(struct AliasNode* alias) {
-        char* toPrint = alias->key;
-        printf("%s", toPrint);
-        printf(": ");
-        toPrint = alias->value;
-        printf("%s", toPrint);
-        printf("\n");
-
->>>>>>> Stashed changes
     }
     else if(getenv(remove_white(argv[0])) == NULL) {
         printf("%s\n", "unsetenv: environment variable not found!");
@@ -189,22 +125,8 @@ void unsetEnvironment() {
         unsetenv(string_1);
         printf("\"%s\" removed from environment variables!\n", string_1);
     }
-
-
 }
 
-void goPath(const char* thePathStr){
-    getCurrentPath();
-    strcpy(currLoc, currentWorkDir);
-    strcat(currLoc, "/");
-    strcat(currLoc, thePathStr);
-    currentWorkDir = currLoc;
-    removeSpaces(currentWorkDir);
-    int isDir = chdir(currentWorkDir);
-    if(isDir){
-        printf("%s is not a valid directory name.\n", thePathStr);
-    }
-}
 
 void do_print_Alias(struct AliasNode* alias) {
     char* toPrint = alias->key;
@@ -270,56 +192,12 @@ void createAlias(char* word3,char* word4){
                     aliasHead->next=NULL;
                     free(aliasHead);
                 }
-<<<<<<< Updated upstream
                 else
                 {
                     if(strcmp((aliasHead1->value),(aliasHead->key)) == 0)
                     {
                         printf("changing values");
                         aliasHead1->value=aliasHead->value;
-=======
-            //printf("vbhvbv",aliasHead3->next->key);
-            aliasHead4=aliasHead3->next;
-            aliasHead3->next=aliasHead4->next;
-            aliasHead4->next=NULL;
-            free(aliasHead4);
-            printAlias(aliasHead5);
-            }
-        }
-
-    void goLS(){
-        DIR *dirp;
-        struct dirent* dir;
-        dirp = opendir(currentWorkDir);
-        if(dirp){
-            while((dir = readdir(dirp)) != NULL){
-                printf("%s\n", dir->d_name);
-            }
-            closedir(dirp);
-        }
-    }
-
-    void goLSWord(){
-        if(isQuote == 1){
-            fileName = removeQuotes(fileName);
-        }
-        DIR *dirp;
-        struct dirent *dir;
-        dirp = opendir(currentWorkDir);
-        int flag = 0;
-        if (dirp){
-            while ((dir = readdir(dirp)) != NULL){
-                if(strcmp(fileName, dir->d_name) == 0){
-                    flag = 1;
-                    DIR *d2;
-                    struct dirent *dir2;
-                    d2 = opendir(dir->d_name);
-                    if (d2){
-                        while ((dir2 = readdir(d2)) != NULL){
-                            printf("%s\n", dir2->d_name);
-                        }
-                    closedir(d2);
->>>>>>> Stashed changes
                     }
                 }
                 aliasHead1=aliasHead1->next;
@@ -374,7 +252,6 @@ void check_alias(char * name) {
         currNode = currNode->next;
     }
 
-<<<<<<< Updated upstream
     char* saved_argv = argv[1];
     char* str = malloc(strlen(currNode->value));
     strcpy(str, currNode->value);
@@ -385,15 +262,6 @@ void check_alias(char * name) {
         argv[i] = tok;
         ++i;
         tok = strtok_r(NULL, " ", &reserve);
-=======
-    void init_scanner_and_parser(){
-        // Need to initialize all the variables
-        argc = 0;
-        bicmd = 0;
-        builtin = 0;
-        isTilde = -1;
-        isQuote = -1;
->>>>>>> Stashed changes
     }
     if(saved_argv == NULL)
         argv[i] = NULL;
@@ -406,6 +274,9 @@ void check_alias(char * name) {
     return;
 
 }
+
+
+
 
 void goLS(){
     DIR *dirp;
@@ -479,6 +350,8 @@ void init_scanner_and_parser(){
     argc = 0;
     bicmd = 0;
     builtin = 0;
+    isTilde = -1;
+    isQuote = -1;
 }
 
 void printPrompt(){
@@ -536,6 +409,7 @@ void shell_init(){
     // (the shell should never die; only can be exit)
     // do anything you feel should be done as init
 }
+
 
 void do_it(){
     switch (bicmd) {
@@ -648,7 +522,6 @@ int getCommand(){
             return OK;
         }
     }
-<<<<<<< Updated upstream
 }
 
 int main( int argc, char *argv[] ){
@@ -678,37 +551,6 @@ int main( int argc, char *argv[] ){
             case BYE_CMD:
                 printf("Goodbye!\n\n");
                 exit(0);
-=======
-
-    int main( int argc, char *argv[] ){
-        printf("=====================================================\n");
-        printf("---------------Welcome to the Shell------------------\n");
-        printf("=====================================================\n\n");
-        shell_init();
-        int flag = 1;
-        while (1) {
-            if(flag) {
-                printPrompt();
-            }
-            else {
-                flag = 1;
-            }
-            switch (CMD = getCommand()) {
-
-                case OK:
-                    processCommand();
-                    break;
-
-                case ERRORS:
-                    recover_from_errors();
-                    flag = 0;
-                    break;
-
-                case BYE_CMD:
-                    printf("Goodbye!\n\n");
-                    exit(0);
-            }
->>>>>>> Stashed changes
         }
     }
     return 0;

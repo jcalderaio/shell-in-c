@@ -21,8 +21,8 @@ ls                  return LS;
 \"[^"\n]*["\n]                                  {
                                                   yylval.string = strdup(yytext+1);
                                                   if (yylval.string[yyleng-2] != '"'){
-                                                    warning("improperly terminated string");
-                                                    return NEWLINE;
+                                                    recover_from_errors();
+                                                    break;
                                                   }
                                                   else{
                                                     yylval.string[yyleng-2] = 0;

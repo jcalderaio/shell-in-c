@@ -820,8 +820,8 @@ YY_RULE_SETUP
 {
                                                   yylval.string = strdup(yytext+1);
                                                   if (yylval.string[yyleng-2] != '"'){
-                                                    printf("improperly terminated string");
-                                                    return NEWLINE;
+                                                    recover_from_errors();
+                                                    break;
                                                   }
                                                   else{
                                                     yylval.string[yyleng-2] = 0;

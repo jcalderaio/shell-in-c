@@ -500,9 +500,9 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    39,    39,    41,    46,    52,    59,    65,    73,    78,
-      84,    90,    98,   106,   113,   121,   129,   136,   143,   149,
-     154,   161,   168,   178,   185,   193
+       0,    39,    39,    41,    45,    51,    58,    64,    72,    77,
+      83,    89,    97,   105,   112,   120,   128,   135,   142,   148,
+     153,   160,   167,   176,   183,   191
 };
 #endif
 
@@ -1430,35 +1430,17 @@ yyreduce:
   YY_REDUCE_PRINT (yyn);
   switch (yyn)
     {
-<<<<<<< Updated upstream
         case 4:
-#line 45 "shellProject.y"
-    { 
-                        bicmd = CDHome_CMD; 
-                        builtin = 1; 
-=======
-        case 2:
-#line 40 "shellProject.y"
-    { eventcount++; }
-    break;
-
-  case 3:
-#line 42 "shellProject.y"
-    { eventcount++; }
-    break;
-
-  case 4:
-#line 47 "shellProject.y"
+#line 46 "shellProject.y"
     {
                         bicmd = CDHome_CMD;
                         builtin = 1;
->>>>>>> Stashed changes
                         return 0;
                         }
     break;
 
   case 5:
-#line 53 "shellProject.y"
+#line 52 "shellProject.y"
     {
                         bicmd = CDPath_CMD;
                         builtin = 1;
@@ -1468,7 +1450,7 @@ yyreduce:
     break;
 
   case 6:
-#line 60 "shellProject.y"
+#line 59 "shellProject.y"
     {
                         bicmd = CDHome_CMD;
                         builtin = 1;
@@ -1477,7 +1459,7 @@ yyreduce:
     break;
 
   case 7:
-#line 66 "shellProject.y"
+#line 65 "shellProject.y"
     {
                         bicmd = CDPath_CMD;
                         isTilde = 1;
@@ -1488,7 +1470,7 @@ yyreduce:
     break;
 
   case 8:
-#line 74 "shellProject.y"
+#line 73 "shellProject.y"
     {
                         bicmd = BYE_CMD;
                         return 0;
@@ -1496,7 +1478,7 @@ yyreduce:
     break;
 
   case 9:
-#line 79 "shellProject.y"
+#line 78 "shellProject.y"
     {
                         bicmd = NEWLINE_CMD;
                         builtin = 1;
@@ -1505,7 +1487,7 @@ yyreduce:
     break;
 
   case 10:
-#line 85 "shellProject.y"
+#line 84 "shellProject.y"
     {
                         bicmd = LS_CMD;
                         builtin = 1;
@@ -1514,7 +1496,7 @@ yyreduce:
     break;
 
   case 11:
-#line 91 "shellProject.y"
+#line 90 "shellProject.y"
     {
                         printf("\n\nWE ARE NOT A STRING WE ARE WORD\n\n");
                         bicmd = LSWord_CMD;
@@ -1525,7 +1507,7 @@ yyreduce:
     break;
 
   case 12:
-#line 99 "shellProject.y"
+#line 98 "shellProject.y"
     {
                         printf("\n\nWE ARE NOT A WORD WE ARE STRING\n\n");
                         bicmd = LSWord_CMD;
@@ -1536,7 +1518,7 @@ yyreduce:
     break;
 
   case 13:
-#line 107 "shellProject.y"
+#line 106 "shellProject.y"
     {
                         bicmd = SETENV_CMD;
                         builtin = 1;
@@ -1546,7 +1528,7 @@ yyreduce:
     break;
 
   case 14:
-#line 114 "shellProject.y"
+#line 113 "shellProject.y"
     {
                         bicmd = SETENV_CMD;
                         builtin = 1;
@@ -1557,7 +1539,7 @@ yyreduce:
     break;
 
   case 15:
-#line 122 "shellProject.y"
+#line 121 "shellProject.y"
     {
                         bicmd = SETENV_CMD;
                         builtin = 1;
@@ -1568,7 +1550,7 @@ yyreduce:
     break;
 
   case 16:
-#line 130 "shellProject.y"
+#line 129 "shellProject.y"
     {
                         bicmd = UNSETENV_CMD;
                         builtin = 1;
@@ -1578,7 +1560,7 @@ yyreduce:
     break;
 
   case 17:
-#line 137 "shellProject.y"
+#line 136 "shellProject.y"
     {
                         bicmd = UNSETENV_CMD;
                         builtin = 1;
@@ -1588,7 +1570,7 @@ yyreduce:
     break;
 
   case 18:
-#line 144 "shellProject.y"
+#line 143 "shellProject.y"
     {
                         builtin = 1;
                         bicmd = PRINTENV_CMD;
@@ -1597,25 +1579,7 @@ yyreduce:
     break;
 
   case 19:
-<<<<<<< Updated upstream
-#line 145 "shellProject.y"
-    { 
-                        bicmd = ALIAS_CMD_CREATE; 
-                        builtin = 1; 
-                        argv[0] = (yyvsp[(2) - (4)].word); 
-                        argv[1] = (yyvsp[(3) - (4)].word); 
-                        return 0; }
-    break;
-
-  case 20:
-#line 152 "shellProject.y"
-    { 
-                        bicmd = ALIAS_CMD_CREATE; 
-                        builtin = 1; 
-                        argv[0] = (yyvsp[(2) - (4)].word); 
-                        argv[1] = (yyvsp[(3) - (4)].string); 
-=======
-#line 150 "shellProject.y"
+#line 149 "shellProject.y"
     { bicmd = ALIAS_CMD;
                         builtin = 1;
                         return 0;
@@ -1623,48 +1587,39 @@ yyreduce:
     break;
 
   case 20:
-#line 155 "shellProject.y"
+#line 154 "shellProject.y"
     {
-                        bicmd = ALIAS_CMD;
+                        bicmd = ALIAS_CMD_CREATE;
                         builtin = 1;
-                        word1 = (yyvsp[(2) - (4)].word);
-                        word2 = (yyvsp[(3) - (4)].word);
->>>>>>> Stashed changes
+                        argv[0] = (yyvsp[(2) - (4)].word);
+                        argv[1] = (yyvsp[(3) - (4)].word);
                         return 0; }
     break;
 
   case 21:
-#line 162 "shellProject.y"
+#line 161 "shellProject.y"
     {
-                        bicmd = ALIAS_CMD;
+                        bicmd = ALIAS_CMD_CREATE;
                         builtin = 1;
-                        al = (yyvsp[(2) - (4)].word);
-                        alWord = (yyvsp[(3) - (4)].string);
+                        argv[0] = (yyvsp[(2) - (4)].word);
+                        argv[1] = (yyvsp[(3) - (4)].string);
                         return 0; }
     break;
 
   case 22:
-#line 169 "shellProject.y"
-<<<<<<< Updated upstream
-    { 
-                        input_command = (yyvsp[(1) - (2)].word); 
-                        argv[0] = (yyvsp[(1) - (2)].word); 
-                        argv[1] = NULL; 
-                        return 0; 
-=======
+#line 168 "shellProject.y"
     {
                         bicmd = UNALIAS_CMD;
                         builtin = 1;
                         word5 = (yyvsp[(2) - (3)].word);
                         return 0;
->>>>>>> Stashed changes
                         }
     break;
 
   case 23:
-#line 179 "shellProject.y"
+#line 177 "shellProject.y"
     {
-                        bistr = (yyvsp[(1) - (2)].word);
+                        input_command = (yyvsp[(1) - (2)].word);
                         argv[0] = (yyvsp[(1) - (2)].word);
                         argv[1] = NULL;
                         return 0;
@@ -1672,7 +1627,7 @@ yyreduce:
     break;
 
   case 24:
-#line 186 "shellProject.y"
+#line 184 "shellProject.y"
     {
                         bistr = (yyvsp[(1) - (3)].word);
                         argv[argc] = (yyvsp[(1) - (3)].word);
@@ -1683,7 +1638,7 @@ yyreduce:
     break;
 
   case 25:
-#line 194 "shellProject.y"
+#line 192 "shellProject.y"
     {
                         bistr = (yyvsp[(1) - (3)].word);
                         argv[argc] = (yyvsp[(1) - (3)].word);
@@ -1695,11 +1650,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-<<<<<<< Updated upstream
-#line 1640 "y.tab.c"
-=======
-#line 1664 "y.tab.c"
->>>>>>> Stashed changes
+#line 1654 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1913,7 +1864,7 @@ yyreturn:
 }
 
 
-#line 202 "shellProject.y"
+#line 200 "shellProject.y"
 
 
 int yyerror(char *s){

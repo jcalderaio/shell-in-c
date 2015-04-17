@@ -37,11 +37,10 @@ int eventcount = 0;
 %%
 
 cmd:              builtin.cmd
-                        
-                | simple.cmd
-                       
-                ;
 
+                | simple.cmd
+
+                ;
 
 builtin.cmd:      CD NEWLINE
                         {
@@ -152,33 +151,18 @@ builtin.cmd:      CD NEWLINE
                         return 0;
                         }
                 | ALIAS WORD WORD NEWLINE
-<<<<<<< Updated upstream
-                        { 
-                        bicmd = ALIAS_CMD_CREATE; 
-                        builtin = 1; 
-                        argv[0] = $2; 
-                        argv[1] = $3; 
-                        return 0; }
-                | ALIAS WORD STRING NEWLINE
-                        { 
-                        bicmd = ALIAS_CMD_CREATE; 
-                        builtin = 1; 
-                        argv[0] = $2; 
-                        argv[1] = $3; 
-=======
                         {
-                        bicmd = ALIAS_CMD;
+                        bicmd = ALIAS_CMD_CREATE;
                         builtin = 1;
-                        word1 = $2;
-                        word2 = $3;
+                        argv[0] = $2;
+                        argv[1] = $3;
                         return 0; }
                 | ALIAS WORD STRING NEWLINE
                         {
-                        bicmd = ALIAS_CMD;
+                        bicmd = ALIAS_CMD_CREATE;
                         builtin = 1;
-                        al = $2;
-                        alWord = $3;
->>>>>>> Stashed changes
+                        argv[0] = $2;
+                        argv[1] = $3;
                         return 0; }
                 | UNALIAS WORD NEWLINE
                         {
@@ -187,23 +171,14 @@ builtin.cmd:      CD NEWLINE
                         word5 = $2;
                         return 0;
                         }
-
                 ;
 
 simple.cmd:       WORD NEWLINE
-<<<<<<< Updated upstream
-                        { 
-                        input_command = $1; 
-                        argv[0] = $1; 
-                        argv[1] = NULL; 
-                        return 0; 
-=======
                         {
-                        bistr = $1;
+                        input_command = $1;
                         argv[0] = $1;
                         argv[1] = NULL;
                         return 0;
->>>>>>> Stashed changes
                         }
                 | WORD WORD NEWLINE
                         {
