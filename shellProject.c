@@ -11,6 +11,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdbool.h>
+#include <pwd.h>
 #include "shellProject.h"
 
 //////////////////////////////////////////////////////
@@ -157,6 +158,17 @@ void goPath(const char* thePathStr){
         }
 
         thePathStr = "";
+}
+
+void goPathUser(){
+    struct passwd *getpwnam(const char *);
+        if(userName[0] == '/'){
+            goHome();
+            goPath(userName+1);
+        }
+        else{
+            goPath(userName);
+        }
 }
 
 void printEnvironment() {
@@ -536,6 +548,9 @@ void do_it(){
         case CDPath_CMD:
             goPath(strPath);
             break;
+        case CDUser_CMD:
+            goPathUser();
+            break;
         case LS_CMD:
             goLS();
             break;
@@ -597,10 +612,10 @@ void execute_it(){
         if(pid == 0){
             switch (currcmd){
             case IO_ADDTOFILE:
-                    if(check_out_file() == OK){
-                        int fd0 = open(distf, 0644);
+                    if(check_out_file() == NULL){
+                        int fd0 = fopen(distf, 0644);
                         dup2(fd0, distf);
-                        close(distf);
+                        fclose(distf);
                     }
                     break;
             case IO_APPENDTOFILE:

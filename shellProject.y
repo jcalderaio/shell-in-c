@@ -50,6 +50,13 @@ builtin.cmd:    TILDE NEWLINE
                         builtin = 1;
                         return 0;
                         }
+                | TILDE WORD NEWLINE
+                        {
+                        bicmd = CDUser_CMD;
+                        builtin = 1;
+                        userName = $2;
+                        return 0;
+                        }
                 |  CD NEWLINE
                         {
                         bicmd = CDHome_CMD;

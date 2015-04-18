@@ -39,6 +39,7 @@
 #define LS_CMD                   11
 #define LSWord_CMD               12
 #define ALIAS_CMD_CREATE         13
+#define CDUser_CMD               14
 
 //------Simple Commands-----------//
 #define IO_ADDTOFILE             1
@@ -155,6 +156,8 @@ int isInFile;
 int isOutFile;
 int isWild;
 char* wcFound;
+char* userName;
+char* newUserName;
 
 ////////////////////////////////////
 
