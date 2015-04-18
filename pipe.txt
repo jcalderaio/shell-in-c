@@ -1,0 +1,3 @@
+>           Overwrite file or output to file
+>>          append the output to the end
+&&          continue to next command
