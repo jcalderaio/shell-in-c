@@ -849,7 +849,7 @@ YY_RULE_SETUP
                                                   else{
                                                     isTilde = 0;
                                                   }
-                                                  yylval.string[yyleng - 3] = 0;
+                                                  yylval.string[yyleng - 2] = 0;
                                                   return WORD;
                                                }
                                             }

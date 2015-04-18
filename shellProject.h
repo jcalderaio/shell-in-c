@@ -121,7 +121,7 @@ int MAXENV;
 int SETPROMPT;
 int CMD;
 int yylex();
-int yyparse();
+int yyparse(); 
 char* pathtab[MAXPATH];
 char* command_path;
 int argc;
