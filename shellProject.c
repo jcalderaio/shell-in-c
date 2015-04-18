@@ -294,9 +294,11 @@ void check_alias(char * key) {
         return;
     }
 
-    //Good up to here
-    while(currAlias.nested != -1){
-        currAlias = aliasTable[currAlias.nested];
+    if(currAlias.nested != -1) { //there is a nested command
+
+        while(currAlias.nested != -1){
+            currAlias = aliasTable[currAlias.nested];
+        }
     }
     
     char* argument_future = argv[1];
