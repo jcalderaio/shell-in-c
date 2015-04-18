@@ -44,7 +44,7 @@ ls                  return LS;
                                                   else{
                                                     isTilde = 0;
                                                   }
-                                                  yylval.string[yyleng - 3] = 0;
+                                                  yylval.string[yyleng - 2] = 0;
                                                   return WORD;
                                                }
                                             }

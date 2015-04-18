@@ -197,13 +197,6 @@ builtin.cmd:    TILDE NEWLINE
                         argv[0] = $2;
                         argv[1] = $3;
                         return 0; }
-                | ALIAS WORD STRING NEWLINE
-                        {
-                        bicmd = ALIAS_CMD_CREATE;
-                        builtin = 1;
-                        argv[0] = $2;
-                        argv[1] = $3;
-                        return 0; }
                 | UNALIAS WORD NEWLINE
                         {
                         bicmd = UNALIAS_CMD;

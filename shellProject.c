@@ -335,24 +335,26 @@ void check_alias(char * key) {
         }
     }
 
+    printf("%s token: \n", currAlias.value);
     char* argument_future = argv[1];
-    char* string = (char*) malloc(sizeof(strlen(currAlias.value)));
+    char* string = malloc(strlen(currAlias.value));
     char* drf;
     char* token = strtok_r(string, " ", &drf);
-    int i = 0;
-    while (token != NULL){
-        argv[i] = token;
-        ++i;
-        token = strtok_r(NULL, " ", &drf);
-    }
-    if(argument_future == NULL)
-        argv[i] = NULL;
-    else{
-        argv[i] = argument_future;
-        argv[++i] = NULL;
-    }
-    memset(input_command,0,strlen(input_command));
-    input_command = argv[0];
+    //printf("%s token: \n", token);
+    // int i = 0;
+    // while (token != NULL){
+    //     argv[i] = token;
+    //     ++i;
+    //     token = strtok_r(NULL, " ", &drf);
+    // }
+    // if(argument_future == NULL)
+    //     argv[i] = NULL;
+    // else{
+    //     argv[i] = argument_future;
+    //     argv[++i] = NULL;
+    // }
+    // memset(input_command,0,strlen(input_command));
+    // input_command = argv[0];
     return;
 }
 
@@ -589,7 +591,7 @@ int executable(){
 void execute_it(){
     // Handle  command execution, pipelining, i/o redirection, and background processing.
     // Utilize a command table whose components are plugged in during parsing by yacc.
-    //check_alias(input_command);
+    check_alias(input_command);
 
     if(!executable()) {
         pid_t pid = fork();
