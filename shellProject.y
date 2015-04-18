@@ -22,6 +22,7 @@ int eventcount = 0;
     char *string;
     char *word;
     char *option;
+    char *envexp;
 }
 
 %token <integer> LT GT AMP LPAREN VBAR DOT DEBUG NEWLINE TILDE LS PERIODPERIOD
@@ -31,6 +32,7 @@ int eventcount = 0;
 %token <word>    WORD SPACE VARIABLE VALUE
 %token <string>  STRING
 %token <option>  OPTION
+%token <envexp>  ENVEXP
 
 %start cmd
 

@@ -83,6 +83,7 @@ void getCurrentPath(){
     }
     else {
         currentWorkDir = cwd;
+        removeSpaces(currentWorkDir);
         free(cwd);
     }
 }
@@ -311,7 +312,7 @@ void unaliasword(char* key){
 }
 
 void check_alias(char * key) {
-    
+
     struct AliasNode currAlias;
     int flag = 0;
     int index = 0;
@@ -334,7 +335,7 @@ void check_alias(char * key) {
             currAlias = aliasTable[currAlias.nested];
         }
     }
-    
+
     char* argument_future = argv[1];
     char* string = (char*) malloc(sizeof(strlen(currAlias.value)));
     char* drf;
@@ -374,6 +375,7 @@ void goLSWord(){
     if(isWild == 1){
         wTest();
         if(wcFound != ""){
+            removeSpaces(wcFound);
             fileName = wcFound;
             printf("\n\n%s\n\n", fileName);
         }
@@ -384,13 +386,14 @@ void goLSWord(){
     dirp = opendir(currentWorkDir);
     int flag = 0;
     if (dirp){
-        printf("\n\nMADE IT HERE\n\n");
         while ((dir = readdir(dirp)) != NULL){
             if(strcmp(fileName, dir->d_name) == 0){
                 flag = 1;
                 DIR *d2;
                 struct dirent *dir2;
+                printf("\n\nMADE IT HERE\n\n");
                 d2 = opendir(dir->d_name);
+                printf("\n\nd2 = %d\n\n", d2);
                 if (d2){
                     while ((dir2 = readdir(d2)) != NULL){
                         printf("%s\n", dir2->d_name);

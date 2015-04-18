@@ -77,7 +77,8 @@
      VARIABLE = 293,
      VALUE = 294,
      STRING = 295,
-     OPTION = 296
+     OPTION = 296,
+     ENVEXP = 297
    };
 #endif
 /* Tokens.  */
@@ -120,6 +121,7 @@
 #define VALUE 294
 #define STRING 295
 #define OPTION 296
+#define ENVEXP 297
 
 
 
@@ -132,9 +134,10 @@ typedef union YYSTYPE
     char *string;
     char *word;
     char *option;
+    char *envexp;
 }
 /* Line 1529 of yacc.c.  */
-#line 138 "y.tab.h"
+#line 141 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
