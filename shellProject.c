@@ -10,6 +10,7 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <stdbool.h>
 #include "shellProject.h"
 
 //////////////////////////////////////////////////////
@@ -17,6 +18,39 @@
 //////////////////////////////////////////////////////
 
 extern char **environ;
+
+bool wCard(char* first, char* second){
+    if(*first == '\0' && *second == '\0'){
+        return true;
+    }
+    if(*first == '*' && *(first+1) != '\0' && *second == '\0'){
+        return false;
+    }
+    if(*first == '?' || *first == *second){
+        return wCard(first+1, second+1);
+    }
+    if(*first == '*'){
+        return wCard(first+1, second) || wCard(first, second+1);
+    }
+    return false;
+}
+
+void wTest(){
+    DIR *dirp;
+    char* second;
+    struct dirent* dir;
+    dirp = opendir(currentWorkDir);
+    if(dirp){
+        while((dir = readdir(dirp)) != NULL){
+            second = dir->d_name;
+            if(wCard(fileName, second)){
+                wcFound = second;
+                break;
+            }
+        }
+        closedir(dirp);
+    }
+}
 
 void removeSpaces (char *str) {
     // Set up two pointers.
@@ -190,7 +224,7 @@ void printAlias() {
 }
 
 void createAlias(char* key, char* value){
-        
+
     int count = 0;
     //If max alias count reached
     if(alias_count == MAXALIAS) {
@@ -234,10 +268,10 @@ void createAlias(char* key, char* value){
 }
 
 void unaliasword(char* key){
-    
+
     int count = 0;
     if(alias_count != 0) {
-        
+
         while(alias_count > count){
             if(!strcmp(key, aliasTable[count].key)){
                 int i = 0;
@@ -250,7 +284,7 @@ void unaliasword(char* key){
             }
             ++count;
         }
-        
+
         int count2 = count + 1;
         while(alias_count -1 > count)
         {
@@ -335,11 +369,22 @@ void goLS(){
 }
 
 void goLSWord(){
+    printf("\n\nhello world\n\n");
+    printf("\n\n%d\n\n", isWild);
+    if(isWild == 1){
+        wTest();
+        if(wcFound != ""){
+            fileName = wcFound;
+            printf("\n\n%s\n\n", fileName);
+        }
+    }
+    printf("\n\n%s\n\n", fileName);
     DIR *dirp;
     struct dirent *dir;
     dirp = opendir(currentWorkDir);
     int flag = 0;
     if (dirp){
+        printf("\n\nMADE IT HERE\n\n");
         while ((dir = readdir(dirp)) != NULL){
             if(strcmp(fileName, dir->d_name) == 0){
                 flag = 1;
@@ -368,14 +413,6 @@ void out_redir(){
 
 }
 
-void whichComm(int c){
-
-}
-
-void nuterr(){
-
-}
-
 ///////////////////////////////////////////////////////
 ///////Error Handling//////////////////////////////////
 ///////////////////////////////////////////////////////
@@ -398,11 +435,23 @@ void recover_from_errors(){
 ///////////////////////////////////////////////////////
 
 int check_in_file(){
-    return 0;
+    isInFile = open(srcf, O_RDONLY, 0600);
+    if( isInFile == -1){
+        return SYSERR;
+    }
+    else{
+        return OK;
+    }
 }
 
 int check_out_file(){
-    return 0;
+    isOutFile = open(distf, O_WRONLY, O_APPEND, O_RDWR, O_CREAT, 0644);
+    if(isOutFile == -1){
+        return SYSERR;
+    }
+    else{
+        return OK;
+    }
 }
 
 void init_scanner_and_parser(){
@@ -412,6 +461,7 @@ void init_scanner_and_parser(){
     builtin = 0;
     isTilde = -1;
     isQuote = -1;
+    wcFound = "";
 }
 
 void printPrompt(){

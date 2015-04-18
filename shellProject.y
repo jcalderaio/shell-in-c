@@ -27,7 +27,7 @@ int eventcount = 0;
 %token <integer> LT GT AMP LPAREN VBAR DOT DEBUG NEWLINE TILDE LS PERIODPERIOD
 %token <integer> SETENV PATH PROMPT CD BYE ALIAS UNALIAS PWD EXTEND PERIOD
 %token <integer> ALIASLOOP UNSETENV PRINTENV QUOTE PIPE BACKGROUND BACKSLASH
-%token <integer> LEFTBRACE RIGHTBRACE DOLLARSIGN
+%token <integer> LEFTBRACE RIGHTBRACE DOLLARSIGN LTLT GTGT
 %token <word>    WORD SPACE VARIABLE VALUE
 %token <string>  STRING
 %token <option>  OPTION
@@ -235,9 +235,11 @@ simple.cmd:       WORD NEWLINE
                         argv[++argc] = NULL;
                         return 0;
                         }
-                | WORD GT WORD
+                | WORD GT WORD NEWLINE
                         {
-
+                        input_command = $1;
+                        srcf = $3;
+                        return 0;
                         }
                 ;
 %%

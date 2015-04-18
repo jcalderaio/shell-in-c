@@ -142,9 +142,13 @@ char* alWord;
 int isQuote;
 char* strPathConCat;
 int dotdot;
-char srcf[];
-char distf[];
+char* srcf;
+char* distf;
 int isPeriod;
+int isInFile;
+int isOutFile;
+int isWild;
+char* wcFound;
 
 ////////////////////////////////////
 

@@ -70,12 +70,14 @@
      LEFTBRACE = 286,
      RIGHTBRACE = 287,
      DOLLARSIGN = 288,
-     WORD = 289,
-     SPACE = 290,
-     VARIABLE = 291,
-     VALUE = 292,
-     STRING = 293,
-     OPTION = 294
+     LTLT = 289,
+     GTGT = 290,
+     WORD = 291,
+     SPACE = 292,
+     VARIABLE = 293,
+     VALUE = 294,
+     STRING = 295,
+     OPTION = 296
    };
 #endif
 /* Tokens.  */
@@ -110,12 +112,14 @@
 #define LEFTBRACE 286
 #define RIGHTBRACE 287
 #define DOLLARSIGN 288
-#define WORD 289
-#define SPACE 290
-#define VARIABLE 291
-#define VALUE 292
-#define STRING 293
-#define OPTION 294
+#define LTLT 289
+#define GTGT 290
+#define WORD 291
+#define SPACE 292
+#define VARIABLE 293
+#define VALUE 294
+#define STRING 295
+#define OPTION 296
 
 
 
@@ -130,7 +134,7 @@ typedef union YYSTYPE
     char *option;
 }
 /* Line 1529 of yacc.c.  */
-#line 134 "y.tab.h"
+#line 138 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
