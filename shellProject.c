@@ -276,39 +276,49 @@ void unaliasword(char* key){
 
 }
 
-// void check_alias(char * name) {
-//     struct AliasNode *currNode = aliasHead5;
-//     while(1) {
-//         if(currNode == NULL) {
-//             return;
-//         }
-//         if(strcmp(currNode->key, name) == 0){
-//             break;
-//         }
-//         currNode = currNode->next;
-//     }
+void check_alias(char * key) {
+    
+    struct AliasNode currAlias;
+    int flag = 0;
+    int index = 0;
+    while(alias_count > index){
+        if(!strcmp(aliasTable[index].key, key)){
+            currAlias = aliasTable[index];
+            ++flag;
+            break;
+        }
+        ++index;
+    }
 
-//     char* saved_argv = argv[1];
-//     char* str = malloc(strlen(currNode->value));
-//     strcpy(str, currNode->value);
-//     char* reserve;
-//     char* tok = strtok_r(str, " ", &reserve);
-//     int i = 0;
-//     while (tok != NULL){
-//         argv[i] = tok;
-//         ++i;
-//         tok = strtok_r(NULL, " ", &reserve);
-//     }
-//     if(saved_argv == NULL)
-//         argv[i] = NULL;
-//     else{
-//         argv[i] = saved_argv;
-//         argv[++i] = NULL;
-//     }
-//     memset(input_command,0,strlen(input_command));
-//     input_command = argv[0];
-//     return;
-// }
+    if(flag == 0) {
+        return;
+    }
+
+    //Good up to here
+    while(currAlias.nested != -1){
+        currAlias = aliasTable[currAlias.nested];
+    }
+    
+    char* argument_future = argv[1];
+    char* string = (char*) malloc(sizeof(strlen(currAlias.value)));
+    char* drf;
+    char* token = strtok_r(string, " ", &drf);
+    int i = 0;
+    while (token != NULL){
+        argv[i] = token;
+        ++i;
+        token = strtok_r(NULL, " ", &drf);
+    }
+    if(argument_future == NULL)
+        argv[i] = NULL;
+    else{
+        argv[i] = argument_future;
+        argv[++i] = NULL;
+    }
+    memset(input_command,0,strlen(input_command));
+    input_command = argv[0];
+    return;
+}
 
 void goLS(){
     DIR *dirp;
@@ -505,7 +515,7 @@ void execute_it(){
     // Utilize a command table whose components are plugged in during parsing by yacc.
     //check_alias(input_command);
 
-   // check_alias(input_command);
+   check_alias(input_command);
 
     //* Check Command Accessability and Executability
     if(isExe == 0) {
