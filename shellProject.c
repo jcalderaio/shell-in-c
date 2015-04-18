@@ -18,6 +18,12 @@
 //////////////////////////////////////////////////////
 
 extern char **environ;
+char * tester1;
+char * tester2;
+char * tester3;
+char * tester4;
+
+
 
 bool wCard(char* first, char* second){
     if(*first == '\0' && *second == '\0'){
@@ -94,7 +100,7 @@ void goHome(){
     chdir(home);
 }
 
-void goPath(const char* thePathStr){
+void goPath(char* thePathStr){
     if(isTilde == 1){
             getCurrentPath();
             strcpy(currLoc, home);
@@ -218,7 +224,7 @@ void printAlias() {
     }
     int count = 0;
     while(count < alias_count){
-        printf("%s: %s\n", aliasTable[count].key, aliasTable[count].value);
+        printf("%s:%s\n", aliasTable[count].key, aliasTable[count].value);
         ++count;
     }
 }
@@ -310,54 +316,6 @@ void unaliasword(char* key){
 
 }
 
-void check_alias(char * key) {
-
-    struct AliasNode currAlias;
-    int flag = 0;
-    int index = 0;
-    while(alias_count > index){
-        if(!strcmp(aliasTable[index].key, key)){
-            currAlias = aliasTable[index];
-            ++flag;
-            break;
-        }
-        ++index;
-    }
-
-    if(flag == 0) {
-        return;
-    }
-
-    if(currAlias.nested != -1) { //there is a nested command
-
-        while(currAlias.nested != -1){
-            currAlias = aliasTable[currAlias.nested];
-        }
-    }
-
-    printf("%s token: \n", currAlias.value);
-    char* argument_future = argv[1];
-    char* string = malloc(strlen(currAlias.value));
-    char* drf;
-    char* token = strtok_r(string, " ", &drf);
-    //printf("%s token: \n", token);
-    // int i = 0;
-    // while (token != NULL){
-    //     argv[i] = token;
-    //     ++i;
-    //     token = strtok_r(NULL, " ", &drf);
-    // }
-    // if(argument_future == NULL)
-    //     argv[i] = NULL;
-    // else{
-    //     argv[i] = argument_future;
-    //     argv[++i] = NULL;
-    // }
-    // memset(input_command,0,strlen(input_command));
-    // input_command = argv[0];
-    return;
-}
-
 void goLS(){
     DIR *dirp;
     struct dirent* dir;
@@ -438,7 +396,7 @@ void recover_from_errors(){
     // In this case you have to recover by “eating”
     // the rest of the command.
     // To do this: use yylex() directly.
-    printf("Command Error!!!");
+    printf("Command Error!!!\n");
 }
 
 ///////////////////////////////////////////////////////
@@ -530,7 +488,58 @@ void shell_init(){
     // do anything you feel should be done as init
 }
 
+char * check_alias(char *key) {
+
+    struct AliasNode currAlias;
+    int flag = 0;
+    int index = 0;
+    while(alias_count > index){
+        if(!strcmp(aliasTable[index].key, key)){
+            currAlias = aliasTable[index];
+            ++flag;
+            break;
+        }
+        ++index;
+    }
+
+    if(flag == 0) {
+        return key;
+    }
+
+    if(currAlias.nested != -1) { //there is a nested command
+
+        while(currAlias.nested != -1){
+            currAlias = aliasTable[currAlias.nested];
+        }
+    }
+
+    printf("%s is the token i am looking for\n", currAlias.value);
+    return currAlias.value;
+
+    // char* argument_future = argv[1];
+    // char* string = malloc(strlen(currAlias.value));
+    // strcpy(string, currAlias.value);
+    // char* drf;
+    // char* token = strtok_r(string, " ", &drf);
+    // int i = 0;
+    // while (token != NULL){
+    //     argv[i] = token;
+    //     ++i;
+    //     token = strtok_r(NULL, " ", &drf);
+    // }
+    // if(argument_future == NULL)
+    //     argv[i] = NULL;
+    // else{
+    //     argv[i] = argument_future;
+    //     argv[++i] = NULL;
+    // }
+    // memset(input_command,0,strlen(input_command));
+    // input_command = argv[0];
+    // return;
+}
+
 void do_it(){
+
     switch (bicmd) {
         case CDHome_CMD:
             goHome();
@@ -569,29 +578,28 @@ void do_it(){
     }
 }
 
-void undoit(){
-    //Need to define this function
-}
-
 int executable(){
     int i = 0;
     for(i = 0; pathtab[i] != NULL; ++i){
-        int len = strlen(pathtab[i]) + strlen(input_command) + strlen("/"); // add 1 for the '/'
-        executable_path = malloc(len);
+        int length = strlen(pathtab[i]) + strlen(input_command) + strlen("/");
+        executable_path = malloc(length);
         strcpy(executable_path, pathtab[i]);
         strcat(executable_path, "/");
         strcat(executable_path, input_command);
         int retVal = access(executable_path, X_OK);
-        if(retVal == 0)
+        if(retVal == 0) {
+            printf("return ok\n");
             return OK;
+        }
     }
-    return SYSERR;
+    printf("return error\n");
+    return ERRORS;
+    
 }
 
 void execute_it(){
     // Handle  command execution, pipelining, i/o redirection, and background processing.
     // Utilize a command table whose components are plugged in during parsing by yacc.
-    check_alias(input_command);
 
     if(!executable()) {
         pid_t pid = fork();

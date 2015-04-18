@@ -34,6 +34,8 @@ int eventcount = 0;
 %token <option>  OPTION
 %token <envexp>  ENVEXP
 
+%type <option>   builtin.cmd
+
 %start cmd
 
 %%
@@ -41,6 +43,8 @@ int eventcount = 0;
 cmd:              builtin.cmd
 
                 | simple.cmd
+
+                | alias.cmd
 
                 ;
 
@@ -185,7 +189,9 @@ builtin.cmd:    TILDE NEWLINE
                         bicmd = PRINTENV_CMD;
                         return 0;
                         }
-                | ALIAS NEWLINE
+                  ;
+
+alias.cmd:        ALIAS NEWLINE
                         { bicmd = ALIAS_CMD;
                         builtin = 1;
                         return 0;
