@@ -147,6 +147,15 @@ builtin.cmd:      CD NEWLINE
                         argv[1] = NULL;
                         return 0;
                         }
+                | SETENV WORD PERIOD NEWLINE
+                        {
+                        bicmd = SETENV_CMD;
+                        builtin = 1;
+                        isPeriod = 1;
+                        argv[0] = $2;
+                        argv[1] = NULL;
+                        return 0;
+                        }
                 | SETENV WORD WORD NEWLINE
                         {
                         bicmd = SETENV_CMD;
@@ -225,6 +234,10 @@ simple.cmd:       WORD NEWLINE
                         argv[++argc] = $2;
                         argv[++argc] = NULL;
                         return 0;
+                        }
+                | WORD GT WORD
+                        {
+
                         }
                 ;
 %%

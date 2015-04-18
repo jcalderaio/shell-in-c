@@ -133,13 +133,32 @@ void printEnvironment() {
 }
 
 void setEnvironment() {
-    if(argv[0] == NULL) {
-        printEnvironment();
+    if(!isPeriod){
+        if(argv[0] == NULL) {
+            printEnvironment();
+        }
+        else if(argv[1] == NULL) {
+            char* string_1 = remove_white(argv[0]);
+            setenv(string_1, "", 0);
+            printf("\"%s\" added to environment variables!\n", string_1);
+        }
+        else {
+            char* string_1 = remove_white(argv[0]);
+            setenv(string_1, remove_white(argv[1]), 0);
+            printf("\"%s\" added to environment variables!\n", string_1);
+        }
     }
-    else if(argv[1] == NULL) {
-        char* string_1 = remove_white(argv[0]);
-        setenv(string_1, "", 0);
-        printf("\"%s\" added to environment variables!\n", string_1);
+    else{
+        if(argv[0] == NULL) {
+            printEnvironment();
+        }
+        else {
+            getCurrentPath();
+            char* string_1 = remove_white(argv[0]);
+            setenv(string_1, remove_white(currentWorkDir), 0);
+            printf("\"%s\" added to environment variables!\n", string_1);
+            isPeriod = 0;
+        }
     }
     else {
         char* string_1 = remove_white(argv[0]);
@@ -334,6 +353,22 @@ void goLSWord(){
     }
 }
 
+void in_redir(){
+
+}
+
+void out_redir(){
+
+}
+
+void whichComm(int c){
+
+}
+
+void nuterr(){
+
+}
+
 ///////////////////////////////////////////////////////
 ///////Error Handling//////////////////////////////////
 ///////////////////////////////////////////////////////
@@ -473,33 +508,69 @@ void undoit(){
 void execute_it(){
     // Handle  command execution, pipelining, i/o redirection, and background processing.
     // Utilize a command table whose components are plugged in during parsing by yacc.
+    //check_alias(input_command);
 
    // check_alias(input_command);
 
-    /*
-     * Check Command Accessability and Executability
-     */
-    // if(isExe == 0) {
-    //     //use access() system call with X_OK
-    //     return;
-    // }
+    //* Check Command Accessability and Executability
+    if(isExe == 0) {
+        //use access() system call with X_OK
+        return;
+    }
 
-    // /*
     //  * Check io file existence in case of io-redirection.
-    //  */
-    // if( check_in_file() == SYSERR ) {
-    //     //nuterr("Cann't read from : %s",srcf);
-    //     return;
-    // }
-    // if( check_out_file() == SYSERR ) {
-    //     //nuterr("Cann't write to : %s",distf);
-    //     return;
-    // }
+    if( check_in_file() == SYSERR ) {
+        printf("Error reading from : %s", srcf);
+        return;
+    }
+    if( check_out_file() == SYSERR ) {
+        printf("Error writing to : %s", distf);
+        return;
+    }
 
     printf("%s :command not found\n", input_command);
 
     //Build up the pipeline (create and set up pipe end points (using pipe, dup)
     //Process background
+    pid_t pid = fork();
+    int c = 0;
+    for(c = 0; c < currcmd; c++){
+        if(argv[0] == NULL ){
+            //Argv?
+        }
+        else{
+            //the case of a command with no arguments
+        }
+
+        switch(pid){   //Fork process return twice
+            case 0:
+                switch(bicmd){
+                    case FIRST:
+                        if( close(1) == SYSCALLER) {  }
+                        if( dup(comtab[c].outfd) != 1) {  }
+                        if( close(comtab[c + 1].infd) == SYSCALLER) {  }
+                        in_redir();
+                        break;
+
+                    case LAST:
+                        if( close(0) == SYSCALLER) {  }
+                        if( dup(comtab[c].infd) != 0) {  }
+                        out_redir();
+                        break;
+
+                    case THE_ONLY_ONE:
+                        in_redir();
+                        out_redir();
+                        break;
+
+                    default:
+                        if( dup2(comtab[c].outfd, 1) == SYSCALLER) { }
+                        if( dup2(comtab[c].infd, 0) == SYSCALLER) { }
+                        if( close(comtab[c+1].infd) == SYSCALLER) { }
+                        break;
+                }
+        }
+    }
 }
 
 int executable(){

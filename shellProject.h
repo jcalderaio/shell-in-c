@@ -52,7 +52,6 @@ typedef struct com{
     int outfd;
     int nargs;
     ARGTAB *atptr;
-
 } COMMAND;
 
 struct env {
@@ -76,7 +75,7 @@ struct AliasNode {
 
 struct AliasNode aliasTable[MAXALIAS];
 int alias_count;
-COMMAND camtab[MAXCMDS];
+COMMAND comtab[MAXCMDS];
 CACHE cachetab[MAXCACHE];
 int currcmd;
 int currcache;
@@ -143,6 +142,9 @@ char* alWord;
 int isQuote;
 char* strPathConCat;
 int dotdot;
+char srcf[];
+char distf[];
+int isPeriod;
 
 ////////////////////////////////////
 
