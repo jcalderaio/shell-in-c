@@ -160,11 +160,6 @@ void setEnvironment() {
             isPeriod = 0;
         }
     }
-    else {
-        char* string_1 = remove_white(argv[0]);
-        setenv(string_1, remove_white(argv[1]), 0);
-        printf("\"%s\" added to environment variables!\n", string_1);
-    }
 }
 
 void unsetEnvironment() {

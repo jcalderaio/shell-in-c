@@ -510,8 +510,8 @@ static const yytype_uint8 yyrline[] =
 {
        0,    39,    39,    41,    45,    51,    58,    64,    72,    79,
       86,    95,   104,   109,   115,   121,   128,   135,   142,   150,
-     160,   168,   175,   182,   188,   193,   200,   207,   216,   223,
-     231,   239
+     159,   167,   174,   181,   187,   192,   199,   206,   215,   222,
+     230,   238
 };
 #endif
 
@@ -1602,7 +1602,6 @@ yyreduce:
   case 19:
 #line 151 "shellProject.y"
     {
-                        printf("\n\nI am here now\n\n");
                         bicmd = SETENV_CMD;
                         builtin = 1;
                         isPeriod = 1;
@@ -1613,7 +1612,7 @@ yyreduce:
     break;
 
   case 20:
-#line 161 "shellProject.y"
+#line 160 "shellProject.y"
     {
                         bicmd = SETENV_CMD;
                         builtin = 1;
@@ -1624,7 +1623,7 @@ yyreduce:
     break;
 
   case 21:
-#line 169 "shellProject.y"
+#line 168 "shellProject.y"
     {
                         bicmd = UNSETENV_CMD;
                         builtin = 1;
@@ -1634,7 +1633,7 @@ yyreduce:
     break;
 
   case 22:
-#line 176 "shellProject.y"
+#line 175 "shellProject.y"
     {
                         bicmd = UNSETENV_CMD;
                         builtin = 1;
@@ -1644,7 +1643,7 @@ yyreduce:
     break;
 
   case 23:
-#line 183 "shellProject.y"
+#line 182 "shellProject.y"
     {
                         builtin = 1;
                         bicmd = PRINTENV_CMD;
@@ -1653,7 +1652,7 @@ yyreduce:
     break;
 
   case 24:
-#line 189 "shellProject.y"
+#line 188 "shellProject.y"
     { bicmd = ALIAS_CMD;
                         builtin = 1;
                         return 0;
@@ -1661,7 +1660,7 @@ yyreduce:
     break;
 
   case 25:
-#line 194 "shellProject.y"
+#line 193 "shellProject.y"
     {
                         bicmd = ALIAS_CMD_CREATE;
                         builtin = 1;
@@ -1671,7 +1670,7 @@ yyreduce:
     break;
 
   case 26:
-#line 201 "shellProject.y"
+#line 200 "shellProject.y"
     {
                         bicmd = ALIAS_CMD_CREATE;
                         builtin = 1;
@@ -1681,7 +1680,7 @@ yyreduce:
     break;
 
   case 27:
-#line 208 "shellProject.y"
+#line 207 "shellProject.y"
     {
                         bicmd = UNALIAS_CMD;
                         builtin = 1;
@@ -1691,7 +1690,7 @@ yyreduce:
     break;
 
   case 28:
-#line 217 "shellProject.y"
+#line 216 "shellProject.y"
     {
                         input_command = (yyvsp[(1) - (2)].word);
                         argv[0] = (yyvsp[(1) - (2)].word);
@@ -1701,7 +1700,7 @@ yyreduce:
     break;
 
   case 29:
-#line 224 "shellProject.y"
+#line 223 "shellProject.y"
     {
                         bistr = (yyvsp[(1) - (3)].word);
                         argv[argc] = (yyvsp[(1) - (3)].word);
@@ -1712,7 +1711,7 @@ yyreduce:
     break;
 
   case 30:
-#line 232 "shellProject.y"
+#line 231 "shellProject.y"
     {
                         bistr = (yyvsp[(1) - (3)].word);
                         argv[argc] = (yyvsp[(1) - (3)].word);
@@ -1723,7 +1722,7 @@ yyreduce:
     break;
 
   case 31:
-#line 240 "shellProject.y"
+#line 239 "shellProject.y"
     {
 
                         }
@@ -1731,7 +1730,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1735 "y.tab.c"
+#line 1734 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -1945,7 +1944,7 @@ yyreturn:
 }
 
 
-#line 244 "shellProject.y"
+#line 243 "shellProject.y"
 
 
 int yyerror(char *s){
