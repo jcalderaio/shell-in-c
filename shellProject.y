@@ -18,7 +18,7 @@ int eventcount = 0;
 %}
 
 %union{
-    int integer;
+    int   integer;
     char *string;
     char *word;
     char *option;
@@ -44,7 +44,13 @@ cmd:              builtin.cmd
 
                 ;
 
-builtin.cmd:      CD NEWLINE
+builtin.cmd:    TILDE NEWLINE
+                        {
+                        bicmd = CDHome_CMD;
+                        builtin = 1;
+                        return 0;
+                        }
+                |  CD NEWLINE
                         {
                         bicmd = CDHome_CMD;
                         builtin = 1;
@@ -88,7 +94,6 @@ builtin.cmd:      CD NEWLINE
                 | CD PERIODPERIOD WORD NEWLINE
                         {
                         bicmd = CDPath_CMD;
-                        printf("\n\nI am a double dot\n\n");
                         builtin = 1;
                         dotdot = 1;
                         strPath = $3;
@@ -97,7 +102,6 @@ builtin.cmd:      CD NEWLINE
                 | CD PERIOD WORD NEWLINE
                         {
                         bicmd = CDPath_CMD;
-                        printf("\n\nI am only one dot\n\n");
                         dotdot = 0;
                         builtin = 1;
                         strPath = $3;
@@ -127,13 +131,8 @@ builtin.cmd:      CD NEWLINE
                         fileName = $2;
                         return 0;
                         }
-                | LS STRING NEWLINE
-                        {
-                        bicmd = LSWord_CMD;
-                        builtin = 1;
-                        fileName = $2;
-                        return 0;
-                        }
+                | LS simple.cmd
+
                 | SETENV NEWLINE
                         {
                         bicmd = SETENV_CMD;
@@ -214,7 +213,7 @@ builtin.cmd:      CD NEWLINE
                         }
                 ;
 
-simple.cmd:       WORD NEWLINE
+simple.cmd:      WORD NEWLINE
                         {
                         input_command = $1;
                         argv[0] = $1;
@@ -239,8 +238,16 @@ simple.cmd:       WORD NEWLINE
                         }
                 | WORD GT WORD NEWLINE
                         {
+                        currcmd = IO_ADDTOFILE;
                         input_command = $1;
-                        srcf = $3;
+                        distf = $3;
+                        return 0;
+                        }
+                | WORD GTGT WORD NEWLINE
+                        {
+                        currcmd = IO_APPENDTOFILE;
+                        input_command = $1;
+                        distf = $3;
                         return 0;
                         }
                 ;

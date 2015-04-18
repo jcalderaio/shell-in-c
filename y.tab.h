@@ -130,7 +130,7 @@
 typedef union YYSTYPE
 #line 20 "shellProject.y"
 {
-    int integer;
+    int   integer;
     char *string;
     char *word;
     char *option;

@@ -26,6 +26,7 @@
 
 #define REGISTRY "REGISTRY"
 
+//------Builtin Commands-----------//
 #define BYE_CMD                  2
 #define CDHome_CMD               3
 #define CDPath_CMD               4
@@ -38,6 +39,11 @@
 #define LS_CMD                   11
 #define LSWord_CMD               12
 #define ALIAS_CMD_CREATE         13
+
+//------Simple Commands-----------//
+#define IO_ADDTOFILE             1
+#define IO_APPENDTOFILE          2
+
 
 ///////*Command line arguments structure*//////
 typedef struct comrgs{

@@ -111,7 +111,6 @@ void goPath(const char* thePathStr){
             isTilde = 0;
         }
         else{
-            //printf("\n\nI am here now2222\n\n");
             if(dotdot == 1){
                 getCurrentPath();
                 strcpy(currLoc, currentWorkDir);
@@ -370,7 +369,6 @@ void goLS(){
 }
 
 void goLSWord(){
-    printf("\n\nhello world\n\n");
     printf("\n\n%d\n\n", isWild);
     if(isWild == 1){
         wTest();
@@ -380,9 +378,17 @@ void goLSWord(){
             printf("\n\n%s\n\n", fileName);
         }
     }
+    if(isTilde == 1){
+        goHome();
+        fileName = fileName + 1;
+    }
+    if(fileName[0] == '/'){
+        fileName = fileName + 1;
+    }
     printf("\n\n%s\n\n", fileName);
     DIR *dirp;
     struct dirent *dir;
+    getCurrentPath();
     dirp = opendir(currentWorkDir);
     int flag = 0;
     if (dirp){
@@ -565,74 +571,6 @@ void undoit(){
     //Need to define this function
 }
 
-void execute_it(){
-    // Handle  command execution, pipelining, i/o redirection, and background processing.
-    // Utilize a command table whose components are plugged in during parsing by yacc.
-    //check_alias(input_command);
-
-   check_alias(input_command);
-
-    //* Check Command Accessability and Executability
-    if(isExe == 0) {
-        //use access() system call with X_OK
-        return;
-    }
-
-    //  * Check io file existence in case of io-redirection.
-    if( check_in_file() == SYSERR ) {
-        printf("Error reading from : %s", srcf);
-        return;
-    }
-    if( check_out_file() == SYSERR ) {
-        printf("Error writing to : %s", distf);
-        return;
-    }
-
-    printf("%s :command not found\n", input_command);
-
-    //Build up the pipeline (create and set up pipe end points (using pipe, dup)
-    //Process background
-    pid_t pid = fork();
-    int c = 0;
-    for(c = 0; c < currcmd; c++){
-        if(argv[0] == NULL ){
-            //Argv?
-        }
-        else{
-            //the case of a command with no arguments
-        }
-
-        switch(pid){   //Fork process return twice
-            case 0:
-                switch(bicmd){
-                    case FIRST:
-                        if( close(1) == SYSCALLER) {  }
-                        if( dup(comtab[c].outfd) != 1) {  }
-                        if( close(comtab[c + 1].infd) == SYSCALLER) {  }
-                        in_redir();
-                        break;
-
-                    case LAST:
-                        if( close(0) == SYSCALLER) {  }
-                        if( dup(comtab[c].infd) != 0) {  }
-                        out_redir();
-                        break;
-
-                    case THE_ONLY_ONE:
-                        in_redir();
-                        out_redir();
-                        break;
-
-                    default:
-                        if( dup2(comtab[c].outfd, 1) == SYSCALLER) { }
-                        if( dup2(comtab[c].infd, 0) == SYSCALLER) { }
-                        if( close(comtab[c+1].infd) == SYSCALLER) { }
-                        break;
-                }
-        }
-    }
-}
-
 int executable(){
     int i = 0;
     for(i = 0; pathtab[i] != NULL; ++i){
@@ -646,6 +584,62 @@ int executable(){
             return OK;
     }
     return SYSERR;
+}
+
+void execute_it(){
+    // Handle  command execution, pipelining, i/o redirection, and background processing.
+    // Utilize a command table whose components are plugged in during parsing by yacc.
+    //check_alias(input_command);
+
+    if(!executable()) {
+        pid_t pid = fork();
+        int stat;
+        if(pid == 0){
+            switch (currcmd){
+            case IO_ADDTOFILE:
+                    if(check_out_file() == OK){
+                        int fd0 = open(distf, 0644);
+                        dup2(fd0, distf);
+                        close(distf);
+                    }
+                    break;
+            case IO_APPENDTOFILE:
+                    break;
+            default:
+                    break;
+        }
+            //child process
+            execve(executable_path, argv , environ);
+            free(executable_path);
+        }
+        else if(pid < 0){
+            //error forking
+            perror(executable_path);
+        }
+        else{
+            waitpid(pid, &stat, 0);
+        }
+    }
+    else{
+
+        printf("%s %s\n", input_command, ": command not found");
+    }
+    //Build up the pipeline (create and set up pipe end points (using pipe, dup)
+    //Process background
+    return;
+
+    // //  * Check io file existence in case of io-redirection.
+    // if( check_in_file() == SYSERR ) {
+    //     printf("Error reading from : %s", srcf);
+    //     return;
+    // }
+    // if( check_out_file() == SYSERR ) {
+    //     printf("Error writing to : %s", distf);
+    //     return;
+    // }
+
+    // printf("%s :command not found\n", input_command);
+
 }
 
 void processCommand(){
