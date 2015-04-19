@@ -128,8 +128,6 @@ char* command_path;
 int argc;
 char* argv[MAXARGS];
 char* executable_path;
-int yylineno;
-char* yytext;
 char* input_command;
 int isExe;
 char* currentLocation;

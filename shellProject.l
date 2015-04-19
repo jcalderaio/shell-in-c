@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include <string.h>
 #include "y.tab.h"
+#include "lex.yy.c"
 #include "shellProject.h"
 extern YYSTYPE yylval;
 %}
