@@ -788,7 +788,7 @@ void reprocess() {
     char * new_command = argv[0];
 
     if(length == 1) {
-        //strcat(new_command, "");
+        strcat(new_command, "\n");
     }
     else {
         strcat(new_command, " ");
@@ -796,7 +796,7 @@ void reprocess() {
         while(argv[i] != NULL){
             strcat(new_command, argv[i]);
             if(i == (length-1) ) {
-                //strcat(new_command, "");
+                strcat(new_command, "\n");
             }
             else {
                 strcat(new_command, " ");
@@ -804,8 +804,6 @@ void reprocess() {
             ++i;
         }
     }
-    
-    const char * const_cmd = new_command;
     
         // yy_scan_string(new_new_command);
         // char* reserve;
@@ -815,17 +813,13 @@ void reprocess() {
         // yyparse();
         // yylex_destroy();
         
-        printf("%s\n", const_cmd);
         YY_BUFFER_STATE bp;
-        bp = yy_scan_string(new_command);
+        bp = yy_scan_string( new_command );
         yy_switch_to_buffer( bp );
         getCommand();
         processCommand();
         yy_delete_buffer(bp);
         yylex_destroy();
-
-
-
 
 }
 
