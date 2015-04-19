@@ -167,11 +167,8 @@
 int eventcount = 0;
 
  /* parse local working data section */
-
  COMMAND *q, *p;
-
  int pfd[2];
-
 
 
 /* Enabling traces.  */
@@ -194,7 +191,7 @@ int eventcount = 0;
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 20 "shellProject.y"
+#line 17 "shellProject.y"
 {
     int   integer;
     char *string;
@@ -203,7 +200,7 @@ typedef union YYSTYPE
     char *envexp;
 }
 /* Line 193 of yacc.c.  */
-#line 207 "y.tab.c"
+#line 204 "y.tab.c"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
@@ -216,7 +213,7 @@ typedef union YYSTYPE
 
 
 /* Line 216 of yacc.c.  */
-#line 220 "y.tab.c"
+#line 217 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -518,10 +515,10 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    44,    44,    46,    48,    52,    58,    65,    71,    78,
-      84,    92,    99,   106,   114,   122,   127,   133,   139,   146,
-     154,   162,   171,   178,   186,   195,   203,   210,   217,   225,
-     231,   238,   247,   254,   262,   270,   278,   285
+       0,    41,    41,    43,    45,    49,    55,    62,    68,    75,
+      81,    89,    96,   103,   111,   119,   124,   130,   136,   143,
+     151,   159,   168,   175,   183,   192,   200,   207,   214,   222,
+     228,   235,   244,   251,   259,   267,   275,   282
 };
 #endif
 
@@ -1468,7 +1465,7 @@ yyreduce:
   switch (yyn)
     {
         case 5:
-#line 53 "shellProject.y"
+#line 50 "shellProject.y"
     {
                         bicmd = CDHome_CMD;
                         builtin = 1;
@@ -1477,7 +1474,7 @@ yyreduce:
     break;
 
   case 6:
-#line 59 "shellProject.y"
+#line 56 "shellProject.y"
     {
                         bicmd = CDUser_CMD;
                         builtin = 1;
@@ -1487,7 +1484,7 @@ yyreduce:
     break;
 
   case 7:
-#line 66 "shellProject.y"
+#line 63 "shellProject.y"
     {
                         bicmd = CDHome_CMD;
                         builtin = 1;
@@ -1496,7 +1493,7 @@ yyreduce:
     break;
 
   case 8:
-#line 72 "shellProject.y"
+#line 69 "shellProject.y"
     {
                         bicmd = CDPath_CMD;
                         builtin = 1;
@@ -1506,7 +1503,7 @@ yyreduce:
     break;
 
   case 9:
-#line 79 "shellProject.y"
+#line 76 "shellProject.y"
     {
                         bicmd = CDHome_CMD;
                         builtin = 1;
@@ -1515,7 +1512,7 @@ yyreduce:
     break;
 
   case 10:
-#line 85 "shellProject.y"
+#line 82 "shellProject.y"
     {
                         bicmd = CDPath_CMD;
                         isTilde = 1;
@@ -1526,7 +1523,7 @@ yyreduce:
     break;
 
   case 11:
-#line 93 "shellProject.y"
+#line 90 "shellProject.y"
     {
                         bicmd = CDPath_CMD;
                         builtin = 1;
@@ -1536,7 +1533,7 @@ yyreduce:
     break;
 
   case 12:
-#line 100 "shellProject.y"
+#line 97 "shellProject.y"
     {
                         bicmd = CDPath_CMD;
                         builtin = 1;
@@ -1546,7 +1543,7 @@ yyreduce:
     break;
 
   case 13:
-#line 107 "shellProject.y"
+#line 104 "shellProject.y"
     {
                         bicmd = CDPath_CMD;
                         builtin = 1;
@@ -1557,7 +1554,7 @@ yyreduce:
     break;
 
   case 14:
-#line 115 "shellProject.y"
+#line 112 "shellProject.y"
     {
                         bicmd = CDPath_CMD;
                         dotdot = 0;
@@ -1568,7 +1565,7 @@ yyreduce:
     break;
 
   case 15:
-#line 123 "shellProject.y"
+#line 120 "shellProject.y"
     {
                         bicmd = BYE_CMD;
                         return 0;
@@ -1576,7 +1573,7 @@ yyreduce:
     break;
 
   case 16:
-#line 128 "shellProject.y"
+#line 125 "shellProject.y"
     {
                         bicmd = NEWLINE_CMD;
                         builtin = 1;
@@ -1585,7 +1582,7 @@ yyreduce:
     break;
 
   case 17:
-#line 134 "shellProject.y"
+#line 131 "shellProject.y"
     {
                         bicmd = LS_CMD;
                         builtin = 1;
@@ -1594,7 +1591,7 @@ yyreduce:
     break;
 
   case 18:
-#line 140 "shellProject.y"
+#line 137 "shellProject.y"
     {
                         bicmd = LSWord_CMD;
                         builtin = 1;
@@ -1604,7 +1601,7 @@ yyreduce:
     break;
 
   case 19:
-#line 147 "shellProject.y"
+#line 144 "shellProject.y"
     {
                         currcmd = OUTPUT_REDIRECTION;
                         isLSWithWord = 1;
@@ -1615,7 +1612,7 @@ yyreduce:
     break;
 
   case 20:
-#line 155 "shellProject.y"
+#line 152 "shellProject.y"
     {
                         currcmd = OUTPUT_APP;
                         isLSWithWord = 1;
@@ -1626,7 +1623,7 @@ yyreduce:
     break;
 
   case 21:
-#line 163 "shellProject.y"
+#line 160 "shellProject.y"
     {
                         bicmd = LSWordWord_CMD;
                         builtin = 1;
@@ -1637,7 +1634,7 @@ yyreduce:
     break;
 
   case 22:
-#line 172 "shellProject.y"
+#line 169 "shellProject.y"
     {
                         bicmd = SETENV_CMD;
                         builtin = 1;
@@ -1647,7 +1644,7 @@ yyreduce:
     break;
 
   case 23:
-#line 179 "shellProject.y"
+#line 176 "shellProject.y"
     {
                         bicmd = SETENV_CMD;
                         builtin = 1;
@@ -1658,7 +1655,7 @@ yyreduce:
     break;
 
   case 24:
-#line 187 "shellProject.y"
+#line 184 "shellProject.y"
     {
                         bicmd = SETENV_CMD;
                         builtin = 1;
@@ -1670,7 +1667,7 @@ yyreduce:
     break;
 
   case 25:
-#line 196 "shellProject.y"
+#line 193 "shellProject.y"
     {
                         bicmd = SETENV_CMD;
                         builtin = 1;
@@ -1681,7 +1678,7 @@ yyreduce:
     break;
 
   case 26:
-#line 204 "shellProject.y"
+#line 201 "shellProject.y"
     {
                         bicmd = UNSETENV_CMD;
                         builtin = 1;
@@ -1691,7 +1688,7 @@ yyreduce:
     break;
 
   case 27:
-#line 211 "shellProject.y"
+#line 208 "shellProject.y"
     {
                         bicmd = UNSETENV_CMD;
                         builtin = 1;
@@ -1701,7 +1698,7 @@ yyreduce:
     break;
 
   case 28:
-#line 218 "shellProject.y"
+#line 215 "shellProject.y"
     {
                         builtin = 1;
                         bicmd = PRINTENV_CMD;
@@ -1710,7 +1707,7 @@ yyreduce:
     break;
 
   case 29:
-#line 226 "shellProject.y"
+#line 223 "shellProject.y"
     {
                         bicmd = ALIAS_CMD;
                         builtin = 1;
@@ -1719,7 +1716,7 @@ yyreduce:
     break;
 
   case 30:
-#line 232 "shellProject.y"
+#line 229 "shellProject.y"
     {
                         bicmd = ALIAS_CMD_CREATE;
                         builtin = 1;
@@ -1729,7 +1726,7 @@ yyreduce:
     break;
 
   case 31:
-#line 239 "shellProject.y"
+#line 236 "shellProject.y"
     {
                         bicmd = UNALIAS_CMD;
                         builtin = 1;
@@ -1739,7 +1736,7 @@ yyreduce:
     break;
 
   case 32:
-#line 248 "shellProject.y"
+#line 245 "shellProject.y"
     {
                         bicmd = WORD_CMD;
                         argv[0] = (yyvsp[(1) - (2)].word);
@@ -1749,7 +1746,7 @@ yyreduce:
     break;
 
   case 33:
-#line 255 "shellProject.y"
+#line 252 "shellProject.y"
     {
                         bicmd = WORD_CMD;
                         argv[0] = (yyvsp[(1) - (3)].word);
@@ -1760,7 +1757,7 @@ yyreduce:
     break;
 
   case 34:
-#line 263 "shellProject.y"
+#line 260 "shellProject.y"
     {
                         currcmd = OUTPUT_REDIRECTION;
                         isLSWithWord = 0;
@@ -1771,7 +1768,7 @@ yyreduce:
     break;
 
   case 35:
-#line 271 "shellProject.y"
+#line 268 "shellProject.y"
     {
                         currcmd = OUTPUT_APP;
                         isLSWithWord = 0;
@@ -1782,7 +1779,7 @@ yyreduce:
     break;
 
   case 36:
-#line 279 "shellProject.y"
+#line 276 "shellProject.y"
     {
                         currcmd = INPUT_REDIRECTION;
                         input_command = (yyvsp[(1) - (4)].word);
@@ -1792,7 +1789,7 @@ yyreduce:
     break;
 
   case 37:
-#line 286 "shellProject.y"
+#line 283 "shellProject.y"
     {
                         currcmd = PIPELINE;
                         input_command = (yyvsp[(1) - (4)].word);
@@ -1803,7 +1800,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1807 "y.tab.c"
+#line 1804 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2017,7 +2014,7 @@ yyreturn:
 }
 
 
-#line 293 "shellProject.y"
+#line 290 "shellProject.y"
 
 
 int yyerror(char *s){

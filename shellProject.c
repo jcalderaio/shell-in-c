@@ -19,7 +19,7 @@
 ///////Builtin Functions//////////////////////////////
 //////////////////////////////////////////////////////
 
-extern char **environ;
+const char **environ;
 
 bool is_alias(char *key) {
 
@@ -553,10 +553,10 @@ void recover_from_errors(){
     // the rest of the command.
     // To do this: use yylex() directly.
     printf("Command Error!!!\n");
-             // yyscan_t scanner;
-             // yylex_init ( &scanner );
-             // yylex ( scanner );
-             // yylex_destroy ( scanner );
+              yyscan_t scanner;
+              yylex_init ( &scanner );
+              yylex ( scanner );
+              yylex_destroy ( scanner );
 }
 
 ///////////////////////////////////////////////////////
@@ -725,7 +725,7 @@ void reprocess() {
     else {
         strcat(new_command, " ");
         int i = 1;
-        while(argv[i] != NULL) {
+        while(argv[i] != NULL){
             strcat(new_command, argv[i]);
             if(i == (length-1) ) {
                 strcat(new_command, "\n");
@@ -742,7 +742,7 @@ void reprocess() {
 void execute_it(){
     // Handle  command execution, pipelining, i/o redirection, and background processing.
     // Utilize a command table whose components are plugged in during parsing by yacc.
-    
+
     //Handle Aliases
     int flag = 0;
     int i = 0;
@@ -773,7 +773,7 @@ void execute_it(){
     //     return;
     // }
 
-    
+
 
     pid_t pid, pid2;
     FILE *fp;
@@ -827,28 +827,23 @@ void execute_it(){
         execvp(input_command, input_command);
         exit(0);
     }
-    else
-    {
+    else{
         if(currcmd == BACKGROUND)
             ;
-        else if(currcmd == PIPELINE)
-        {
+        else if(currcmd == PIPELINE){
             waitpid(pid, &status1, 0);      //wait for process 1 to finish
             pid2 = fork();
-            if(pid2 < 0)
-            {
+            if(pid2 < 0){
                 printf("error in forking");
                 exit(-1);
             }
-            else if(pid2 == 0)
-            {
+            else if(pid2 == 0){
                 close(myPipe[1]);       //close output to pipe
                 dup2(myPipe[0], fileno(stdin));
                 close(myPipe[0]);
                 execvp(*cmdArgv2, cmdArgv2);
             }
-            else
-            {
+            else{
                 ;//wait(NULL);
                 //waitpid(pid, &status1, 0);
                 //waitpid(pid2, &status2, 0);
@@ -899,7 +894,6 @@ int main( int argc, char *argv[], char ** environ ){
             flag = 1;
         }
         switch (CMD = getCommand()) {
-
             case OK:
                 processCommand();
                 break;

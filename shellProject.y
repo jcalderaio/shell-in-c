@@ -10,11 +10,8 @@
 int eventcount = 0;
 
  /* parse local working data section */
-
  COMMAND *q, *p;
-
  int pfd[2];
-
 %}
 
 %union{

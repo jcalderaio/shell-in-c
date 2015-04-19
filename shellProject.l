@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#include "shellProject.tab.h"
+#include "y.tab.h"
 #include "shellProject.h"
 extern YYSTYPE yylval;
 %}

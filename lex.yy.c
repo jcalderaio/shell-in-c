@@ -499,7 +499,7 @@ char *yytext;
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#include "shellProject.tab.h"
+#include "y.tab.h"
 #include "shellProject.h"
 extern YYSTYPE yylval;
 #line 506 "lex.yy.c"
@@ -684,7 +684,7 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 12 "shellProject.l"
+#line 10 "shellProject.l"
 
 
 #line 691 "lex.yy.c"
@@ -772,52 +772,52 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 14 "shellProject.l"
+#line 12 "shellProject.l"
 return CD;
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 15 "shellProject.l"
+#line 13 "shellProject.l"
 return ALIAS;
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 16 "shellProject.l"
+#line 14 "shellProject.l"
 return UNALIAS;
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 17 "shellProject.l"
+#line 15 "shellProject.l"
 return SETENV;
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 18 "shellProject.l"
+#line 16 "shellProject.l"
 return UNSETENV;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 19 "shellProject.l"
+#line 17 "shellProject.l"
 return PRINTENV;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 20 "shellProject.l"
+#line 18 "shellProject.l"
 return BYE;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 21 "shellProject.l"
+#line 19 "shellProject.l"
 return LS;
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 22 "shellProject.l"
+#line 20 "shellProject.l"
 { yylval.option = strdup(yytext); return OPTION; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 23 "shellProject.l"
+#line 21 "shellProject.l"
 {
                                               yylval.word   = strdup(yytext);
                                               int i = 0;
@@ -834,7 +834,7 @@ YY_RULE_SETUP
 case 11:
 /* rule 11 can match eol */
 YY_RULE_SETUP
-#line 35 "shellProject.l"
+#line 33 "shellProject.l"
 {
                                                yylval.string = strdup(yytext);
                                                if (yylval.string[yyleng-1] != '"'){
@@ -858,7 +858,7 @@ YY_RULE_SETUP
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 54 "shellProject.l"
+#line 52 "shellProject.l"
 {
                                               yylval.envexp = strdup(yytext);
                                               int i = 0;
@@ -874,88 +874,88 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 67 "shellProject.l"
+#line 65 "shellProject.l"
 return QUOTE;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 68 "shellProject.l"
+#line 66 "shellProject.l"
 return LEFTBRACE;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 69 "shellProject.l"
+#line 67 "shellProject.l"
 return RIGHTBRACE;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 70 "shellProject.l"
+#line 68 "shellProject.l"
 return DOLLARSIGN;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 71 "shellProject.l"
+#line 69 "shellProject.l"
 return LT;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 72 "shellProject.l"
+#line 70 "shellProject.l"
 return LTLT;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 73 "shellProject.l"
+#line 71 "shellProject.l"
 return GT;
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 74 "shellProject.l"
+#line 72 "shellProject.l"
 return GTGT;
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 75 "shellProject.l"
+#line 73 "shellProject.l"
 return PIPE;
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 76 "shellProject.l"
+#line 74 "shellProject.l"
 return BACKGROUND;
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 77 "shellProject.l"
+#line 75 "shellProject.l"
 return BACKSLASH;
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 78 "shellProject.l"
+#line 76 "shellProject.l"
 return TILDE;
 	YY_BREAK
 case 25:
 /* rule 25 can match eol */
 YY_RULE_SETUP
-#line 79 "shellProject.l"
+#line 77 "shellProject.l"
 return NEWLINE;
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 80 "shellProject.l"
+#line 78 "shellProject.l"
 return PERIODPERIOD;
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 81 "shellProject.l"
+#line 79 "shellProject.l"
 return PERIOD;
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 82 "shellProject.l"
+#line 80 "shellProject.l"
 ;
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 84 "shellProject.l"
+#line 82 "shellProject.l"
 ECHO;
 	YY_BREAK
 #line 962 "lex.yy.c"
@@ -1955,7 +1955,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 84 "shellProject.l"
+#line 82 "shellProject.l"
 
 
 
