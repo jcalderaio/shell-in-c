@@ -7,8 +7,6 @@
 extern YYSTYPE yylval;
 %}
 
-
-
 %%
 
 cd                  return CD;

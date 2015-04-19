@@ -11,6 +11,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdbool.h>
+
+// #include "lex.yy.c"
 #include "shellProject.h"
 
 //////////////////////////////////////////////////////
@@ -18,10 +20,6 @@
 //////////////////////////////////////////////////////
 
 extern char **environ;
-char * tester1;
-char * tester2;
-char * tester3;
-char * tester4;
 
 bool is_alias(char *key) {
 
@@ -738,9 +736,6 @@ void reprocess() {
             ++i;
         }
     }
-
-    //yyscan_t scanner;
-
 
 }
 
