@@ -1,16 +1,13 @@
-all: clean y.tab.h y.tab.c lex.yy.c shellProject build run
+all: clean y.tab.h y.tab.c lex.yy.c shellProject run
 
 shellProject: lex.yy.c y.tab.c y.tab.h
-		gcc -Wall -c lex.yy.c y.tab.c shellProject.c
+		gcc -o shellProject *.c
 
 y.tab.h y.tab.c: shellProject.y
-		bison -dy shellProject.y
+		yacc -dy shellProject.y
 
 lex.yy.c: shellProject.l
 		flex shellProject.l
-
-build:
-	gcc -o shellProject lex.yy.o y.tab.o shellProject.o
 
 run:
 	./shellProject

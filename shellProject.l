@@ -3,8 +3,9 @@
 #include <ctype.h>
 #include <string.h>
 #include "y.tab.h"
-#include "shellProject.h"
+#include "variable.h"
 extern YYSTYPE yylval;
+
 %}
 
 %%
@@ -40,7 +41,7 @@ ls                  return LS;
                                                   if(yylval.string[0] == '~'){
                                                     yylval.string = strdup(yytext + 2);
                                                     yylval.string[yyleng - 3] = 0;
-                                                    isTilde = 1;
+                                                    //isTilde = 1;
                                                   }
                                                   else{
                                                     isTilde = 0;
@@ -52,12 +53,12 @@ ls                  return LS;
 \$\{[^ \$\{\}\n]*[}\n]                      {
                                               yylval.envexp = strdup(yytext);
                                               int i = 0;
-                                              if (yylval.string[yyleng-3] != '}'){
+                                              if (yylval.envexp[yyleng-1] != '}'){
                                                   return WORD;
                                                }
                                                else{
                                                   yylval.envexp = strdup(yytext+2);
-                                                  yylval.string[yyleng-3] = 0;
+                                                  yylval.envexp[yyleng-3] = 0;
                                                   return ENVEXP;
                                                }
                                             }
@@ -80,6 +81,11 @@ ls                  return LS;
 .                   ;
 
 %%
+
+int yyerror(char *s){
+    fprintf(stderr, "*%s*\n", s);
+    return 0;
+}
 
 int yywrap(void){
     return 1;

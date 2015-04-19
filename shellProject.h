@@ -1,6 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
+
+
+//#include "lex.yy.c"
 
 #define FALSE 0
 #define TRUE !FALSE
@@ -42,6 +42,7 @@
 #define CDUser_CMD               14
 #define LSWordWord_CMD           15
 #define WORD_CMD                 16
+#define ENVEXP_CMD               17
 
 //------Simple Commands-----------//
 #define IO_ADDTOFILE             1
@@ -122,8 +123,7 @@ int CDX;
 int MAXENV;
 int SETPROMPT;
 int CMD;
-int yylex();
-int yyparse();
+//int yyparse();
 char* pathtab[MAXPATH];
 char* command_path;
 int argc;
@@ -142,7 +142,6 @@ char* var;
 char* value;
 char* word1;
 char* word2;
-int isTilde;
 char* word5;
 char* al;
 char* alWord;
@@ -154,12 +153,12 @@ char* distf;
 int isPeriod;
 int isInFile;
 int isOutFile;
-int isWild;
 char* wcFound;
 char* userName;
 int isLSWithWord;
 char* fileName1;
 char* fileName2;
+char* envExpVariable;
 
 ////////////////////////////////////
 

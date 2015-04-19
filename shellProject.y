@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "shellProject.h"
+#include "variable.h"
 
 /*-------------------------------------------------------------------------------------
  * shellProject.y - yacc specification file for the parser generator
@@ -12,6 +13,9 @@ int eventcount = 0;
  /* parse local working data section */
  COMMAND *q, *p;
  int pfd[2];
+
+ extern int yylex();
+
 %}
 
 %union{
@@ -156,6 +160,14 @@ builtin.cmd:    TILDE NEWLINE
                         distf = $3;
                         return 0;
                         }
+                | LS LT WORD NEWLINE
+                        {
+                        currcmd = INPUT_REDIRECTION;
+                        isLSWithWord = 1;
+                        input_command = $1;
+                        srcf = $3;
+                        return 0;
+                        }
                 | LS WORD WORD NEWLINE
                         {
                         bicmd = LSWordWord_CMD;
@@ -164,7 +176,13 @@ builtin.cmd:    TILDE NEWLINE
                         fileName2 = $3;
                         return 0;
                         }
-
+                | ENVEXP NEWLINE
+                        {
+                        bicmd = ENVEXP_CMD;
+                        builtin = 1;
+                        envExpVariable = $1;
+                        return 0;
+                        }
                 | SETENV NEWLINE
                         {
                         bicmd = SETENV_CMD;
@@ -246,6 +264,7 @@ simple.cmd:      WORD NEWLINE
                         bicmd = WORD_CMD;
                         argv[0] = $1;
                         argv[1] = NULL;
+                        printf("\n\nHELLO I AM HERE\n\n");
                         return 0;
                         }
                 | WORD WORD NEWLINE
@@ -275,6 +294,7 @@ simple.cmd:      WORD NEWLINE
                 | WORD LT WORD NEWLINE
                         {
                         currcmd = INPUT_REDIRECTION;
+                        isLSWithWord = 0;
                         input_command = $1;
                         srcf = $3;
                         return 0;
@@ -288,10 +308,4 @@ simple.cmd:      WORD NEWLINE
                         }
                 ;
 %%
-
-int yyerror(char *s){
-    fprintf(stderr, "*%s*\n", s);
-    printf("OH MAN!!!!");
-    return 0;
-}
 

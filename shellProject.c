@@ -12,14 +12,15 @@
 #include <sys/stat.h>
 #include <stdbool.h>
 
-// #include "lex.yy.c"
+
 #include "shellProject.h"
+#include "variable.h"
 
 //////////////////////////////////////////////////////
 ///////Builtin Functions//////////////////////////////
 //////////////////////////////////////////////////////
 
-const char **environ;
+extern char **environ;
 
 bool is_alias(char *key) {
 
@@ -116,6 +117,46 @@ void wTest(){
         closedir(dirp);
     }
 }
+
+void wTestNewNew(){
+    printf("\n\nWe Are Here...\n\n");
+    DIR *dirp;
+    char* second;
+    struct dirent* dir;
+    dirp = opendir(currentWorkDir);
+    if(dirp){
+        while((dir = readdir(dirp)) != NULL){
+            second = dir->d_name;
+            if(wCard(fileName2, second)){
+                printf("\n\nSecond Directory name is:%s\n\n",second);
+                wcFound = second;
+                break;
+            }
+        }
+        closedir(dirp);
+    }
+}
+
+void wTestNew(){
+    DIR *dirp;
+    char* second;
+    struct dirent* dir;
+    dirp = opendir(currentWorkDir);
+    if(dirp){
+        while((dir = readdir(dirp)) != NULL){
+            second = dir->d_name;
+            if(wCard(fileName1, second)){
+                printf("\n\nDirectory name is:%s\n\n",second);
+                wcFound = second;
+                break;
+            }
+        }
+        closedir(dirp);
+    }
+    wTestNewNew();
+}
+
+
 
 //For I/O Redirection and Pipelining functioning
 void chop(char *srcPtr)
@@ -445,9 +486,18 @@ void goLSWord(){
 }
 
 void goLSWordWord(){
-    fileName1 = get_alias(fileName1);
+
     if(isWild == 1){
-        wTest();
+        if(fileName1){
+            printf("\n\nWhy Not here....\n\n");
+            fileName1 = get_alias(fileName1);
+            wTestNew();
+        }
+    if(fileName2){
+            printf("\n\nIs it really coming here....\n\n");
+            fileName2 = get_alias(fileName2);
+            wTestNewNew();
+        }
         if(wcFound != ""){
             removeSpaces(wcFound);
             fileName1 = wcFound;
@@ -530,6 +580,11 @@ void goLSWordWord(){
     }
 }
 
+void envExpansion(){
+
+    printf("%s\n", getenv(envExpVariable));
+}
+
 void in_redir(){
 
 }
@@ -543,7 +598,7 @@ void out_redir(){
 ///////////////////////////////////////////////////////
 
 void understand_errors(){
-    printf("An error occured while parsing the yacc file.\n");
+    printf("\nAn error occured while parsing the yacc file.\n");
 }
 
 void recover_from_errors(){
@@ -552,7 +607,7 @@ void recover_from_errors(){
     // In this case you have to recover by “eating”
     // the rest of the command.
     // To do this: use yylex() directly.
-    printf("Command Error!!!\n");
+    printf("\nCommand Error!!!\n");
               // yyscan_t scanner;
               // yylex_init ( &scanner );
               // yylex ( scanner );
@@ -674,6 +729,9 @@ void do_it(){
             break;
         case UNALIAS_CMD:
             unaliasword(remove_white(argv[0]));
+            break;
+        case ENVEXP_CMD:
+            envExpansion();
             break;
         case SETENV_CMD:
             setEnvironment();
@@ -811,12 +869,20 @@ void execute_it(){
                 }
                 else{
                     printf("%s", input_command);
+                    printf("\n\n");
                 }
                 break;
             case INPUT_REDIRECTION:
                 printf("\n\nWe are in the INPUT_REDIRECTION\n\n");
                 fp = fopen(srcf, "r");
                 dup2(fileno(fp), 0);
+                if(isLSWithWord == 1){
+                    goLS();
+                }
+                else{
+                    printf("%s", input_command);
+                    printf("\n\n");
+                }
                 break;
             case PIPELINE:
                 close(myPipe[0]);       //close input of pipe
