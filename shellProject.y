@@ -260,7 +260,6 @@ simple.cmd:      WORD NEWLINE
                         bicmd = WORD_CMD;
                         argv[0] = $1;
                         argv[1] = NULL;
-                        printf("\n\nHELLO I AM HERE\n\n");
                         return 0;
                         }
                 | WORD WORD NEWLINE

@@ -521,7 +521,7 @@ static const yytype_uint16 yyrline[] =
        0,    41,    41,    43,    45,    49,    55,    62,    68,    75,
       81,    89,    96,   103,   111,   119,   124,   130,   136,   143,
      151,   159,   167,   175,   182,   189,   197,   206,   214,   221,
-     228,   236,   242,   249,   258,   266,   274,   282,   290,   298
+     228,   236,   242,   249,   258,   265,   273,   281,   289,   297
 };
 #endif
 
@@ -1768,13 +1768,12 @@ yyreduce:
                         bicmd = WORD_CMD;
                         argv[0] = (yyvsp[(1) - (2)].word);
                         argv[1] = NULL;
-                        printf("\n\nHELLO I AM HERE\n\n");
                         return 0;
                         }
     break;
 
   case 35:
-#line 267 "shellProject.y"
+#line 266 "shellProject.y"
     {
                         bicmd = WORD_CMD;
                         argv[0] = (yyvsp[(1) - (3)].word);
@@ -1785,7 +1784,7 @@ yyreduce:
     break;
 
   case 36:
-#line 275 "shellProject.y"
+#line 274 "shellProject.y"
     {
                         currcmd = OUTPUT_REDIRECTION;
                         isLSWithWord = 0;
@@ -1796,7 +1795,7 @@ yyreduce:
     break;
 
   case 37:
-#line 283 "shellProject.y"
+#line 282 "shellProject.y"
     {
                         currcmd = OUTPUT_APP;
                         isLSWithWord = 0;
@@ -1807,7 +1806,7 @@ yyreduce:
     break;
 
   case 38:
-#line 291 "shellProject.y"
+#line 290 "shellProject.y"
     {
                         currcmd = INPUT_REDIRECTION;
                         isLSWithWord = 0;
@@ -1818,7 +1817,7 @@ yyreduce:
     break;
 
   case 39:
-#line 299 "shellProject.y"
+#line 298 "shellProject.y"
     {
                         currcmd = PIPELINE;
                         input_command = (yyvsp[(1) - (4)].word);
@@ -1829,7 +1828,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1833 "y.tab.c"
+#line 1832 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2043,7 +2042,7 @@ yyreturn:
 }
 
 
-#line 306 "shellProject.y"
+#line 305 "shellProject.y"
 
 
 

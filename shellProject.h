@@ -48,6 +48,8 @@
 #define IO_ADDTOFILE             1
 #define IO_APPENDTOFILE          2
 
+#define yyconst const
+
 
 ///////*Command line arguments structure*//////
 typedef struct comrgs{
@@ -123,7 +125,6 @@ int CDX;
 int MAXENV;
 int SETPROMPT;
 int CMD;
-//int yyparse();
 char* pathtab[MAXPATH];
 char* command_path;
 int argc;

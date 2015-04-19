@@ -22,10 +22,17 @@
 extern char **environ;
 
 extern int yyparse();
-extern FILE *yyin;
-extern int yy_scan_string(const char *);
 //extern void reset_lexer(void);
 //extern void reset_parser(void);
+extern int yylex_destroy();
+typedef struct yy_buffer_state *YY_BUFFER_STATE;
+//extern struct YY_BUFFER_STATE;
+extern void yy_switch_to_buffer ( YY_BUFFER_STATE  );
+extern YY_BUFFER_STATE yy_scan_string(const char *);
+extern void yy_delete_buffer (YY_BUFFER_STATE );
+
+
+
 
 bool is_alias(char *key) {
 
@@ -67,6 +74,27 @@ char * get_alias(char *key) {
     }
 
     return currAlias.value;
+
+    // char* argument_future = argv[1];
+    // char* string = malloc(strlen(currAlias.value));
+    // strcpy(string, currAlias.value);
+    // char* drf;
+    // char* token = strtok_r(string, " ", &drf);
+    // int i = 0;
+    // while (token != NULL){
+    //     argv[i] = token;
+    //     ++i;
+    //     token = strtok_r(NULL, " ", &drf);
+    // }
+    // if(argument_future == NULL)
+    //     argv[i] = NULL;
+    // else{
+    //     argv[i] = argument_future;
+    //     argv[++i] = NULL;
+    // }
+    // memset(input_command,0,strlen(input_command));
+    // input_command = argv[0];
+    // return;
 }
 
 bool wCard(char* first, char* second){
@@ -101,6 +129,46 @@ void wTest(char* str){
         closedir(dirp);
     }
 }
+
+void wTestNewNew(){
+    printf("\n\nWe Are Here...\n\n");
+    DIR *dirp;
+    char* second;
+    struct dirent* dir;
+    dirp = opendir(currentWorkDir);
+    if(dirp){
+        while((dir = readdir(dirp)) != NULL){
+            second = dir->d_name;
+            if(wCard(fileName2, second)){
+                printf("\n\nSecond Directory name is:%s\n\n",second);
+                wcFound = second;
+                break;
+            }
+        }
+        closedir(dirp);
+    }
+}
+
+void wTestNew(){
+    DIR *dirp;
+    char* second;
+    struct dirent* dir;
+    dirp = opendir(currentWorkDir);
+    if(dirp){
+        while((dir = readdir(dirp)) != NULL){
+            second = dir->d_name;
+            if(wCard(fileName1, second)){
+                printf("\n\nDirectory name is:%s\n\n",second);
+                wcFound = second;
+                break;
+            }
+        }
+        closedir(dirp);
+    }
+    wTestNewNew();
+}
+
+
 
 //For I/O Redirection and Pipelining functioning
 void chop(char *srcPtr)
@@ -546,6 +614,10 @@ void recover_from_errors(){
     // the rest of the command.
     // To do this: use yylex() directly.
     printf("\nCommand Error!!!\n");
+              // yyscan_t scanner;
+              // yylex_init ( &scanner );
+              // yylex ( scanner );
+              // yylex_destroy ( scanner );
 }
 
 ///////////////////////////////////////////////////////
@@ -623,6 +695,18 @@ void shell_init(){
     //do anything you feel should be done as init
     signal(SIGINT, SIG_IGN);
     return;
+
+    // init all variables.
+    // define (allocate storage) for some var/tables
+    // init all tables (e.g., alias table)
+
+    //Dont require
+    // get PATH environment variable (use getenv())
+    // get HOME env variable (also use getenv())
+
+    // disable anything that can kill your shell.
+    // (the shell should never die; only can be exit)
+    // do anything you feel should be done as init
 }
 
 void do_it(){
@@ -690,10 +774,11 @@ int executable(){
 
 }
 
-void reprocess() {
+int reprocess() {
 
+    int err= 0;
     int length = 0;
-    while(argv[length] != 0) {
+    while(argv[length] != NULL) {
         ++length;
     }
 
@@ -716,18 +801,25 @@ void reprocess() {
             ++i;
         }
     }
-
-    printf("main: scaning buf:\n%s\nOutput:",new_command);
-    // reset_lexer();                      /* implemented in lexer.l */
-    // reset_parser();                     /* implemented in parser.y */
-      /**
-       *  command to set input.
-       */
-     yy_scan_string(new_command);
-      /**
-       * invoke the parser
-       */
-    yyparse();
+    
+    const char * const_cmd = new_command;
+    
+        // yy_scan_string(new_new_command);
+        // char* reserve;
+        // printf("alias print bitch\n");
+        // //char * whatever = strtok_r(new_command, " ", &reserve);
+        // yy_scan_string("cd ");
+        // yyparse();
+        // yylex_destroy();
+        
+        printf("%s\n", const_cmd);
+        YY_BUFFER_STATE bp;
+        bp = yy_scan_string("cd");
+        yy_switch_to_buffer( bp );
+        err= yyparse();
+        yy_delete_buffer(bp);
+        yylex_destroy();
+        return err;
 
 }
 
@@ -750,7 +842,6 @@ void execute_it(){
         reprocess();
         return;
     }
-
 
 
 
