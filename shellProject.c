@@ -11,7 +11,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdbool.h>
-#include <pwd.h>
 #include "shellProject.h"
 
 //////////////////////////////////////////////////////
@@ -25,6 +24,54 @@ char * tester3;
 char * tester4;
 
 
+char * check_alias(char *key) {
+
+    struct AliasNode currAlias;
+    int flag = 0;
+    int index = 0;
+    while(alias_count > index){
+        if(!strcmp(aliasTable[index].key, key)){
+            currAlias = aliasTable[index];
+            ++flag;
+            break;
+        }
+        ++index;
+    }
+
+    if(flag == 0) {
+        return key;
+    }
+
+    if(currAlias.nested != -1) { //there is a nested command
+
+        while(currAlias.nested != -1){
+            currAlias = aliasTable[currAlias.nested];
+        }
+    }
+
+    return currAlias.value;
+
+    // char* argument_future = argv[1];
+    // char* string = malloc(strlen(currAlias.value));
+    // strcpy(string, currAlias.value);
+    // char* drf;
+    // char* token = strtok_r(string, " ", &drf);
+    // int i = 0;
+    // while (token != NULL){
+    //     argv[i] = token;
+    //     ++i;
+    //     token = strtok_r(NULL, " ", &drf);
+    // }
+    // if(argument_future == NULL)
+    //     argv[i] = NULL;
+    // else{
+    //     argv[i] = argument_future;
+    //     argv[++i] = NULL;
+    // }
+    // memset(input_command,0,strlen(input_command));
+    // input_command = argv[0];
+    // return;
+}
 
 bool wCard(char* first, char* second){
     if(*first == '\0' && *second == '\0'){
@@ -101,19 +148,20 @@ void goHome(){
     chdir(home);
 }
 
-void goPath(char* thePathStr){
+void goPath(){
+    strPath = check_alias(strPath);
     if(isTilde == 1){
             getCurrentPath();
             strcpy(currLoc, home);
-            if(!(thePathStr[0] == '/')){
+            if(!(strPath[0] == '/')){
                 strcat(currLoc, "/");
             }
-            strcat(currLoc, thePathStr);
+            strcat(currLoc, strPath);
             currentWorkDir = currLoc;
             removeSpaces(currentWorkDir);
             int isDir = chdir(currentWorkDir);
             if(isDir){
-                printf("%s is not a valid directory name.\n", thePathStr);
+                printf("%s is not a valid directory name.\n", strPath);
             }
             isTilde = 0;
         }
@@ -121,7 +169,7 @@ void goPath(char* thePathStr){
             if(dotdot == 1){
                 getCurrentPath();
                 strcpy(currLoc, currentWorkDir);
-                if(!(thePathStr[0] == '/')){
+                if(!(strPath[0] == '/')){
                     strcat(currLoc, "/");
                 }
                 strcat(currLoc, "..");
@@ -129,20 +177,20 @@ void goPath(char* thePathStr){
                 removeSpaces(currentWorkDir);
                 int isDir = chdir(currentWorkDir);
                 if(isDir){
-                    printf("%s is not a valid directory name.\n", thePathStr);
+                    printf("%s is not a valid directory name.\n", strPath);
                 }
 
                 getCurrentPath();
                 strcpy(currLoc, currentWorkDir);
-                if(!(thePathStr[0] == '/')){
+                if(!(strPath[0] == '/')){
                     strcat(currLoc, "/");
                 }
-                strcat(currLoc, thePathStr);
+                strcat(currLoc, strPath);
                 currentWorkDir = currLoc;
                 removeSpaces(currentWorkDir);
                 isDir = chdir(currentWorkDir);
                 if(isDir){
-                    printf("%s is not a valid directory name.\n", thePathStr);
+                    printf("%s is not a valid directory name.\n", strPath);
                 }
 
                 dotdot = 0;
@@ -150,31 +198,20 @@ void goPath(char* thePathStr){
             else{
                 getCurrentPath();
                 strcpy(currLoc, currentWorkDir);
-                if(!(thePathStr[0] == '/')){
+                if(!(strPath[0] == '/')){
                     strcat(currLoc, "/");
                 }
-                strcat(currLoc, thePathStr);
+                strcat(currLoc, strPath);
                 currentWorkDir = currLoc;
                 removeSpaces(currentWorkDir);
                 int isDir = chdir(currentWorkDir);
                 if(isDir){
-                    printf("%s is not a valid directory name.\n", thePathStr);
+                    printf("%s is not a valid directory name.\n", strPath);
                 }
             }
         }
 
-        thePathStr = "";
-}
-
-void goPathUser(){
-    struct passwd *getpwnam(const char *);
-        if(userName[0] == '/'){
-            goHome();
-            goPath(userName+1);
-        }
-        else{
-            goPath(userName);
-        }
+        strPath = "";
 }
 
 void printEnvironment() {
@@ -191,12 +228,14 @@ void setEnvironment() {
         }
         else if(argv[1] == NULL) {
             char* string_1 = remove_white(argv[0]);
+            string_1 = check_alias(string_1);
             setenv(string_1, "", 0);
             printf("\"%s\" added to environment variables!\n", string_1);
         }
         else {
             char* string_1 = remove_white(argv[0]);
-            setenv(string_1, remove_white(argv[1]), 0);
+            string_1 = check_alias(string_1);
+            setenv(string_1, check_alias(remove_white(argv[1])), 0);
             printf("\"%s\" added to environment variables!\n", string_1);
         }
     }
@@ -206,7 +245,7 @@ void setEnvironment() {
         }
         else {
             getCurrentPath();
-            char* string_1 = remove_white(argv[0]);
+            char* string_1 = check_alias(remove_white(argv[0]));
             setenv(string_1, remove_white(currentWorkDir), 0);
             printf("\"%s\" added to environment variables!\n", string_1);
             isPeriod = 0;
@@ -222,7 +261,7 @@ void unsetEnvironment() {
         printf("%s\n", "unsetenv: environment variable not found!");
     }
     else {
-        char* string_1 = remove_white(argv[0]);
+        char* string_1 = check_alias(remove_white(argv[0]));
         unsetenv(string_1);
         printf("\"%s\" removed from environment variables!\n", string_1);
     }
@@ -341,6 +380,8 @@ void goLS(){
 }
 
 void goLSWord(){
+
+    fileName = check_alias(fileName);
     printf("\n\n%d\n\n", isWild);
     if(isWild == 1){
         wTest();
@@ -500,56 +541,6 @@ void shell_init(){
     // do anything you feel should be done as init
 }
 
-char * check_alias(char *key) {
-
-    struct AliasNode currAlias;
-    int flag = 0;
-    int index = 0;
-    while(alias_count > index){
-        if(!strcmp(aliasTable[index].key, key)){
-            currAlias = aliasTable[index];
-            ++flag;
-            break;
-        }
-        ++index;
-    }
-
-    if(flag == 0) {
-        return key;
-    }
-
-    if(currAlias.nested != -1) { //there is a nested command
-
-        while(currAlias.nested != -1){
-            currAlias = aliasTable[currAlias.nested];
-        }
-    }
-
-    printf("%s is the token i am looking for\n", currAlias.value);
-    return currAlias.value;
-
-    // char* argument_future = argv[1];
-    // char* string = malloc(strlen(currAlias.value));
-    // strcpy(string, currAlias.value);
-    // char* drf;
-    // char* token = strtok_r(string, " ", &drf);
-    // int i = 0;
-    // while (token != NULL){
-    //     argv[i] = token;
-    //     ++i;
-    //     token = strtok_r(NULL, " ", &drf);
-    // }
-    // if(argument_future == NULL)
-    //     argv[i] = NULL;
-    // else{
-    //     argv[i] = argument_future;
-    //     argv[++i] = NULL;
-    // }
-    // memset(input_command,0,strlen(input_command));
-    // input_command = argv[0];
-    // return;
-}
-
 void do_it(){
 
     switch (bicmd) {
@@ -557,10 +548,7 @@ void do_it(){
             goHome();
             break;
         case CDPath_CMD:
-            goPath(strPath);
-            break;
-        case CDUser_CMD:
-            goPathUser();
+            goPath();
             break;
         case LS_CMD:
             goLS();
@@ -622,10 +610,10 @@ void execute_it(){
         if(pid == 0){
             switch (currcmd){
             case IO_ADDTOFILE:
-                    if(check_out_file() == NULL){
-                        int fd0 = fopen(distf, 0644);
+                    if(check_out_file() == OK){
+                        int fd0 = open(distf, 0644);
                         dup2(fd0, distf);
-                        fclose(distf);
+                        close(distf);
                     }
                     break;
             case IO_APPENDTOFILE:
