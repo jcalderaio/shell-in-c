@@ -1,4 +1,4 @@
-all: clean y.tab.h y.tab.c lex.yy.c shellProject build
+all: clean y.tab.h y.tab.c lex.yy.c shellProject build run
 
 shellProject: lex.yy.c y.tab.c y.tab.h
 		gcc -Wall -c lex.yy.c y.tab.c shellProject.c
@@ -11,6 +11,9 @@ lex.yy.c: shellProject.l
 
 build:
 	gcc -o shellProject lex.yy.o y.tab.o shellProject.o
+
+run:
+	./shellProject
 
 clean:
 	rm -rf lex.yy.c y.tab.c y.tab.h shellProject

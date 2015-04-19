@@ -553,10 +553,10 @@ void recover_from_errors(){
     // the rest of the command.
     // To do this: use yylex() directly.
     printf("Command Error!!!\n");
-              yyscan_t scanner;
-              yylex_init ( &scanner );
-              yylex ( scanner );
-              yylex_destroy ( scanner );
+              // yyscan_t scanner;
+              // yylex_init ( &scanner );
+              // yylex ( scanner );
+              // yylex_destroy ( scanner );
 }
 
 ///////////////////////////////////////////////////////
