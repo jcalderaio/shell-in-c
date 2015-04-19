@@ -742,21 +742,22 @@ void reprocess() {
 void execute_it(){
     // Handle  command execution, pipelining, i/o redirection, and background processing.
     // Utilize a command table whose components are plugged in during parsing by yacc.
+    
     //Handle Aliases
-    // int flag = 0;
-    // int i = 0;
-    // while(argv[i] != NULL) {
-    //     if(is_alias(argv[i])) {
-    //         argv[i] = get_alias(argv[i]);
-    //         ++flag;
-    //     }
-    //     ++i;
-    // }
+    int flag = 0;
+    int i = 0;
+    while(argv[i] != NULL) {
+        if(is_alias(argv[i])) {
+            argv[i] = get_alias(argv[i]);
+            ++flag;
+        }
+        ++i;
+    }
 
-    // if(flag != 0) {
-    //     reprocess();
-    //     return;
-    // }
+    if(flag != 0) {
+        reprocess();
+        return;
+    }
 
 
 
@@ -772,7 +773,7 @@ void execute_it(){
     //     return;
     // }
 
-    // printf("%s :command not found\n", input_command);
+    
 
     pid_t pid, pid2;
     FILE *fp;
