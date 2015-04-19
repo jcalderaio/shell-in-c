@@ -25,11 +25,12 @@ extern int yyparse();
 //extern void reset_lexer(void);
 //extern void reset_parser(void);
 extern int yylex_destroy();
-typedef struct yy_buffer_state *YY_BUFFER_STATE;
+typedef struct yy_buffer_state * YY_BUFFER_STATE;
 //extern struct YY_BUFFER_STATE;
 extern void yy_switch_to_buffer ( YY_BUFFER_STATE  );
-extern YY_BUFFER_STATE yy_scan_string(const char *);
-extern void yy_delete_buffer (YY_BUFFER_STATE );
+extern YY_BUFFER_STATE yy_scan_string(char * str);
+extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
+extern YY_BUFFER_STATE yy_scan_buffer(char *);
 
 
 
@@ -774,9 +775,11 @@ int executable(){
 
 }
 
-int reprocess() {
+int getCommand();
+void processCommand();
 
-    int err= 0;
+void reprocess() {
+
     int length = 0;
     while(argv[length] != NULL) {
         ++length;
@@ -785,7 +788,7 @@ int reprocess() {
     char * new_command = argv[0];
 
     if(length == 1) {
-        strcat(new_command, "\n");
+        //strcat(new_command, "");
     }
     else {
         strcat(new_command, " ");
@@ -793,7 +796,7 @@ int reprocess() {
         while(argv[i] != NULL){
             strcat(new_command, argv[i]);
             if(i == (length-1) ) {
-                strcat(new_command, "\n");
+                //strcat(new_command, "");
             }
             else {
                 strcat(new_command, " ");
@@ -814,12 +817,15 @@ int reprocess() {
         
         printf("%s\n", const_cmd);
         YY_BUFFER_STATE bp;
-        bp = yy_scan_string("cd");
+        bp = yy_scan_string(new_command);
         yy_switch_to_buffer( bp );
-        err= yyparse();
+        getCommand();
+        processCommand();
         yy_delete_buffer(bp);
         yylex_destroy();
-        return err;
+
+
+
 
 }
 
