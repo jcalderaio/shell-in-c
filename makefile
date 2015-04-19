@@ -4,7 +4,7 @@ shellProject: lex.yy.c y.tab.c y.tab.h
 		gcc -o shellProject *.c
 
 y.tab.h y.tab.c: shellProject.y
-		yacc -dy shellProject.y
+		bison -dy shellProject.y
 
 lex.yy.c: shellProject.l
 		flex shellProject.l

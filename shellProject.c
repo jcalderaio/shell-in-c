@@ -21,6 +21,12 @@
 
 extern char **environ;
 
+extern int yyparse();
+extern FILE *yyin;
+extern int yy_scan_string(const char *);
+//extern void reset_lexer(void);
+//extern void reset_parser(void);
+
 bool is_alias(char *key) {
 
     struct AliasNode currAlias;
@@ -61,27 +67,6 @@ char * get_alias(char *key) {
     }
 
     return currAlias.value;
-
-    // char* argument_future = argv[1];
-    // char* string = malloc(strlen(currAlias.value));
-    // strcpy(string, currAlias.value);
-    // char* drf;
-    // char* token = strtok_r(string, " ", &drf);
-    // int i = 0;
-    // while (token != NULL){
-    //     argv[i] = token;
-    //     ++i;
-    //     token = strtok_r(NULL, " ", &drf);
-    // }
-    // if(argument_future == NULL)
-    //     argv[i] = NULL;
-    // else{
-    //     argv[i] = argument_future;
-    //     argv[++i] = NULL;
-    // }
-    // memset(input_command,0,strlen(input_command));
-    // input_command = argv[0];
-    // return;
 }
 
 bool wCard(char* first, char* second){
@@ -100,7 +85,7 @@ bool wCard(char* first, char* second){
     return false;
 }
 
-void wTest(){
+void wTest(char* str){
     DIR *dirp;
     char* second;
     struct dirent* dir;
@@ -108,7 +93,7 @@ void wTest(){
     if(dirp){
         while((dir = readdir(dirp)) != NULL){
             second = dir->d_name;
-            if(wCard(fileName, second)){
+            if(wCard(str, second)){
                 wcFound = second;
                 break;
             }
@@ -116,46 +101,6 @@ void wTest(){
         closedir(dirp);
     }
 }
-
-void wTestNewNew(){
-    printf("\n\nWe Are Here...\n\n");
-    DIR *dirp;
-    char* second;
-    struct dirent* dir;
-    dirp = opendir(currentWorkDir);
-    if(dirp){
-        while((dir = readdir(dirp)) != NULL){
-            second = dir->d_name;
-            if(wCard(fileName2, second)){
-                printf("\n\nSecond Directory name is:%s\n\n",second);
-                wcFound = second;
-                break;
-            }
-        }
-        closedir(dirp);
-    }
-}
-
-void wTestNew(){
-    DIR *dirp;
-    char* second;
-    struct dirent* dir;
-    dirp = opendir(currentWorkDir);
-    if(dirp){
-        while((dir = readdir(dirp)) != NULL){
-            second = dir->d_name;
-            if(wCard(fileName1, second)){
-                printf("\n\nDirectory name is:%s\n\n",second);
-                wcFound = second;
-                break;
-            }
-        }
-        closedir(dirp);
-    }
-    wTestNewNew();
-}
-
-
 
 //For I/O Redirection and Pipelining functioning
 void chop(char *srcPtr)
@@ -445,10 +390,11 @@ void goLS(){
 void goLSWord(){
     fileName = get_alias(fileName);
     if(isWild == 1){
-        wTest();
+        wTest(fileName);
         if(wcFound != ""){
             removeSpaces(wcFound);
             fileName = wcFound;
+            wcFound = "";
         }
     }
     if(isTilde == 1){
@@ -487,19 +433,18 @@ void goLSWord(){
 void goLSWordWord(){
 
     if(isWild == 1){
-        if(fileName1){
-            printf("\n\nWhy Not here....\n\n");
-            fileName1 = get_alias(fileName1);
-            wTestNew();
-        }
-    if(fileName2){
-            printf("\n\nIs it really coming here....\n\n");
-            fileName2 = get_alias(fileName2);
-            wTestNewNew();
-        }
+        wTest(fileName1);
         if(wcFound != ""){
             removeSpaces(wcFound);
             fileName1 = wcFound;
+            wcFound = "";
+        }
+        printf("fileName2 %s", fileName2);
+        wTest(fileName2);
+        if(wcFound != ""){
+            removeSpaces(wcFound);
+            fileName2 = wcFound;
+            wcFound = "";
         }
     }
     if(isTilde == 1){
@@ -522,7 +467,7 @@ void goLSWordWord(){
                 struct dirent *dir2;
                 d2 = opendir(dir->d_name);
                 if (d2){
-                    printf("%s:\n\n", fileName1);
+                    printf("The folder name 1 - %s:\n\n", fileName1);
                     while ((dir2 = readdir(d2)) != NULL){
                         printf("%s\n", dir2->d_name);
                     }
@@ -539,13 +484,7 @@ void goLSWordWord(){
 
     //The second file name
     fileName2 = get_alias(fileName2);
-    if(isWild == 1){
-        wTest();
-        if(wcFound != ""){
-            removeSpaces(wcFound);
-            fileName2 = wcFound;
-        }
-    }
+
     if(isTilde == 1){
         goHome();
         fileName2 = fileName2 + 1;
@@ -565,7 +504,7 @@ void goLSWordWord(){
                 struct dirent *dir2;
                 d2 = opendir(dir->d_name);
                 if (d2){
-                    printf("%s:\n\n", fileName2);
+                    printf("The folder name 1 - %s:\n\n", fileName2);
                     while ((dir2 = readdir(d2)) != NULL){
                         printf("%s\n", dir2->d_name);
                     }
@@ -607,10 +546,6 @@ void recover_from_errors(){
     // the rest of the command.
     // To do this: use yylex() directly.
     printf("\nCommand Error!!!\n");
-              // yyscan_t scanner;
-              // yylex_init ( &scanner );
-              // yylex ( scanner );
-              // yylex_destroy ( scanner );
 }
 
 ///////////////////////////////////////////////////////
@@ -688,18 +623,6 @@ void shell_init(){
     //do anything you feel should be done as init
     signal(SIGINT, SIG_IGN);
     return;
-
-    // init all variables.
-    // define (allocate storage) for some var/tables
-    // init all tables (e.g., alias table)
-
-    //Dont require
-    // get PATH environment variable (use getenv())
-    // get HOME env variable (also use getenv())
-
-    // disable anything that can kill your shell.
-    // (the shell should never die; only can be exit)
-    // do anything you feel should be done as init
 }
 
 void do_it(){
@@ -794,6 +717,18 @@ void reprocess() {
         }
     }
 
+    printf("main: scaning buf:\n%s\nOutput:",new_command);
+    // reset_lexer();                      /* implemented in lexer.l */
+    // reset_parser();                     /* implemented in parser.y */
+      /**
+       *  command to set input.
+       */
+     yy_scan_string(new_command);
+      /**
+       * invoke the parser
+       */
+    yyparse();
+
 }
 
 void execute_it(){
@@ -815,6 +750,7 @@ void execute_it(){
         reprocess();
         return;
     }
+
 
 
 
