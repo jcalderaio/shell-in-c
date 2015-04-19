@@ -3,7 +3,7 @@
 #include <ctype.h>
 #include <string.h>
 #include "y.tab.h"
-#include "variable.h"
+#include "shellProject.h"
 extern YYSTYPE yylval;
 
 %}
@@ -83,9 +83,10 @@ ls                  return LS;
 %%
 
 int yyerror(char *s){
-    fprintf(stderr, "*%s*\n", s);
-    return 0;
+      fprintf(stderr, "*%s*\n", s);
+      return 0;
 }
+
 
 int yywrap(void){
     return 1;

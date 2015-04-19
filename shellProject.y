@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <string.h>
 #include "shellProject.h"
-#include "variable.h"
 
 /*-------------------------------------------------------------------------------------
  * shellProject.y - yacc specification file for the parser generator
@@ -34,9 +33,6 @@ int eventcount = 0;
 %token <string>  STRING
 %token <option>  OPTION
 %token <envexp>  ENVEXP
-
-
-%type <option>   builtin.cmd
 
 %start cmd
 

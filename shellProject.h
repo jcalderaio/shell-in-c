@@ -159,6 +159,8 @@ int isLSWithWord;
 char* fileName1;
 char* fileName2;
 char* envExpVariable;
+int isWild;
+int isTilde;
 
 ////////////////////////////////////
 

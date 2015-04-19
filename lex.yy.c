@@ -500,7 +500,7 @@ char *yytext;
 #include <ctype.h>
 #include <string.h>
 #include "y.tab.h"
-#include "variable.h"
+#include "shellProject.h"
 extern YYSTYPE yylval;
 
 #line 507 "lex.yy.c"
@@ -1961,9 +1961,10 @@ void yyfree (void * ptr )
 
 
 int yyerror(char *s){
-    fprintf(stderr, "*%s*\n", s);
-    return 0;
+      fprintf(stderr, "*%s*\n", s);
+      return 0;
 }
+
 
 int yywrap(void){
     return 1;

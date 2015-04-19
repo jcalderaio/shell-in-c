@@ -128,7 +128,7 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 21 "shellProject.y"
+#line 20 "shellProject.y"
 {
     int   integer;
     char *string;
