@@ -439,7 +439,7 @@ void goLSWordWord(){
             fileName1 = wcFound;
             wcFound = "";
         }
-        printf("fileName2 %s", fileName2);
+
         wTest(fileName2);
         if(wcFound != ""){
             removeSpaces(wcFound);
@@ -467,7 +467,7 @@ void goLSWordWord(){
                 struct dirent *dir2;
                 d2 = opendir(dir->d_name);
                 if (d2){
-                    printf("The folder name 1 - %s:\n\n", fileName1);
+                    printf("%s:\n\n", fileName1);
                     while ((dir2 = readdir(d2)) != NULL){
                         printf("%s\n", dir2->d_name);
                     }
@@ -504,7 +504,7 @@ void goLSWordWord(){
                 struct dirent *dir2;
                 d2 = opendir(dir->d_name);
                 if (d2){
-                    printf("The folder name 1 - %s:\n\n", fileName2);
+                    printf("%s:\n\n", fileName2);
                     while ((dir2 = readdir(d2)) != NULL){
                         printf("%s\n", dir2->d_name);
                     }
