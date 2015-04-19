@@ -1,4 +1,0 @@
-
-
-int isWild;
-int isTilde;
