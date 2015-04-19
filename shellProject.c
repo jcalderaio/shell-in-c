@@ -23,8 +23,21 @@ char * tester2;
 char * tester3;
 char * tester4;
 
+bool is_alias(char *key) {
 
-char * check_alias(char *key) {
+    struct AliasNode currAlias;
+    int index = 0;
+    while(alias_count > index){
+        if(!strcmp(aliasTable[index].key, key)){
+            currAlias = aliasTable[index];
+            return true;
+        }
+        ++index;
+    }
+    return false;
+}
+
+char * get_alias(char *key) {
 
     struct AliasNode currAlias;
     int flag = 0;
@@ -149,7 +162,7 @@ void goHome(){
 }
 
 void goPath(){
-    strPath = check_alias(strPath);
+    strPath = get_alias(strPath);
     if(isTilde == 1){
             getCurrentPath();
             strcpy(currLoc, home);
@@ -228,14 +241,14 @@ void setEnvironment() {
         }
         else if(argv[1] == NULL) {
             char* string_1 = remove_white(argv[0]);
-            string_1 = check_alias(string_1);
+            string_1 = get_alias(string_1);
             setenv(string_1, "", 0);
             printf("\"%s\" added to environment variables!\n", string_1);
         }
         else {
             char* string_1 = remove_white(argv[0]);
-            string_1 = check_alias(string_1);
-            setenv(string_1, check_alias(remove_white(argv[1])), 0);
+            string_1 = get_alias(string_1);
+            setenv(string_1, get_alias(remove_white(argv[1])), 0);
             printf("\"%s\" added to environment variables!\n", string_1);
         }
     }
@@ -245,7 +258,7 @@ void setEnvironment() {
         }
         else {
             getCurrentPath();
-            char* string_1 = check_alias(remove_white(argv[0]));
+            char* string_1 = get_alias(remove_white(argv[0]));
             setenv(string_1, remove_white(currentWorkDir), 0);
             printf("\"%s\" added to environment variables!\n", string_1);
             isPeriod = 0;
@@ -261,7 +274,7 @@ void unsetEnvironment() {
         printf("%s\n", "unsetenv: environment variable not found!");
     }
     else {
-        char* string_1 = check_alias(remove_white(argv[0]));
+        char* string_1 = get_alias(remove_white(argv[0]));
         unsetenv(string_1);
         printf("\"%s\" removed from environment variables!\n", string_1);
     }
@@ -381,7 +394,7 @@ void goLS(){
 
 void goLSWord(){
 
-    fileName = check_alias(fileName);
+    fileName = get_alias(fileName);
     printf("\n\n%d\n\n", isWild);
     if(isWild == 1){
         wTest();
@@ -600,46 +613,61 @@ int executable(){
     
 }
 
+void reprocess() {
+
+    int length = 0;
+    while(argv[length] != 0) {
+        ++length;
+    }
+
+    char * new_command = argv[0];
+
+    if(length == 1) {
+        strcat(new_command, "\n");
+    }
+    else {
+        strcat(new_command, " ");
+        int i = 1;
+        while(argv[i] != NULL) {
+            strcat(new_command, argv[i]);
+            if(i == (length-1) ) {
+                strcat(new_command, "\n");
+            }
+            else {
+                strcat(new_command, " ");
+            }
+            ++i;
+        }
+    }
+
+    //yyscan_t scanner;
+
+
+}
+
 void execute_it(){
     // Handle  command execution, pipelining, i/o redirection, and background processing.
     // Utilize a command table whose components are plugged in during parsing by yacc.
 
-    if(!executable()) {
-        pid_t pid = fork();
-        int stat;
-        if(pid == 0){
-            switch (currcmd){
-            case IO_ADDTOFILE:
-                    if(check_out_file() == OK){
-                        int fd0 = open(distf, 0644);
-                        dup2(fd0, distf);
-                        close(distf);
-                    }
-                    break;
-            case IO_APPENDTOFILE:
-                    break;
-            default:
-                    break;
+    //Handle Aliases
+    int flag = 0;
+    int i = 0;
+    while(argv[i] != NULL) {
+        if(is_alias(argv[i])) {
+            argv[i] = get_alias(argv[i]);
+            ++flag;
         }
-            //child process
-            execve(executable_path, argv , environ);
-            free(executable_path);
-        }
-        else if(pid < 0){
-            //error forking
-            perror(executable_path);
-        }
-        else{
-            waitpid(pid, &stat, 0);
-        }
+        ++i;
     }
-    else{
 
-        printf("%s %s\n", input_command, ": command not found");
+    if(flag != 0) {
+        reprocess();
+        return;
     }
-    //Build up the pipeline (create and set up pipe end points (using pipe, dup)
-    //Process background
-    return;
+
+
+    
+    
 
     // //  * Check io file existence in case of io-redirection.
     // if( check_in_file() == SYSERR ) {

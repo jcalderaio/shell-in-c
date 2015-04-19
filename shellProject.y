@@ -34,6 +34,7 @@ int eventcount = 0;
 %token <option>  OPTION
 %token <envexp>  ENVEXP
 
+
 %type <option>   builtin.cmd
 
 %start cmd
@@ -221,25 +222,17 @@ alias.cmd:        ALIAS NEWLINE
 
 simple.cmd:      WORD NEWLINE
                         {
-                        input_command = $1;
+                        bicmd = WORD_CMD;
                         argv[0] = $1;
                         argv[1] = NULL;
                         return 0;
                         }
                 | WORD WORD NEWLINE
                         {
-                        bistr = $1;
-                        argv[argc] = $1;
-                        argv[++argc] = $2;
-                        argv[++argc] = NULL;
-                        return 0;
-                        }
-                | WORD STRING NEWLINE
-                        {
-                        bistr = $1;
-                        argv[argc] = $1;
-                        argv[++argc] = $2;
-                        argv[++argc] = NULL;
+                        bicmd = WORD_CMD;
+                        argv[0] = $1;
+                        argv[1] = $2;
+                        argv[2] = NULL;
                         return 0;
                         }
                 | WORD GT WORD NEWLINE

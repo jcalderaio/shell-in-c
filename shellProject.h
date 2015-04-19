@@ -40,6 +40,7 @@
 #define LSWord_CMD               12
 #define ALIAS_CMD_CREATE         13
 #define CDUser_CMD               14
+#define WORD_CMD                 15
 
 //------Simple Commands-----------//
 #define IO_ADDTOFILE             1
