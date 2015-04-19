@@ -62,7 +62,7 @@ builtin.cmd:    TILDE NEWLINE
                         userName = $2;
                         return 0;
                         }
-                |  CD NEWLINE
+                | CD NEWLINE
                         {
                         bicmd = CDHome_CMD;
                         builtin = 1;
@@ -143,7 +143,22 @@ builtin.cmd:    TILDE NEWLINE
                         fileName = $2;
                         return 0;
                         }
-                | LS simple.cmd
+                | LS GT WORD NEWLINE
+                        {
+                        currcmd = OUTPUT_REDIRECTION;
+                        isLSWithWord = 1;
+                        input_command = $1;
+                        distf = $3;
+                        return 0;
+                        }
+                | LS GTGT WORD NEWLINE
+                        {
+                        currcmd = OUTPUT_APP;
+                        isLSWithWord = 1;
+                        input_command = $1;
+                        distf = $3;
+                        return 0;
+                        }
 
                 | SETENV NEWLINE
                         {
@@ -200,7 +215,8 @@ builtin.cmd:    TILDE NEWLINE
                   ;
 
 alias.cmd:        ALIAS NEWLINE
-                        { bicmd = ALIAS_CMD;
+                        {
+                        bicmd = ALIAS_CMD;
                         builtin = 1;
                         return 0;
                         }
@@ -237,16 +253,32 @@ simple.cmd:      WORD NEWLINE
                         }
                 | WORD GT WORD NEWLINE
                         {
-                        currcmd = IO_ADDTOFILE;
+                        currcmd = OUTPUT_REDIRECTION;
+                        isLSWithWord = 0;
                         input_command = $1;
                         distf = $3;
                         return 0;
                         }
                 | WORD GTGT WORD NEWLINE
                         {
-                        currcmd = IO_APPENDTOFILE;
+                        currcmd = OUTPUT_APP;
+                        isLSWithWord = 0;
                         input_command = $1;
                         distf = $3;
+                        return 0;
+                        }
+                | WORD LT WORD NEWLINE
+                        {
+                        currcmd = INPUT_REDIRECTION;
+                        input_command = $1;
+                        srcf = $3;
+                        return 0;
+                        }
+                | WORD PIPE WORD NEWLINE
+                        {
+                        currcmd = PIPELINE;
+                        input_command = $1;
+                        srcf = $3;
                         return 0;
                         }
                 ;

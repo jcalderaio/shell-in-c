@@ -40,7 +40,7 @@
 #define LSWord_CMD               12
 #define ALIAS_CMD_CREATE         13
 #define CDUser_CMD               14
-#define WORD_CMD                 15
+#define LSWordWord_CMD           15
 
 //------Simple Commands-----------//
 #define IO_ADDTOFILE             1
@@ -122,7 +122,7 @@ int MAXENV;
 int SETPROMPT;
 int CMD;
 int yylex();
-int yyparse(); 
+int yyparse();
 char* pathtab[MAXPATH];
 char* command_path;
 int argc;
@@ -158,9 +158,21 @@ int isOutFile;
 int isWild;
 char* wcFound;
 char* userName;
-char* newUserName;
+int isLSWithWord;
 
 ////////////////////////////////////
+
+
+/*For I/O Redirection and Pipelining!!!!*/
+#define INPUT_STRING_SIZE   80
+#define NORMAL              0
+#define OUTPUT_REDIRECTION  1
+#define INPUT_REDIRECTION   2
+#define PIPELINE            3
+#define BACKGROUND          4
+#define OUTPUT_APP          5
+int myPipe[2];
+
 
 #define NIL(x) (x *)0
 #define ALL NIL(char)

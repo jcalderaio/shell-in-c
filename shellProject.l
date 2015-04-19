@@ -39,12 +39,13 @@ ls                  return LS;
                                                   yylval.string = strdup(yytext + 1);
                                                   if(yylval.string[0] == '~'){
                                                     yylval.string = strdup(yytext + 2);
+                                                    yylval.string[yyleng - 3] = 0;
                                                     isTilde = 1;
                                                   }
                                                   else{
                                                     isTilde = 0;
+                                                    yylval.string[yyleng - 2] = 0;
                                                   }
-                                                  yylval.string[yyleng - 2] = 0;
                                                   return WORD;
                                                }
                                             }

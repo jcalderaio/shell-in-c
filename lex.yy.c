@@ -844,12 +844,13 @@ YY_RULE_SETUP
                                                   yylval.string = strdup(yytext + 1);
                                                   if(yylval.string[0] == '~'){
                                                     yylval.string = strdup(yytext + 2);
+                                                    yylval.string[yyleng - 3] = 0;
                                                     isTilde = 1;
                                                   }
                                                   else{
                                                     isTilde = 0;
+                                                    yylval.string[yyleng - 2] = 0;
                                                   }
-                                                  yylval.string[yyleng - 2] = 0;
                                                   return WORD;
                                                }
                                             }
@@ -857,7 +858,7 @@ YY_RULE_SETUP
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 51 "shellProject.l"
+#line 52 "shellProject.l"
 {
                                               yylval.envexp = strdup(yytext);
                                               int i = 0;
@@ -873,91 +874,91 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 64 "shellProject.l"
+#line 65 "shellProject.l"
 return QUOTE;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 65 "shellProject.l"
+#line 66 "shellProject.l"
 return LEFTBRACE;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 66 "shellProject.l"
+#line 67 "shellProject.l"
 return RIGHTBRACE;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 67 "shellProject.l"
+#line 68 "shellProject.l"
 return DOLLARSIGN;
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 68 "shellProject.l"
+#line 69 "shellProject.l"
 return LT;
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 69 "shellProject.l"
+#line 70 "shellProject.l"
 return LTLT;
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 70 "shellProject.l"
+#line 71 "shellProject.l"
 return GT;
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 71 "shellProject.l"
+#line 72 "shellProject.l"
 return GTGT;
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 72 "shellProject.l"
+#line 73 "shellProject.l"
 return PIPE;
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 73 "shellProject.l"
+#line 74 "shellProject.l"
 return BACKGROUND;
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 74 "shellProject.l"
+#line 75 "shellProject.l"
 return BACKSLASH;
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 75 "shellProject.l"
+#line 76 "shellProject.l"
 return TILDE;
 	YY_BREAK
 case 25:
 /* rule 25 can match eol */
 YY_RULE_SETUP
-#line 76 "shellProject.l"
+#line 77 "shellProject.l"
 return NEWLINE;
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 77 "shellProject.l"
+#line 78 "shellProject.l"
 return PERIODPERIOD;
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 78 "shellProject.l"
+#line 79 "shellProject.l"
 return PERIOD;
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 79 "shellProject.l"
+#line 80 "shellProject.l"
 ;
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 81 "shellProject.l"
+#line 82 "shellProject.l"
 ECHO;
 	YY_BREAK
-#line 961 "lex.yy.c"
+#line 962 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1954,7 +1955,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 81 "shellProject.l"
+#line 82 "shellProject.l"
 
 
 

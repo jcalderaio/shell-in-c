@@ -119,6 +119,18 @@ void wTest(){
     }
 }
 
+//For I/O Redirection and Pipelining functioning
+void chop(char *srcPtr)
+{
+    while(*srcPtr != ' ' && *srcPtr != '\t' && *srcPtr != '\n')
+    {
+        srcPtr++;
+    }
+    *srcPtr = '\0';
+}
+
+
+//End of I/O Redirection and Pipelining functioning
 void removeSpaces (char *str) {
     // Set up two pointers.
     char *src = str;
@@ -401,7 +413,6 @@ void goLSWord(){
         if(wcFound != ""){
             removeSpaces(wcFound);
             fileName = wcFound;
-            printf("\n\n%s\n\n", fileName);
         }
     }
     if(isTilde == 1){
@@ -411,7 +422,6 @@ void goLSWord(){
     if(fileName[0] == '/'){
         fileName = fileName + 1;
     }
-    printf("\n\n%s\n\n", fileName);
     DIR *dirp;
     struct dirent *dir;
     getCurrentPath();
@@ -423,9 +433,7 @@ void goLSWord(){
                 flag = 1;
                 DIR *d2;
                 struct dirent *dir2;
-                printf("\n\nMADE IT HERE\n\n");
                 d2 = opendir(dir->d_name);
-                printf("\n\nd2 = %d\n\n", d2);
                 if (d2){
                     while ((dir2 = readdir(d2)) != NULL){
                         printf("%s\n", dir2->d_name);
@@ -569,6 +577,8 @@ void do_it(){
         case LSWord_CMD:
             goLSWord();
             break;
+        case LSWordWord_CMD:
+            break;
         case ALIAS_CMD:
             printAlias();
             break;
@@ -610,7 +620,7 @@ int executable(){
     }
     printf("return error\n");
     return ERRORS;
-    
+
 }
 
 void reprocess() {
@@ -648,7 +658,6 @@ void reprocess() {
 void execute_it(){
     // Handle  command execution, pipelining, i/o redirection, and background processing.
     // Utilize a command table whose components are plugged in during parsing by yacc.
-
     //Handle Aliases
     int flag = 0;
     int i = 0;
@@ -666,8 +675,8 @@ void execute_it(){
     }
 
 
-    
-    
+
+
 
     // //  * Check io file existence in case of io-redirection.
     // if( check_in_file() == SYSERR ) {
@@ -681,6 +690,91 @@ void execute_it(){
 
     // printf("%s :command not found\n", input_command);
 
+    pid_t pid, pid2;
+    FILE *fp;
+    int mode2 = NORMAL, cmdArgc, status1, status2;
+    char *cmdArgv2[INPUT_STRING_SIZE], *supplement2 = NULL;
+    if(currcmd == PIPELINE){
+        if(pipe(myPipe)){
+            fprintf(stderr, "Pipe failed!");
+            exit(-1);
+        }
+    }
+    pid = fork();
+    if( pid < 0){
+        printf("Error occured");
+        exit(-1);
+    }
+    else if(pid == 0){
+        switch(currcmd)
+        {
+            case OUTPUT_REDIRECTION:
+                fp = fopen(distf, "w+");
+                dup2(fileno(fp), 1);
+                if(isLSWithWord == 1){
+                    goLS();
+                }
+                else{
+                    printf("%s", input_command);
+                }
+                break;
+            case OUTPUT_APP:
+                fp = fopen(distf, "a");
+                dup2(fileno(fp), 1);
+                if(isLSWithWord == 1){
+                    goLS();
+                }
+                else{
+                    printf("%s", input_command);
+                }
+                break;
+            case INPUT_REDIRECTION:
+                printf("\n\nWe are in the INPUT_REDIRECTION\n\n");
+                fp = fopen(srcf, "r");
+                dup2(fileno(fp), 0);
+                break;
+            case PIPELINE:
+                close(myPipe[0]);       //close input of pipe
+                dup2(myPipe[1], fileno(stdout));
+                close(myPipe[1]);
+                break;
+        }
+        execvp(input_command, input_command);
+        exit(0);
+    }
+    else
+    {
+        if(currcmd == BACKGROUND)
+            ;
+        else if(currcmd == PIPELINE)
+        {
+            waitpid(pid, &status1, 0);      //wait for process 1 to finish
+            pid2 = fork();
+            if(pid2 < 0)
+            {
+                printf("error in forking");
+                exit(-1);
+            }
+            else if(pid2 == 0)
+            {
+                close(myPipe[1]);       //close output to pipe
+                dup2(myPipe[0], fileno(stdin));
+                close(myPipe[0]);
+                execvp(*cmdArgv2, cmdArgv2);
+            }
+            else
+            {
+                ;//wait(NULL);
+                //waitpid(pid, &status1, 0);
+                //waitpid(pid2, &status2, 0);
+                close(myPipe[0]);
+                close(myPipe[1]);
+            }
+        }
+        else
+            waitpid(pid, &status1, 0);
+            //wait(NULL);
+    }
 }
 
 void processCommand(){
