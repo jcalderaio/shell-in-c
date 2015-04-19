@@ -405,9 +405,7 @@ void goLS(){
 }
 
 void goLSWord(){
-
     fileName = get_alias(fileName);
-    printf("\n\n%d\n\n", isWild);
     if(isWild == 1){
         wTest();
         if(wcFound != ""){
@@ -448,6 +446,92 @@ void goLSWord(){
     }
 }
 
+void goLSWordWord(){
+    fileName1 = get_alias(fileName1);
+    if(isWild == 1){
+        wTest();
+        if(wcFound != ""){
+            removeSpaces(wcFound);
+            fileName1 = wcFound;
+        }
+    }
+    if(isTilde == 1){
+        goHome();
+        fileName1 = fileName1 + 1;
+    }
+    if(fileName1[0] == '/'){
+        fileName1 = fileName1 + 1;
+    }
+    DIR *dirp;
+    struct dirent *dir;
+    getCurrentPath();
+    dirp = opendir(currentWorkDir);
+    int flag = 0;
+    if (dirp){
+        while ((dir = readdir(dirp)) != NULL){
+            if(strcmp(fileName1, dir->d_name) == 0){
+                flag = 1;
+                DIR *d2;
+                struct dirent *dir2;
+                d2 = opendir(dir->d_name);
+                if (d2){
+                    printf("%s:\n\n", fileName1);
+                    while ((dir2 = readdir(d2)) != NULL){
+                        printf("%s\n", dir2->d_name);
+                    }
+                    closedir(d2);
+                }
+            }
+        }
+        closedir(dirp);
+        if(flag == 0)
+            printf("Directory %s does not exist.\n", fileName1);
+
+        printf("\n\n");
+    }
+
+    //The second file name
+    fileName2 = get_alias(fileName2);
+    if(isWild == 1){
+        wTest();
+        if(wcFound != ""){
+            removeSpaces(wcFound);
+            fileName2 = wcFound;
+        }
+    }
+    if(isTilde == 1){
+        goHome();
+        fileName2 = fileName2 + 1;
+    }
+    if(fileName2[0] == '/'){
+        fileName2 = fileName2 + 1;
+    }
+
+    getCurrentPath();
+    dirp = opendir(currentWorkDir);
+    flag = 0;
+    if (dirp){
+        while ((dir = readdir(dirp)) != NULL){
+            if(strcmp(fileName2, dir->d_name) == 0){
+                flag = 1;
+                DIR *d2;
+                struct dirent *dir2;
+                d2 = opendir(dir->d_name);
+                if (d2){
+                    printf("%s:\n\n", fileName2);
+                    while ((dir2 = readdir(d2)) != NULL){
+                        printf("%s\n", dir2->d_name);
+                    }
+                    closedir(d2);
+                }
+            }
+        }
+        closedir(dirp);
+        if(flag == 0)
+            printf("Directory %s does not exist.\n", fileName2);
+    }
+}
+
 void in_redir(){
 
 }
@@ -471,6 +555,10 @@ void recover_from_errors(){
     // the rest of the command.
     // To do this: use yylex() directly.
     printf("Command Error!!!\n");
+             // yyscan_t scanner;
+             // yylex_init ( &scanner );
+             // yylex ( scanner );
+             // yylex_destroy ( scanner );
 }
 
 ///////////////////////////////////////////////////////
@@ -578,6 +666,7 @@ void do_it(){
             goLSWord();
             break;
         case LSWordWord_CMD:
+            goLSWordWord();
             break;
         case ALIAS_CMD:
             printAlias();
@@ -659,20 +748,20 @@ void execute_it(){
     // Handle  command execution, pipelining, i/o redirection, and background processing.
     // Utilize a command table whose components are plugged in during parsing by yacc.
     //Handle Aliases
-    int flag = 0;
-    int i = 0;
-    while(argv[i] != NULL) {
-        if(is_alias(argv[i])) {
-            argv[i] = get_alias(argv[i]);
-            ++flag;
-        }
-        ++i;
-    }
+    // int flag = 0;
+    // int i = 0;
+    // while(argv[i] != NULL) {
+    //     if(is_alias(argv[i])) {
+    //         argv[i] = get_alias(argv[i]);
+    //         ++flag;
+    //     }
+    //     ++i;
+    // }
 
-    if(flag != 0) {
-        reprocess();
-        return;
-    }
+    // if(flag != 0) {
+    //     reprocess();
+    //     return;
+    // }
 
 
 
@@ -827,6 +916,8 @@ int main( int argc, char *argv[], char ** environ ){
             case BYE_CMD:
                 printf("Goodbye!\n\n");
                 exit(0);
+            default:
+                break;
         }
     }
     return 0;

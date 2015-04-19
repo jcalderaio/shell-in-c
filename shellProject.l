@@ -2,10 +2,12 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#include "y.tab.h"
+#include "shellProject.tab.h"
 #include "shellProject.h"
 extern YYSTYPE yylval;
 %}
+
+
 
 %%
 
@@ -18,7 +20,7 @@ printenv            return PRINTENV;
 bye                 return BYE;
 ls                  return LS;
 [-][a-z]                                    { yylval.option = strdup(yytext); return OPTION; }
-[a-zA-Z\/\-\_\*\?\.][a-zA-Z0-9\/\-\_\*\?\.]*    {
+[a-zA-Z\/\-\_\*\?][a-zA-Z0-9\/\-\_\*\?\.]*    {
                                               yylval.word   = strdup(yytext);
                                               int i = 0;
                                               isWild = 0;
@@ -77,7 +79,7 @@ ls                  return LS;
 \n                  return NEWLINE;
 \.\.                return PERIODPERIOD;
 \.                  return PERIOD;
-[ \t\r]+            ;
+.                   ;
 
 %%
 

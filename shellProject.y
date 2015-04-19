@@ -159,6 +159,14 @@ builtin.cmd:    TILDE NEWLINE
                         distf = $3;
                         return 0;
                         }
+                | LS WORD WORD NEWLINE
+                        {
+                        bicmd = LSWordWord_CMD;
+                        builtin = 1;
+                        fileName1 = $2;
+                        fileName2 = $3;
+                        return 0;
+                        }
 
                 | SETENV NEWLINE
                         {
@@ -286,6 +294,7 @@ simple.cmd:      WORD NEWLINE
 
 int yyerror(char *s){
     fprintf(stderr, "*%s*\n", s);
+    printf("OH MAN!!!!");
     return 0;
 }
 
