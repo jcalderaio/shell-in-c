@@ -42,7 +42,7 @@ bool is_alias(char *key) {
     int index = 0;
     while(alias_count > index){
 
-        if(!strcmp(aliasTable[index].key, key)){  
+        if(!strcmp(aliasTable[index].key, key)){   //Compares input key and aliasTable key
             currAlias = aliasTable[index];
             return true;
         }
@@ -64,7 +64,7 @@ char * get_alias(char *key) {
     int flag = 0;
     int index = 0;
     while(alias_count > index){
-        if(!strcmp(aliasTable[index].key, key)){
+        if(!strcmp(aliasTable[index].key, key)){  //Compares input key and aliasTable key
             currAlias = aliasTable[index];
             ++flag;
             break;
@@ -72,10 +72,12 @@ char * get_alias(char *key) {
         ++index;
     }
 
+    //If no alias, return original char *
     if(flag == 0) {
         return key;
     }
 
+    //If nested alias, get it. If not, return most nested.
     if(currAlias.nested != -1) { //there is a nested command
 
         while(currAlias.nested != -1){
@@ -187,6 +189,11 @@ void removeSpaces (char *str) {
     *dst = '\0';
 }
 
+/*====================================================================*/
+/*  This function removes the extra white spaces that yacc sometimes 
+    adds to the end of the argument */ 
+/*====================================================================*/
+
 char * remove_white(char * source) {
     while(isspace(*source)){ //removing preceeding 0 from the input
         ++source;
@@ -282,6 +289,11 @@ void goPath(){
         strPath = "";
 }
 
+/*====================================================================*/
+/*  This function iterates through the global environ array and
+    prints the environm */ 
+/*====================================================================*/
+
 void printEnvironment() {
     int i;
     for(i = 0; environ[i] != NULL; ++i) {
@@ -289,20 +301,25 @@ void printEnvironment() {
     }
 }
 
+/*====================================================================*/
+/*  This function sets the environment variables that the user enters
+    as arguments */ 
+/*====================================================================*/
+
 void setEnvironment() {
-    if(!isPeriod){
+    if(!isPeriod){                //If the variable does not start with a period ( . )
         if(argv[0] == NULL) {
-            printEnvironment();
+            printEnvironment();     //If argument is NULL, print the variables
         }
-        else if(argv[1] == NULL) {
-            char* string_1 = remove_white(argv[0]);
+        else if(argv[1] == NULL) {                      //If argument is NULL, set the left hand variable as NULL
+            char* string_1 = remove_white(argv[0]);     //Removes the weird white spaces
             string_1 = get_alias(string_1);
             setenv(string_1, "", 0);
             printf("\"%s\" added to environment variables!\n", string_1);
         }
         else {
-            char* string_1 = remove_white(argv[0]);
-            string_1 = get_alias(string_1);
+            char* string_1 = remove_white(argv[0]);               //Sets the left hand side equal to the right hand variable
+            string_1 = get_alias(string_1);                              //entered in by the user
             setenv(string_1, get_alias(remove_white(argv[1])), 0);
             printf("\"%s\" added to environment variables!\n", string_1);
         }
@@ -334,16 +351,21 @@ void setEnvironment() {
     }
 }
 
+/*====================================================================*/
+/*  This function takes in a users argument and removes the corresponding
+    variable from the environment table */ 
+/*====================================================================*/
+
 void unsetEnvironment() {
     if(argv[0] == NULL) {
-        printf("%s\n", "unsetenv: you didn't include anything to unset!");
+        printf("%s\n", "unsetenv: you didn't include anything to unset!");      //If the argument is NULL, the user entered nothing to remove
     }
-    else if(getenv(remove_white(argv[0])) == NULL) {
+    else if(getenv(remove_white(argv[0])) == NULL) {                    //The user entered an invalid variable to remove
         printf("%s\n", "unsetenv: environment variable not found!");
     }
     else {
-        char* string_1 = get_alias(remove_white(argv[0]));
-        unsetenv(string_1);
+        char* string_1 = get_alias(remove_white(argv[0]));  
+        unsetenv(string_1);                                             //Envoke a system command to remove the environment variable
         printf("\"%s\" removed from environment variables!\n", string_1);
     }
 }
