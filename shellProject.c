@@ -22,25 +22,23 @@
 extern char **environ;
 
 extern int yyparse();
-//extern void reset_lexer(void);
-//extern void reset_parser(void);
 extern int yylex_destroy();
 typedef struct yy_buffer_state * YY_BUFFER_STATE;
-//extern struct YY_BUFFER_STATE;
 extern void yy_switch_to_buffer ( YY_BUFFER_STATE  );
 extern YY_BUFFER_STATE yy_scan_string(char * str);
 extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
 extern YY_BUFFER_STATE yy_scan_buffer(char *);
 
-
-
-
-bool is_alias(char *key) {
+/*
+This function takes a character pointer as an argument and returns true if
+it has a corresponding alias in the aliasTable and false if it doesnt
+*/
+bool is_alias(char *key) {        
 
     struct AliasNode currAlias;
     int index = 0;
     while(alias_count > index){
-        if(!strcmp(aliasTable[index].key, key)){
+        if(!strcmp(aliasTable[index].key, key)){  
             currAlias = aliasTable[index];
             return true;
         }
@@ -49,6 +47,11 @@ bool is_alias(char *key) {
     return false;
 }
 
+
+/*
+This function takes a character pointer as an argument and returns true if
+it has a corresponding alias in the aliasTable and false if it doesnt
+*/
 char * get_alias(char *key) {
 
     struct AliasNode currAlias;
@@ -75,27 +78,6 @@ char * get_alias(char *key) {
     }
 
     return currAlias.value;
-
-    // char* argument_future = argv[1];
-    // char* string = malloc(strlen(currAlias.value));
-    // strcpy(string, currAlias.value);
-    // char* drf;
-    // char* token = strtok_r(string, " ", &drf);
-    // int i = 0;
-    // while (token != NULL){
-    //     argv[i] = token;
-    //     ++i;
-    //     token = strtok_r(NULL, " ", &drf);
-    // }
-    // if(argument_future == NULL)
-    //     argv[i] = NULL;
-    // else{
-    //     argv[i] = argument_future;
-    //     argv[++i] = NULL;
-    // }
-    // memset(input_command,0,strlen(input_command));
-    // input_command = argv[0];
-    // return;
 }
 
 bool wCard(char* first, char* second){
@@ -687,8 +669,8 @@ void shell_init(){
     //struct alias aliastab[MAXALIAS];
     struct env envtab[MAXENV];
 
-    //init all tables (e.g., alias table)
-    //get PATH environment variable (use getenv())
+    // get PATH environment variable (use getenv())
+    // get HOME env variable (also use getenv())
     char *currPath = getenv("PATH");
     char *homePath = getenv("HOME");
 
@@ -709,23 +691,12 @@ void shell_init(){
     //printf("%s", home);
     home = homePath;
     currentLocation = home;
-    //disable anything that can kill your shell
-    //(the shell should never die; only can be exit)
     //do anything you feel should be done as init
-    signal(SIGINT, SIG_IGN);
-    return;
-
-    // init all variables.
-    // define (allocate storage) for some var/tables
-    // init all tables (e.g., alias table)
-
-    //Dont require
-    // get PATH environment variable (use getenv())
-    // get HOME env variable (also use getenv())
 
     // disable anything that can kill your shell.
-    // (the shell should never die; only can be exit)
-    // do anything you feel should be done as init
+    signal(SIGINT, SIG_IGN);
+    return;
+ 
 }
 
 void do_it(){
@@ -823,14 +794,6 @@ void reprocess() {
         }
     }
 
-        // yy_scan_string(new_new_command);
-        // char* reserve;
-        // printf("alias print bitch\n");
-        // //char * whatever = strtok_r(new_command, " ", &reserve);
-        // yy_scan_string("cd ");
-        // yyparse();
-        // yylex_destroy();
-
         YY_BUFFER_STATE bp;
         bp = yy_scan_string( new_command );
         yy_switch_to_buffer( bp );
@@ -860,21 +823,6 @@ void execute_it(){
         reprocess();
         return;
     }
-
-
-
-
-
-    // //  * Check io file existence in case of io-redirection.
-    // if( check_in_file() == SYSERR ) {
-    //     printf("Error reading from : %s", srcf);
-    //     return;
-    // }
-    // if( check_out_file() == SYSERR ) {
-    //     printf("Error writing to : %s", distf);
-    //     return;
-    // }
-
 
 
     pid_t pid, pid2;
