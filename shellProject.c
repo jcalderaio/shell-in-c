@@ -878,7 +878,7 @@ void execute_it(){
 
 
     pid_t pid, pid2;
-    FILE *fp;
+    FILE *fp,*fpRead;
     int mode2 = NORMAL, cmdArgc, status1, status2;
     char *cmdArgv2[INPUT_STRING_SIZE], *supplement2 = NULL;
     if(currcmd == PIPELINE){
@@ -895,9 +895,30 @@ void execute_it(){
     else if(pid == 0){
         switch(currcmd)
         {
-            case OUTPUT_REDIRECTION:
+            case OUTPUT_REDIRECTION: {
+                fpRead = fopen(input_command, "r");
                 fp = fopen(distf, "w+");
+                char const* const fileName = argv[1]; /* should check that argc > 1 */
+                FILE* file = fopen(fileName, "r"); /* should check the result */
+                char new_line[256];
+
+                while ( fgets(new_line, sizeof(new_line), fpRead) != NULL) { 
+
+                    // printf("%s\n", str);
+                    char* reserve;
+                    char* tok = strtok_r(new_line, " ", &reserve);
+                    int i = 0;
+                    while (tok != NULL){
+                        argv[i] = tok;
+                        ++i;
+                        tok = strtok_r(NULL, " ", &reserve);
+                    }
+
+                }
+
                 dup2(fileno(fp), 1);
+
+
                 if(isLSWithWord == 1){
                     goLS();
                 }
@@ -905,7 +926,8 @@ void execute_it(){
                     printf("%s", input_command);
                 }
                 break;
-            case OUTPUT_APP:
+            }
+            case OUTPUT_APP: {
                 fp = fopen(distf, "a");
                 dup2(fileno(fp), 1);
                 if(isLSWithWord == 1){
@@ -916,7 +938,8 @@ void execute_it(){
                     printf("\n\n");
                 }
                 break;
-            case INPUT_REDIRECTION:
+            }
+            case INPUT_REDIRECTION: {
                 printf("\n\nWe are in the INPUT_REDIRECTION\n\n");
                 fp = fopen(srcf, "r");
                 dup2(fileno(fp), 0);
@@ -928,11 +951,13 @@ void execute_it(){
                     printf("\n\n");
                 }
                 break;
-            case PIPELINE:
+            }
+            case PIPELINE: {
                 close(myPipe[0]);       //close input of pipe
                 dup2(myPipe[1], fileno(stdout));
                 close(myPipe[1]);
                 break;
+            }
         }
         execvp(input_command, input_command);
         exit(0);
