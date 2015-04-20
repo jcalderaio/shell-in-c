@@ -31,12 +31,11 @@ extern YY_BUFFER_STATE yy_scan_buffer(char *);
 
 
 /*====================================================================*/
-/*  This function takes a character pointer as an argument and returns 
-    true if it has a corresponding alias in the aliasTable and false 
-    if it doesnt */ 
+/*  This function takes a character pointer as an argument and returns
+    true if it has a corresponding alias in the aliasTable and false
+    if it doesnt */
 /*====================================================================*/
 
-bool is_alias(char *key) {        
 /*
 This function takes a character pointer as an argument and returns true if
 it has a corresponding alias in the aliasTable and false if it doesnt
@@ -46,7 +45,7 @@ bool is_alias(char *key) {
     struct AliasNode currAlias;
     int index = 0;
     while(alias_count > index){
-        if(!strcmp(aliasTable[index].key, key)){  
+        if(!strcmp(aliasTable[index].key, key)){
             currAlias = aliasTable[index];
             return true;
         }
@@ -57,9 +56,9 @@ bool is_alias(char *key) {
 
 
 /*====================================================================*/
-/*  This function takes a character pointer as an argument and returns 
-    the most nested alias if it has a corresponding alias in the aliasTable 
-    the the original inputted character pointer if it doesn't */ 
+/*  This function takes a character pointer as an argument and returns
+    the most nested alias if it has a corresponding alias in the aliasTable
+    the the original inputted character pointer if it doesn't */
 /*====================================================================*/
 
 char * get_alias(char *key) {
@@ -169,8 +168,8 @@ void removeSpaces (char *str) {
 }
 
 /*====================================================================*/
-/*  This function removes the extra white spaces that yacc sometimes 
-    adds to the end of the argument */ 
+/*  This function removes the extra white spaces that yacc sometimes
+    adds to the end of the argument */
 /*====================================================================*/
 
 char * remove_white(char * source) {
@@ -288,7 +287,7 @@ void goPath(){
 
 /*====================================================================*/
 /*  This function iterates through the global environ array and
-    prints the environm */ 
+    prints the environm */
 /*====================================================================*/
 
 void printEnvironment() {
@@ -300,7 +299,7 @@ void printEnvironment() {
 
 /*====================================================================*/
 /*  This function sets the environment variables that the user enters
-    as arguments */ 
+    as arguments */
 /*====================================================================*/
 
 void setEnvironment() {
@@ -350,7 +349,7 @@ void setEnvironment() {
 
 /*====================================================================*/
 /*  This function takes in a users argument and removes the corresponding
-    variable from the environment table */ 
+    variable from the environment table */
 /*====================================================================*/
 
 void unsetEnvironment() {
@@ -361,7 +360,7 @@ void unsetEnvironment() {
         printf("%s\n", "unsetenv: environment variable not found!");
     }
     else {
-        char* string_1 = get_alias(remove_white(argv[0]));  
+        char* string_1 = get_alias(remove_white(argv[0]));
         unsetenv(string_1);                                             //Envoke a system command to remove the environment variable
         printf("\"%s\" removed from environment variables!\n", string_1);
     }
@@ -369,7 +368,7 @@ void unsetEnvironment() {
 
 /*====================================================================*/
 /*  This function iterates through the global environ array and
-    prints the environment variables to the screen */ 
+    prints the environment variables to the screen */
 /*====================================================================*/
 
 void printAlias() {
@@ -386,8 +385,8 @@ void printAlias() {
 }
 
 /*====================================================================*/
-/*  This function takes a two character pointers arguments and sets 
-    an alias in an aliasTable the refers to the value */ 
+/*  This function takes a two character pointers arguments and sets
+    an alias in an aliasTable the refers to the value */
 /*====================================================================*/
 
 void createAlias(char* key, char* value){
@@ -409,7 +408,7 @@ void createAlias(char* key, char* value){
         return;
     }
 
-    //If more than one alias in the table, a check is performed so that 
+    //If more than one alias in the table, a check is performed so that
         //no two aliases can have the same name
     while(count < alias_count){
         if(!strcmp(aliasTable[count].key, key)){
@@ -419,7 +418,7 @@ void createAlias(char* key, char* value){
         ++count;
     }
 
-    //If no alias exists yet, alias is created! 
+    //If no alias exists yet, alias is created!
 
     aliasTable[alias_count].key = key;
     aliasTable[alias_count].value = value;
@@ -427,7 +426,7 @@ void createAlias(char* key, char* value){
 
     printf("\"%s\" added as an alias!\n", key);
 
-    //A check is performed to see if new alias refers an old alias. 
+    //A check is performed to see if new alias refers an old alias.
         //If so, the previous nested number points to the new alias.
 
     int count2 = 0;
@@ -443,8 +442,8 @@ void createAlias(char* key, char* value){
 }
 
 /*====================================================================*/
-/*  This function takes a character pointer as an argument. If valid, 
-    unsets an alias in the table with the same name */ 
+/*  This function takes a character pointer as an argument. If valid,
+    unsets an alias in the table with the same name */
 /*====================================================================*/
 void unaliasword(char* key){
 
@@ -454,7 +453,7 @@ void unaliasword(char* key){
         while(alias_count > count){
             if(!strcmp(key, aliasTable[count].key)){    //Will compare the alias key to input key
                 int i = 0;
-                while(i < count){   
+                while(i < count){
                     if(strcmp(key, aliasTable[i].value) == 0)   //WIll input alies value to input key
                         aliasTable[i].nested = -1;          //If equal, sets aliases nested value to -1
                     ++i;
@@ -478,7 +477,7 @@ void unaliasword(char* key){
             ++count2;
         }
         --alias_count;                  //Removes the alias and number of aliases in the table
-        printf("\"%s\" alias removed!\n", key);         
+        printf("\"%s\" alias removed!\n", key);
         return;
     }
 
@@ -750,7 +749,7 @@ void printPrompt(){
 /*====================================================================*/
 /*  This function initializes the shell and allocates memory to specific
     tables and variables needed for the shell to perform and even
-    possibly return back to lex */ 
+    possibly return back to lex */
 /*====================================================================*/
 
 void shell_init(){
@@ -787,14 +786,14 @@ void shell_init(){
     // disable anything that can kill your shell.
     signal(SIGINT, SIG_IGN);
     return;
- 
+
 }
 
 /*====================================================================*/
 /*  This function executes built in commands by checking the header file
     for the defined name and switching it out with a number. The switch is
     then performed, which in turn executes the proper command with the
-    arguments from the user passed in through the yacc file. */ 
+    arguments from the user passed in through the yacc file. */
 /*====================================================================*/
 
 void do_it(){
@@ -802,7 +801,7 @@ void do_it(){
     switch (bicmd) {
 
         //This command redirects the user to the home directory
-        case CDHome_CMD:    
+        case CDHome_CMD:
             goHome();
             break;
 
@@ -893,7 +892,7 @@ void processCommand();
 
 /*====================================================================*/
 /*  This function concatenates all the user arguments into a string token
-    which is sent to the lexer for reprocessing */ 
+    which is sent to the lexer for reprocessing */
 /*====================================================================*/
 
 void reprocess() {
@@ -923,7 +922,7 @@ void reprocess() {
         }
     }
 
-        //This series of commands resets the tokens of the 
+        //This series of commands resets the tokens of the
             //lexer and parses it. The current commands buffer is destroyed.
         YY_BUFFER_STATE bp;
         bp = yy_scan_string( new_command );
@@ -939,7 +938,7 @@ void execute_it(){
     // Handle  command execution, pipelining, i/o redirection, and background processing.
     // Utilize a command table whose components are plugged in during parsing by yacc.
 
-    
+
 
     //Handle Aliases
     int flag = 0;       //This flag indicates if there are aliases or not
@@ -983,7 +982,7 @@ void execute_it(){
                 FILE* file = fopen(fileName, "r"); /* should check the result */
                 char new_line[256];
 
-                while ( fgets(new_line, sizeof(new_line), fpRead) != NULL) { 
+                while ( fgets(new_line, sizeof(new_line), fpRead) != NULL) {
 
                     // printf("%s\n", str);
                     char* reserve;
