@@ -904,17 +904,20 @@ void execute_it(){
     // Handle  command execution, pipelining, i/o redirection, and background processing.
     // Utilize a command table whose components are plugged in during parsing by yacc.
 
+    
+
     //Handle Aliases
-    int flag = 0;
+    int flag = 0;       //This flag indicates if there are aliases or not
     int i = 0;
     while(argv[i] != NULL) {
-        if(is_alias(argv[i])) {
+        if(is_alias(argv[i])) {     //If there is an aliases, replace the current argument with its alias
             argv[i] = get_alias(argv[i]);
             ++flag;
         }
         ++i;
     }
 
+    //If a command contains an alias, send to reprocesses to go back to lexera
     if(flag != 0) {
         reprocess();
         return;
