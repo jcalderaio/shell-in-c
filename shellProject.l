@@ -19,7 +19,7 @@ printenv            return PRINTENV;
 bye                 return BYE;
 ls                  return LS;
 [-][a-z]                                    { yylval.option = strdup(yytext); return OPTION; }
-[a-zA-Z\/\-\_\*\?][a-zA-Z0-9\/\-\_\*\?\.]*    {
+[a-zA-Z0-9\/\-\_\*\?\:][a-zA-Z0-9\/\-\_\*\?\.\:\~]*    {
                                               yylval.word   = strdup(yytext);
                                               int i = 0;
                                               isWild = 0;

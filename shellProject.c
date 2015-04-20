@@ -226,8 +226,8 @@ void goHome(){
 }
 
 void goPath(){
-    strPath = get_alias(strPath);
-    if(isTilde == 1){
+        strPath = get_alias(strPath);
+        if(isTilde == 1){
             getCurrentPath();
             strcpy(currLoc, home);
             if(!(strPath[0] == '/')){
@@ -246,10 +246,13 @@ void goPath(){
             if(dotdot == 1){
                 getCurrentPath();
                 strcpy(currLoc, currentWorkDir);
+
                 if(!(strPath[0] == '/')){
-                    strcat(currLoc, "/");
+                    strcat(currLoc, "/..");
                 }
-                strcat(currLoc, "..");
+                else{
+                    strcat(currLoc, "/..");
+                }
                 currentWorkDir = currLoc;
                 removeSpaces(currentWorkDir);
                 int isDir = chdir(currentWorkDir);
@@ -314,6 +317,19 @@ void setEnvironment() {
             string_1 = get_alias(string_1);
             setenv(string_1, get_alias(remove_white(argv[1])), 0);
             printf("\"%s\" added to environment variables!\n", string_1);
+        }
+    }
+    else if(isFrontPeriod == 1){
+         if(argv[0] == NULL) {
+            printEnvironment();
+        }
+        else {
+            getCurrentPath();
+            char* string_1 = ".";
+            strcat(string_1, get_alias(remove_white(argv[0])));
+            setenv(string_1, remove_white(currentWorkDir), 0);
+            printf("\"%s\" added to environment variables!\n", string_1);
+            isPeriod = 0;
         }
     }
     else{
@@ -653,6 +669,8 @@ void init_scanner_and_parser(){
     isTilde = -1;
     isQuote = -1;
     wcFound = "";
+    isFrontPeriod = 0;
+    isPeriod = 0;
 }
 
 void printPrompt(){
@@ -804,7 +822,7 @@ void reprocess() {
             ++i;
         }
     }
-    
+
         // yy_scan_string(new_new_command);
         // char* reserve;
         // printf("alias print bitch\n");
@@ -812,7 +830,7 @@ void reprocess() {
         // yy_scan_string("cd ");
         // yyparse();
         // yylex_destroy();
-        
+
         YY_BUFFER_STATE bp;
         bp = yy_scan_string( new_command );
         yy_switch_to_buffer( bp );

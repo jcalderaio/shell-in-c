@@ -431,16 +431,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  44
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   77
+#define YYLAST   79
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  43
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  5
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  39
+#define YYNRULES  40
 /* YYNRULES -- Number of states.  */
-#define YYNSTATES  83
+#define YYNSTATES  85
 
 /* YYTRANSLATE(YYLEX) -- Bison symbol number corresponding to YYLEX.  */
 #define YYUNDEFTOK  2
@@ -491,8 +491,9 @@ static const yytype_uint8 yyprhs[] =
 {
        0,     0,     3,     5,     7,     9,    12,    16,    19,    23,
       27,    32,    36,    40,    45,    50,    52,    54,    57,    61,
-      66,    71,    76,    81,    84,    87,    91,    96,   101,   104,
-     108,   111,   114,   119,   123,   126,   130,   135,   140,   145
+      66,    71,    76,    81,    84,    87,    91,    97,   102,   107,
+     110,   114,   117,   120,   125,   129,   132,   136,   141,   146,
+     151
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
@@ -507,12 +508,13 @@ static const yytype_int8 yyrhs[] =
       -1,    12,     4,    36,    10,    -1,    12,    35,    36,    10,
       -1,    12,     3,    36,    10,    -1,    12,    36,    36,    10,
       -1,    42,    10,    -1,    14,    10,    -1,    14,    36,    10,
-      -1,    14,    36,    23,    10,    -1,    14,    36,    36,    10,
-      -1,    25,    10,    -1,    25,    36,    10,    -1,    26,    10,
-      -1,    19,    10,    -1,    19,    36,    36,    10,    -1,    20,
-      36,    10,    -1,    36,    10,    -1,    36,    36,    10,    -1,
-      36,     4,    36,    10,    -1,    36,    35,    36,    10,    -1,
-      36,     3,    36,    10,    -1,    36,    28,    36,    10,    -1
+      -1,    14,    36,    23,    36,    10,    -1,    14,    36,    23,
+      10,    -1,    14,    36,    36,    10,    -1,    25,    10,    -1,
+      25,    36,    10,    -1,    26,    10,    -1,    19,    10,    -1,
+      19,    36,    36,    10,    -1,    20,    36,    10,    -1,    36,
+      10,    -1,    36,    36,    10,    -1,    36,     4,    36,    10,
+      -1,    36,    35,    36,    10,    -1,    36,     3,    36,    10,
+      -1,    36,    28,    36,    10,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
@@ -520,8 +522,9 @@ static const yytype_uint16 yyrline[] =
 {
        0,    41,    41,    43,    45,    49,    55,    62,    68,    75,
       81,    89,    96,   103,   111,   119,   124,   130,   136,   143,
-     151,   159,   167,   175,   182,   189,   197,   206,   214,   221,
-     228,   236,   242,   249,   258,   265,   273,   281,   289,   297
+     151,   159,   167,   175,   182,   189,   197,   207,   216,   224,
+     231,   238,   246,   252,   259,   268,   275,   283,   291,   299,
+     307
 };
 #endif
 
@@ -559,7 +562,8 @@ static const yytype_uint8 yyr1[] =
        0,    43,    44,    44,    44,    45,    45,    45,    45,    45,
       45,    45,    45,    45,    45,    45,    45,    45,    45,    45,
       45,    45,    45,    45,    45,    45,    45,    45,    45,    45,
-      45,    46,    46,    46,    47,    47,    47,    47,    47,    47
+      45,    45,    46,    46,    46,    47,    47,    47,    47,    47,
+      47
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
@@ -567,8 +571,9 @@ static const yytype_uint8 yyr2[] =
 {
        0,     2,     1,     1,     1,     2,     3,     2,     3,     3,
        4,     3,     3,     4,     4,     1,     1,     2,     3,     4,
-       4,     4,     4,     2,     2,     3,     4,     4,     2,     3,
-       2,     2,     4,     3,     2,     3,     4,     4,     4,     4
+       4,     4,     4,     2,     2,     3,     5,     4,     4,     2,
+       3,     2,     2,     4,     3,     2,     3,     4,     4,     4,
+       4
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -579,12 +584,12 @@ static const yytype_uint8 yydefact[] =
        0,    16,     0,     0,     0,     0,    15,     0,     0,     0,
        0,     0,     0,     0,     2,     4,     3,     5,     0,     0,
        0,    17,     0,     0,    24,     0,     7,     0,     0,     0,
-       0,    31,     0,     0,    28,     0,    30,     0,     0,    34,
+       0,    32,     0,     0,    29,     0,    31,     0,     0,    35,
        0,     0,     0,    23,     1,     6,     0,     0,     0,    18,
        0,    25,     0,     0,     9,     0,    11,     0,    12,     0,
-       8,     0,    33,    29,     0,     0,     0,     0,    35,    21,
-      19,    20,    22,    26,    27,    10,    13,    14,    32,    38,
-      36,    39,    37
+       8,     0,    34,    30,     0,     0,     0,     0,    36,    21,
+      19,    20,    22,    27,     0,    28,    10,    13,    14,    33,
+      39,    37,    40,    38,    26
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -599,14 +604,14 @@ static const yytype_int8 yydefgoto[] =
 static const yytype_int8 yypact[] =
 {
       -6,   -27,     7,    -1,    11,     5,   -27,    12,   -26,    13,
-      28,    -3,    29,    40,   -27,   -27,   -27,   -27,    32,     8,
-       9,   -27,    10,    16,   -27,    14,   -27,    17,    19,    21,
-      41,   -27,    18,    46,   -27,    48,   -27,    23,    24,   -27,
-      25,    26,    53,   -27,   -27,   -27,    54,    55,    56,   -27,
-      57,   -27,    58,    59,   -27,    60,   -27,    61,   -27,    62,
-     -27,    63,   -27,   -27,    64,    65,    66,    67,   -27,   -27,
-     -27,   -27,   -27,   -27,   -27,   -27,   -27,   -27,   -27,   -27,
-     -27,   -27,   -27
+      29,    -3,    30,    42,   -27,   -27,   -27,   -27,    34,     9,
+      10,   -27,    15,    16,   -27,    14,   -27,    17,    19,    21,
+      44,   -27,    20,    48,   -27,    49,   -27,    24,    25,   -27,
+      26,    27,    55,   -27,   -27,   -27,    56,    57,    58,   -27,
+      59,   -27,    28,    60,   -27,    61,   -27,    62,   -27,    63,
+     -27,    64,   -27,   -27,    65,    66,    67,    68,   -27,   -27,
+     -27,   -27,   -27,   -27,    69,   -27,   -27,   -27,   -27,   -27,
+     -27,   -27,   -27,   -27,   -27
 };
 
 /* YYPGOTO[NTERM-NUM].  */
@@ -625,11 +630,11 @@ static const yytype_uint8 yytable[] =
       37,    38,    19,    20,     1,     2,     3,    39,     4,    21,
       33,     5,     6,     7,     8,    26,    27,    17,    28,     9,
       10,    24,    31,    34,    51,    40,    49,    54,    29,    56,
-      11,    58,    41,    42,    22,    23,    12,    52,    36,    43,
-      44,    30,    45,    18,    46,    47,    48,    25,    32,    35,
-      53,    60,    50,    55,    61,    57,    62,    59,    63,    64,
-      65,    66,    67,    68,    69,    70,    71,    72,    73,    74,
-      75,    76,    77,    78,    79,    80,    81,    82
+      11,    58,    41,    42,    22,    23,    12,    52,    73,    36,
+      43,    30,    44,    18,    45,    46,    47,    25,    32,    35,
+      53,    48,    50,    55,    60,    57,    61,    59,    62,    63,
+      64,    65,    66,    67,    74,    68,    69,    70,    71,    72,
+      75,    76,    77,    78,    79,    80,    81,    82,    83,    84
 };
 
 static const yytype_uint8 yycheck[] =
@@ -638,10 +643,10 @@ static const yytype_uint8 yycheck[] =
       36,    17,    18,    19,    20,    10,    11,    10,    13,    25,
       26,    10,    10,    10,    10,    28,    10,    10,    23,    10,
       36,    10,    35,    36,    35,    36,    42,    23,    10,    10,
-       0,    36,    10,    36,    36,    36,    36,    36,    36,    36,
-      36,    10,    36,    36,    36,    36,    10,    36,    10,    36,
-      36,    36,    36,    10,    10,    10,    10,    10,    10,    10,
-      10,    10,    10,    10,    10,    10,    10,    10
+      10,    36,     0,    36,    10,    36,    36,    36,    36,    36,
+      36,    36,    36,    36,    10,    36,    36,    36,    10,    10,
+      36,    36,    36,    36,    36,    10,    10,    10,    10,    10,
+      10,    10,    10,    10,    10,    10,    10,    10,    10,    10
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
@@ -655,8 +660,8 @@ static const yytype_uint8 yystos[] =
       28,    35,    36,    10,     0,    10,    36,    36,    36,    10,
       36,    10,    23,    36,    10,    36,    10,    36,    10,    36,
       10,    36,    10,    10,    36,    36,    36,    36,    10,    10,
-      10,    10,    10,    10,    10,    10,    10,    10,    10,    10,
-      10,    10,    10
+      10,    10,    10,    10,    36,    10,    10,    10,    10,    10,
+      10,    10,    10,    10,    10
 };
 
 #define yyerrok		(yyerrstatus = 0)
@@ -1684,6 +1689,19 @@ yyreduce:
   case 26:
 #line 198 "shellProject.y"
     {
+                        printf("\n\nHOLLY SHIT I MADE IT HERE11111\n\n");
+                        bicmd = SETENV_CMD;
+                        isFrontPeriod = 1;
+                        builtin = 1;
+                        argv[0] = (yyvsp[(2) - (5)].word);
+                        argv[1] = (yyvsp[(4) - (5)].word);
+                        return 0;
+                        }
+    break;
+
+  case 27:
+#line 208 "shellProject.y"
+    {
                         bicmd = SETENV_CMD;
                         builtin = 1;
                         isPeriod = 1;
@@ -1693,8 +1711,8 @@ yyreduce:
                         }
     break;
 
-  case 27:
-#line 207 "shellProject.y"
+  case 28:
+#line 217 "shellProject.y"
     {
                         bicmd = SETENV_CMD;
                         builtin = 1;
@@ -1704,8 +1722,8 @@ yyreduce:
                         }
     break;
 
-  case 28:
-#line 215 "shellProject.y"
+  case 29:
+#line 225 "shellProject.y"
     {
                         bicmd = UNSETENV_CMD;
                         builtin = 1;
@@ -1714,8 +1732,8 @@ yyreduce:
                         }
     break;
 
-  case 29:
-#line 222 "shellProject.y"
+  case 30:
+#line 232 "shellProject.y"
     {
                         bicmd = UNSETENV_CMD;
                         builtin = 1;
@@ -1724,8 +1742,8 @@ yyreduce:
                         }
     break;
 
-  case 30:
-#line 229 "shellProject.y"
+  case 31:
+#line 239 "shellProject.y"
     {
                         builtin = 1;
                         bicmd = PRINTENV_CMD;
@@ -1733,8 +1751,8 @@ yyreduce:
                         }
     break;
 
-  case 31:
-#line 237 "shellProject.y"
+  case 32:
+#line 247 "shellProject.y"
     {
                         bicmd = ALIAS_CMD;
                         builtin = 1;
@@ -1742,8 +1760,8 @@ yyreduce:
                         }
     break;
 
-  case 32:
-#line 243 "shellProject.y"
+  case 33:
+#line 253 "shellProject.y"
     {
                         bicmd = ALIAS_CMD_CREATE;
                         builtin = 1;
@@ -1752,8 +1770,8 @@ yyreduce:
                         return 0; }
     break;
 
-  case 33:
-#line 250 "shellProject.y"
+  case 34:
+#line 260 "shellProject.y"
     {
                         bicmd = UNALIAS_CMD;
                         builtin = 1;
@@ -1762,8 +1780,8 @@ yyreduce:
                         }
     break;
 
-  case 34:
-#line 259 "shellProject.y"
+  case 35:
+#line 269 "shellProject.y"
     {
                         bicmd = WORD_CMD;
                         argv[0] = (yyvsp[(1) - (2)].word);
@@ -1772,8 +1790,8 @@ yyreduce:
                         }
     break;
 
-  case 35:
-#line 266 "shellProject.y"
+  case 36:
+#line 276 "shellProject.y"
     {
                         bicmd = WORD_CMD;
                         argv[0] = (yyvsp[(1) - (3)].word);
@@ -1783,8 +1801,8 @@ yyreduce:
                         }
     break;
 
-  case 36:
-#line 274 "shellProject.y"
+  case 37:
+#line 284 "shellProject.y"
     {
                         currcmd = OUTPUT_REDIRECTION;
                         isLSWithWord = 0;
@@ -1794,8 +1812,8 @@ yyreduce:
                         }
     break;
 
-  case 37:
-#line 282 "shellProject.y"
+  case 38:
+#line 292 "shellProject.y"
     {
                         currcmd = OUTPUT_APP;
                         isLSWithWord = 0;
@@ -1805,8 +1823,8 @@ yyreduce:
                         }
     break;
 
-  case 38:
-#line 290 "shellProject.y"
+  case 39:
+#line 300 "shellProject.y"
     {
                         currcmd = INPUT_REDIRECTION;
                         isLSWithWord = 0;
@@ -1816,8 +1834,8 @@ yyreduce:
                         }
     break;
 
-  case 39:
-#line 298 "shellProject.y"
+  case 40:
+#line 308 "shellProject.y"
     {
                         currcmd = PIPELINE;
                         input_command = (yyvsp[(1) - (4)].word);
@@ -1828,7 +1846,7 @@ yyreduce:
 
 
 /* Line 1267 of yacc.c.  */
-#line 1832 "y.tab.c"
+#line 1850 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2042,7 +2060,7 @@ yyreturn:
 }
 
 
-#line 305 "shellProject.y"
+#line 315 "shellProject.y"
 
 
 

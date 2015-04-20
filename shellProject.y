@@ -194,6 +194,16 @@ builtin.cmd:    TILDE NEWLINE
                         argv[1] = NULL;
                         return 0;
                         }
+                | SETENV WORD PERIOD WORD NEWLINE
+                        {
+                        printf("\n\nHOLLY SHIT I MADE IT HERE11111\n\n");
+                        bicmd = SETENV_CMD;
+                        isFrontPeriod = 1;
+                        builtin = 1;
+                        argv[0] = $2;
+                        argv[1] = $4;
+                        return 0;
+                        }
                 | SETENV WORD PERIOD NEWLINE
                         {
                         bicmd = SETENV_CMD;

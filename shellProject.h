@@ -162,6 +162,7 @@ char* fileName2;
 char* envExpVariable;
 int isWild;
 int isTilde;
+int isFrontPeriod;
 
 ////////////////////////////////////
 
