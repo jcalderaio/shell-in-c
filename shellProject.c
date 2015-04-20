@@ -11,16 +11,16 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdbool.h>
+
+
 #include "shellProject.h"
 
+//////////////////////////////////////////////////////
+///////Builtin Functions//////////////////////////////
+//////////////////////////////////////////////////////
 
+extern char **environ;
 
-extern char **environ;    //This is the table to set our environments
-
-
-/*====================================================================*/
-/* THESE ARE THE FUNCTIONS IMPORTED FROM THE LEX.YY.C FILE */ 
-/*====================================================================*/
 extern int yyparse();
 extern int yylex_destroy();
 typedef struct yy_buffer_state * YY_BUFFER_STATE;
@@ -88,30 +88,55 @@ char * get_alias(char *key) {
     return currAlias.value;
 }
 
+//This is the function that checks for wildcards
 bool wCard(char* first, char* second){
+    //The position in the char* is checked to make sure
+    //that both are not equal to '/0' if so tru is returned
     if(*first == '\0' && *second == '\0'){
         return true;
     }
+    //The position in the char* is checked to make sure
+    //that the first equals '*' and first+1 != '\0' and
+    //second == '\0' if so false is returned
     if(*first == '*' && *(first+1) != '\0' && *second == '\0'){
         return false;
     }
+    //The position in the char* is checked to make sure
+    //that the first equals '?' or first == second if this
+    //true the function is called recursively incrementing
+    //the pointer location for first and second
     if(*first == '?' || *first == *second){
         return wCard(first+1, second+1);
     }
+    //The position in the char* is checked to make sure
+    //that first is not equal to '*' if true either
+    //wCard(first+1, second) or wCard(first, second+1)
+    //is called recursivley.
     if(*first == '*'){
         return wCard(first+1, second) || wCard(first, second+1);
     }
+
+    //If none of the if statements are executed above false is returned
     return false;
 }
 
+//This is the function that is called that is used to set the wild
+//card value passed in through str as the matching wildcard using
+//wCard(char* first, char* second)
 void wTest(char* str){
     DIR *dirp;
     char* second;
     struct dirent* dir;
+    //dirp checks to see it the opendir succefully
+    //opend the currentWorkDir
     dirp = opendir(currentWorkDir);
     if(dirp){
+        //If the current directory can successfully open
         while((dir = readdir(dirp)) != NULL){
+            //This will look through eventhing in the dirtory
             second = dir->d_name;
+            //If the wild card if found wcFound is reset and
+            //
             if(wCard(str, second)){
                 wcFound = second;
                 break;
@@ -121,58 +146,8 @@ void wTest(char* str){
     }
 }
 
-void wTestNewNew(){
-    printf("\n\nWe Are Here...\n\n");
-    DIR *dirp;
-    char* second;
-    struct dirent* dir;
-    dirp = opendir(currentWorkDir);
-    if(dirp){
-        while((dir = readdir(dirp)) != NULL){
-            second = dir->d_name;
-            if(wCard(fileName2, second)){
-                printf("\n\nSecond Directory name is:%s\n\n",second);
-                wcFound = second;
-                break;
-            }
-        }
-        closedir(dirp);
-    }
-}
 
-void wTestNew(){
-    DIR *dirp;
-    char* second;
-    struct dirent* dir;
-    dirp = opendir(currentWorkDir);
-    if(dirp){
-        while((dir = readdir(dirp)) != NULL){
-            second = dir->d_name;
-            if(wCard(fileName1, second)){
-                printf("\n\nDirectory name is:%s\n\n",second);
-                wcFound = second;
-                break;
-            }
-        }
-        closedir(dirp);
-    }
-    wTestNewNew();
-}
-
-
-
-//For I/O Redirection and Pipelining functioning
-void chop(char *srcPtr)
-{
-    while(*srcPtr != ' ' && *srcPtr != '\t' && *srcPtr != '\n')
-    {
-        srcPtr++;
-    }
-    *srcPtr = '\0';
-}
-
-
-//End of I/O Redirection and Pipelining functioning
+//This function removes white spaces from a char*
 void removeSpaces (char *str) {
     // Set up two pointers.
     char *src = str;
@@ -201,12 +176,16 @@ char * remove_white(char * source) {
     return source;
 }
 
+//This function gets the current working directory
 void getCurrentPath(){
     char * cwd;
     cwd = getcwd (0, 0);
+    //If the current working directory is not valid an error message occurs
     if (! cwd) {
         fprintf (stderr, "getcwd failed: %s\n", strerror (errno));
     }
+    //If the current working directory is valid then currentWordDir
+    //Will be set to that file path
     else {
         currentWorkDir = cwd;
         removeSpaces(currentWorkDir);
@@ -214,15 +193,22 @@ void getCurrentPath(){
     }
 }
 
+//This function is used to redirect to the home directory
 void goHome(){
     strcpy(currLoc, home);
     printf("You are now being redirected to the home directory\n");
     chdir(home);
 }
 
+//This function is used to go to a particular path
 void goPath(){
+    //First the path is checked if it contains an alias
         strPath = get_alias(strPath);
+        //Next the path is checked if it contained a tilde when being parsed
         if(isTilde == 1){
+            //If there was a tilde in the path the home
+            //path is copied into currLoc and the the the
+            //desired file path is added at the end
             getCurrentPath();
             strcpy(currLoc, home);
             if(!(strPath[0] == '/')){
@@ -239,6 +225,8 @@ void goPath(){
         }
         else{
             if(dotdot == 1){
+                //If there was a dotdot in the path this is incorporated
+                //into the file path and redirected to that location
                 getCurrentPath();
                 strcpy(currLoc, currentWorkDir);
 
@@ -255,6 +243,9 @@ void goPath(){
                     printf("%s is not a valid directory name.\n", strPath);
                 }
 
+                //Once the location has been moved up a folder
+                //then the intended location following the
+                //dot dot is then redirected to that location
                 getCurrentPath();
                 strcpy(currLoc, currentWorkDir);
                 if(!(strPath[0] == '/')){
@@ -271,6 +262,8 @@ void goPath(){
                 dotdot = 0;
             }
             else{
+                //For all other cases the the file path is used
+                //and the shell is redirected to that current location
                 getCurrentPath();
                 strcpy(currLoc, currentWorkDir);
                 if(!(strPath[0] == '/')){
@@ -492,21 +485,33 @@ void unaliasword(char* key){
 
 }
 
+//This is the function that is used to print
+//all the content in the current woriking directory
 void goLS(){
     DIR *dirp;
     struct dirent* dir;
+     //dirp checks to see it the opendir succefully
+    //opend the currentWorkDir
     dirp = opendir(currentWorkDir);
     if(dirp){
+        //If the current directory can successfully open
         while((dir = readdir(dirp)) != NULL){
+            //This is where all of the content is printed out
             printf("%s\n", dir->d_name);
         }
         closedir(dirp);
     }
 }
 
+//This is the function that is used to print
+//all the content in the requested directory
 void goLSWord(){
+    //This checks if there is an alias is so it returns
+    //the correct char*
     fileName = get_alias(fileName);
+    //This is where the wild card is checked
     if(isWild == 1){
+        //The wild card function is checked
         wTest(fileName);
         if(wcFound != ""){
             removeSpaces(wcFound);
@@ -514,6 +519,7 @@ void goLSWord(){
             wcFound = "";
         }
     }
+    //check to make sure if it conatined a tilde
     if(isTilde == 1){
         goHome();
         fileName = fileName + 1;
@@ -524,9 +530,12 @@ void goLSWord(){
     DIR *dirp;
     struct dirent *dir;
     getCurrentPath();
+     //dirp checks to see it the opendir succefully
+    //opend the currentWorkDir
     dirp = opendir(currentWorkDir);
     int flag = 0;
     if (dirp){
+        //If the current directory can successfully open
         while ((dir = readdir(dirp)) != NULL){
             if(strcmp(fileName, dir->d_name) == 0){
                 flag = 1;
@@ -535,6 +544,7 @@ void goLSWord(){
                 d2 = opendir(dir->d_name);
                 if (d2){
                     while ((dir2 = readdir(d2)) != NULL){
+                        //This is where all of the content is printed out
                         printf("%s\n", dir2->d_name);
                     }
                     closedir(d2);
@@ -548,15 +558,20 @@ void goLSWord(){
 }
 
 void goLSWordWord(){
+    //This checks if there is an alias is so it returns
+    //the correct char*
+    fileName1 = get_alias(fileName1);
 
+    //This is where the wild card is checked
     if(isWild == 1){
+        //The wild card function is checked for fileName1
         wTest(fileName1);
         if(wcFound != ""){
             removeSpaces(wcFound);
             fileName1 = wcFound;
             wcFound = "";
         }
-
+        //The wild card function is checked for fileName2
         wTest(fileName2);
         if(wcFound != ""){
             removeSpaces(wcFound);
@@ -564,6 +579,7 @@ void goLSWordWord(){
             wcFound = "";
         }
     }
+    //check to make sure if it conatined a tilde
     if(isTilde == 1){
         goHome();
         fileName1 = fileName1 + 1;
@@ -577,6 +593,7 @@ void goLSWordWord(){
     dirp = opendir(currentWorkDir);
     int flag = 0;
     if (dirp){
+        //If the current directory can successfully open
         while ((dir = readdir(dirp)) != NULL){
             if(strcmp(fileName1, dir->d_name) == 0){
                 flag = 1;
@@ -584,8 +601,10 @@ void goLSWordWord(){
                 struct dirent *dir2;
                 d2 = opendir(dir->d_name);
                 if (d2){
+                    //This is where the filename is being printed
                     printf("%s:\n\n", fileName1);
                     while ((dir2 = readdir(d2)) != NULL){
+                        //This is where all of the content is printed out
                         printf("%s\n", dir2->d_name);
                     }
                     closedir(d2);
@@ -599,9 +618,11 @@ void goLSWordWord(){
         printf("\n\n");
     }
 
-    //The second file name
+    //This checks if there is an alias is so it returns
+    //the correct char*
     fileName2 = get_alias(fileName2);
 
+    //check to make sure if it conatined a tilde
     if(isTilde == 1){
         goHome();
         fileName2 = fileName2 + 1;
@@ -614,6 +635,7 @@ void goLSWordWord(){
     dirp = opendir(currentWorkDir);
     flag = 0;
     if (dirp){
+        //If the current directory can successfully open
         while ((dir = readdir(dirp)) != NULL){
             if(strcmp(fileName2, dir->d_name) == 0){
                 flag = 1;
@@ -621,8 +643,10 @@ void goLSWordWord(){
                 struct dirent *dir2;
                 d2 = opendir(dir->d_name);
                 if (d2){
+                    //This is where the filename is being printed
                     printf("%s:\n\n", fileName2);
                     while ((dir2 = readdir(d2)) != NULL){
+                        //This is where all of the content is printed out
                         printf("%s\n", dir2->d_name);
                     }
                     closedir(d2);
@@ -673,6 +697,8 @@ void recover_from_errors(){
 ///////Shell Functions/////////////////////////////////
 ///////////////////////////////////////////////////////
 
+//This is the function that is used to check
+//in file
 int check_in_file(){
     isInFile = open(srcf, O_RDONLY, 0600);
     if( isInFile == -1){
@@ -683,6 +709,8 @@ int check_in_file(){
     }
 }
 
+//This is the function that is used to check
+//out file
 int check_out_file(){
     isOutFile = open(distf, O_WRONLY, O_APPEND, O_RDWR, O_CREAT, 0644);
     if(isOutFile == -1){
@@ -705,6 +733,9 @@ void init_scanner_and_parser(){
     isPeriod = 0;
 }
 
+//This is the message of the terminal that
+//the user will se evertime they interact
+//with the shell
 void printPrompt(){
     getCurrentPath();
     printf("%s", currentWorkDir);
@@ -943,6 +974,21 @@ void execute_it(){
                 fp = fopen(distf, "w+");
                 char const* const fileName = argv[1]; /* should check that argc > 1 */
                 FILE* file = fopen(fileName, "r"); /* should check the result */
+                char new_line[256];
+
+                while ( fgets(new_line, sizeof(new_line), fpRead) != NULL) { 
+
+                    // printf("%s\n", str);
+                    char* reserve;
+                    char* tok = strtok_r(new_line, " ", &reserve);
+                    int i = 0;
+                    while (tok != NULL){
+                        argv[i] = tok;
+                        ++i;
+                        tok = strtok_r(NULL, " ", &reserve);
+                    }
+
+                }
 
                 dup2(fileno(fp), 1);
 
