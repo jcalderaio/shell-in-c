@@ -370,30 +370,40 @@ void unsetEnvironment() {
     }
 }
 
+/*====================================================================*/
+/*  This function iterates through the global environ array and
+    prints the environment variables to the screen */ 
+/*====================================================================*/
+
 void printAlias() {
 
-    if(alias_count == 0) {
+    if(alias_count == 0) {          //If there are no variables, it is accounted for
         printf("No aliases!\n");
         return;
     }
     int count = 0;
     while(count < alias_count){
-        printf("%s:%s\n", aliasTable[count].key, aliasTable[count].value);
-        ++count;
+        printf("%s:%s\n", aliasTable[count].key, aliasTable[count].value);   //Iterate through the table and print alias along
+        ++count;                                                                    //with its true value
     }
 }
+
+/*====================================================================*/
+/*  This function takes a two character pointers arguments and sets 
+    an alias in an aliasTable the refers to the value */ 
+/*====================================================================*/
 
 void createAlias(char* key, char* value){
 
     int count = 0;
     //If max alias count reached
-    if(alias_count == MAXALIAS) {
-        printf("Max number of aliases created!\n");
+    if(alias_count == MAXALIAS) {       //Defined number of aliases
+        printf("Max number of aliases created!\n");   //Cannot create any more aliases
         return;
     }
 
     //If no aliases created yet
-    if(alias_count == 0){
+    if(alias_count == 0){                   //Adds an alias to the head of the table if no aliases yet
         aliasTable[0].key = key;
         aliasTable[0].value = value;
         aliasTable[0].nested = -1;
@@ -402,6 +412,8 @@ void createAlias(char* key, char* value){
         return;
     }
 
+    //If more than one alias in the table, a check is performed so that 
+        //no two aliases can have the same name
     while(count < alias_count){
         if(!strcmp(aliasTable[count].key, key)){
             printf("\"%s\" is already an alias!\n", key);
@@ -410,11 +422,16 @@ void createAlias(char* key, char* value){
         ++count;
     }
 
+    //If no alias exists yet, alias is created! 
+
     aliasTable[alias_count].key = key;
     aliasTable[alias_count].value = value;
     aliasTable[alias_count].nested = -1;
 
     printf("\"%s\" added as an alias!\n", key);
+
+    //A check is performed to see if new alias refers an old alias. 
+        //If so, the previous nested number points to the new alias.
 
     int count2 = 0;
     while(count2 < alias_count){
@@ -423,14 +440,19 @@ void createAlias(char* key, char* value){
         }
         ++count2;
     }
+    //Alias count is increased
      ++alias_count;
     return;
 }
 
+/*====================================================================*/
+/*  This function takes a character pointer as an argument if valid, 
+    unsets an alias in the table with the same name */ 
+/*====================================================================*/
 void unaliasword(char* key){
 
     int count = 0;
-    if(alias_count != 0) {
+    if(alias_count != 0) {                          //If there are aliases in the table
 
         while(alias_count > count){
             if(!strcmp(key, aliasTable[count].key)){

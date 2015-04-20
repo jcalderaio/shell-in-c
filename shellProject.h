@@ -1,16 +1,17 @@
 
 
 //#include "lex.yy.c"
+/*Boolean Definitions*/
 
 #define FALSE 0
 #define TRUE !FALSE
-
+/*Size Definitions*/
 #define MAXCMDS              50
 #define MAXARGS              300
 #define MAXALIAS             100
 #define MAXCACHE             100
 #define MAXPATH              50
-
+/*Error Definitions*/
 #define OK                   0
 #define ERRORS               1
 #define SYSERR               1
@@ -27,6 +28,7 @@
 #define REGISTRY "REGISTRY"
 
 //------Builtin Commands-----------//
+/*Assigning bicmd Different Numbers*/
 #define BYE_CMD                  2
 #define CDHome_CMD               3
 #define CDPath_CMD               4
@@ -45,6 +47,7 @@
 #define ENVEXP_CMD               17
 
 //------Simple Commands-----------//
+/*Assigning Simple Commands Different Numbers*/
 #define IO_ADDTOFILE             1
 #define IO_APPENDTOFILE          2
 
@@ -65,18 +68,18 @@ typedef struct com{
     int nargs;
     ARGTAB *atptr;
 } COMMAND;
-
+/*Environment Structure*/
 struct env {
     int used; //number of usage times?
     char *envname; //pointer to alias name?
     char *envstr;  //pointer to alias string?
 };
-
+/*Cache Table Structure*/
 typedef struct cache{
     char *cmd;
     char *hostport;
 } CACHE;
-
+/*Alias Structure*/
 struct AliasNode {
         int nested;
         char* key;
@@ -85,84 +88,79 @@ struct AliasNode {
 
 ///////*Externals*/////////////
 
-struct AliasNode aliasTable[MAXALIAS];
-int alias_count;
-COMMAND comtab[MAXCMDS];
-CACHE cachetab[MAXCACHE];
-int currcmd;
-int currcache;
-int lastcurrcmd;
-int recursive;
-int pathleng;
-int currarg;
-int login;
-int builtin;
-int bicmd;
-int bioutf;
-char *bistr;
-char *bistr2;
-int debug;
-int IwasSet;
-int err;
-int error_somewhere;
-int ap;
-int cmd_has_tail;
-int backgnd;
-int concurrp;
-int eventcount;
-char *home;
-char *shname;
-char *prompt_string;
-int user_defined_prompt;
-int append;
-int loop;
+struct AliasNode aliasTable[MAXALIAS]; //Table of all aliases
+int alias_count;                       //Number of aliases
+COMMAND comtab[MAXCMDS];               //Table of all commands
+CACHE cachetab[MAXCACHE];              //Table of all cache
+int currcmd;                           //Number of the current command
+int currcache;                         //Number of the current cache
+int lastcurrcmd;                       //Number of the last command
+int recursive;                         //it's just a variable
+int pathleng;                          //Path length
+int currarg;                           //Current argument
+int login;                             //Login number
+int builtin;                           //Used for builtin commands
+int bicmd;                             //Used for builtin commands to get executed
+int bioutf;                            //out file for builtin
+char *bistr;                           //String pointer for the builtin commands
+char *bistr2;                          //builtin pointer2
+int debug;                             //for debugging 
+int IwasSet;                           //something was set 
+int err;                               //error 
+int error_somewhere;                   //if error is somewhere
+int ap;                                //just a variable 
+int cmd_has_tail;                      //used for the commands having tail 
+int backgnd;                           //used for background
+int concurrp;                          //for concurrent process
+int eventcount;                        //counts the number of events
+char *home;                            //home 
+char *shname;                          //for shell name 
+char *prompt_string;                   //string prompt 
+int user_defined_prompt;               //user defined prompt 
+int append;                            //for appending anything 
+int loop;                              //used as a loop integer 
 
 ////////////////////////////////
 
-int SETPATH;
-int SETT;
-int CDX;
-int MAXENV;
-int SETPROMPT;
-int CMD;
-char* pathtab[MAXPATH];
-char* command_path;
-int argc;
-char* argv[MAXARGS];
-char* executable_path;
-char* input_command;
-int isExe;
-char* currentLocation;
-char currLoc[MAXPATH];
-char* strPath;
-int alphasort(); //Inbuilt sorting function
-char* pathname[MAXPATH];
-char* currentWorkDir;
-char* fileName;
-char* var;
-char* value;
-char* word1;
-char* word2;
-char* word5;
-char* al;
-char* alWord;
-int isQuote;
-char* strPathConCat;
-int dotdot;
-char* srcf;
-char* distf;
-int isPeriod;
-int isInFile;
-int isOutFile;
-char* wcFound;
-char* userName;
-int isLSWithWord;
-char* fileName1;
-char* fileName2;
-char* envExpVariable;
-int isWild;
-int isTilde;
-int isFrontPeriod;
+int SETPATH;                           //set the path
+int SETT;                              //used somewhere 
+int CDX;                               //used somewhere
+int MAXENV;                            //maximum no of environment 
+int SETPROMPT;                         //setting the prompt
+int CMD;                               //for taking the command 
+char* pathtab[MAXPATH];                //used in executable 
+char* command_path;                    //used for command path 
+int argc;                              //number of arguments 
+char* argv[MAXARGS];                   //array of arguments 
+char* executable_path;                 //for executable path 
+char* input_command;                   //for input command 
+int isExe;                             //used somewhere 
+char* currentLocation;                 //for current location 
+char currLoc[MAXPATH];                 //for current location path 
+char* strPath;                         //for string path 
+int alphasort();                       //Inbuilt sorting function
+char* pathname[MAXPATH];               //for path name 
+char* currentWorkDir;                  //for current working directory 
+char* fileName;                        //for filename     
+char* var;                             //just a variable 
+char* value;                           //used in aliasing 
+int isQuote;                           //used in init_scanner_and_parser
+char* strPathConCat;                   //string path concatenation
+int dotdot;                            //used for CD ..
+char* srcf;                            //used as source file 
+char* distf;                           //used as destination file 
+int isPeriod;                          //used in set environment 
+int isInFile;                          //input file 
+int isOutFile;                         //output file 
+char* wcFound;                         //wildcard found 
+char* userName;                        //username     
+int isLSWithWord;                      //list with word         
+char* fileName1;                       //used as filename for WildCard Matching
+char* fileName2;                       //used as filename for WildCard Matching
+char* envExpVariable;                  //environment expansion variable     
+int isWild;                            //for checking wildcard 
+int isTilde;                           //for checking tilde 
+int isFrontPeriod;                     //used in set environment 
 
 ////////////////////////////////////
 
@@ -180,7 +178,7 @@ int myPipe[2];
 
 #define NIL(x) (x *)0
 #define ALL NIL(char)
-#define copystring (a,b) strcpy((a=(char *)malloc(strlen(b)+1)), b)
-#define mkstr(a) (char *)makestring(a)
-#define allocate(t) (t *)malloc(sizeof(t))
+#define copystring (a,b) strcpy((a=(char *)malloc(strlen(b)+1)), b)  //copying definition is allocating the memory space of actual string
+#define mkstr(a) (char *)makestring(a)         //definining mkstr as a char* to makestring
+#define allocate(t) (t *)malloc(sizeof(t))     //allocate memory of size t
 
