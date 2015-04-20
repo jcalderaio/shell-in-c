@@ -36,10 +36,6 @@ extern YY_BUFFER_STATE yy_scan_buffer(char *);
     if it doesnt */
 /*====================================================================*/
 
-/*
-This function takes a character pointer as an argument and returns true if
-it has a corresponding alias in the aliasTable and false if it doesnt
-*/
 bool is_alias(char *key) {
 
     struct AliasNode currAlias;
@@ -937,8 +933,6 @@ void reprocess() {
 void execute_it(){
     // Handle  command execution, pipelining, i/o redirection, and background processing.
     // Utilize a command table whose components are plugged in during parsing by yacc.
-
-
 
     //Handle Aliases
     int flag = 0;       //This flag indicates if there are aliases or not
