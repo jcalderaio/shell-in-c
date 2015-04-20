@@ -446,20 +446,20 @@ void createAlias(char* key, char* value){
 }
 
 /*====================================================================*/
-/*  This function takes a character pointer as an argument if valid, 
+/*  This function takes a character pointer as an argument. If valid, 
     unsets an alias in the table with the same name */ 
 /*====================================================================*/
 void unaliasword(char* key){
 
     int count = 0;
-    if(alias_count != 0) {                          //If there are aliases in the table
+    if(alias_count != 0) {                          //If there are aliases in the table, continue
 
         while(alias_count > count){
-            if(!strcmp(key, aliasTable[count].key)){
+            if(!strcmp(key, aliasTable[count].key)){    //Will compare the alias key to input key
                 int i = 0;
-                while(i < count){
-                    if(strcmp(key, aliasTable[i].value) == 0)
-                        aliasTable[i].nested = -1;
+                while(i < count){   
+                    if(strcmp(key, aliasTable[i].value) == 0)   //WIll input alies value to input key
+                        aliasTable[i].nested = -1;          //If equal, sets aliases nested value to -1
                     ++i;
                 }
                 break;
@@ -468,25 +468,25 @@ void unaliasword(char* key){
         }
 
         int count2 = count + 1;
-        while(alias_count -1 > count)
+        while(alias_count -1 > count)           //While count < alias count -1
         {
             aliasTable[count] = aliasTable[count2];
             int i = 0;
             while(count > i){
-                if (!strcmp(aliasTable[i].value, aliasTable[count].key))
+                if (!strcmp(aliasTable[i].value, aliasTable[count].key))  //Disconnects the old nested aliases
                     aliasTable[i].nested = count;
                 ++i;
             }
             ++count;
             ++count2;
         }
-        --alias_count;
-        printf("\"%s\" alias removed!\n", key);
+        --alias_count;                  //Removes the alias and number of aliases in the table
+        printf("\"%s\" alias removed!\n", key);         
         return;
     }
 
     else {
-        printf("No aliases to remove\n");
+        printf("No aliases to remove\n");       //Else, print no aliases to remove
         return;
     }
 
@@ -712,6 +712,12 @@ void printPrompt(){
     return;
 }
 
+/*====================================================================*/
+/*  This function initializes the shell and allocates memory to specific
+    tables and variables needed for the shell to perform and even
+    possibly return back to lex */ 
+/*====================================================================*/
+
 void shell_init(){
     //init all variables
     currcmd = 0;
@@ -749,45 +755,78 @@ void shell_init(){
  
 }
 
+/*====================================================================*/
+/*  This function executes built in commands by checking the header file
+    for the defined name and switching it out with a number. The switch is
+    then performed, which in turn executes the proper command with the
+    arguments from the user passed in through the yacc file. */ 
+/*====================================================================*/
+
 void do_it(){
 
     switch (bicmd) {
-        case CDHome_CMD:
+
+        //This command redirects the user to the home directory
+        case CDHome_CMD:    
             goHome();
             break;
+
+        //This command redirects the user to a user specified path
         case CDPath_CMD:
             goPath();
             break;
+
+        //This displays to the user the contents of the directory in a list
         case LS_CMD:
             goLS();
             break;
+
+        //This displays to the user the contents of a user specified folder
         case LSWord_CMD:
             goLSWord();
             break;
+
+        //This displays to the user the contents of two user specified directories
         case LSWordWord_CMD:
             goLSWordWord();
             break;
+
+        //This displays all the aliases to the user
         case ALIAS_CMD:
             printAlias();
             break;
+
+        //This creates an alias with a command or variable that a user can later use
         case ALIAS_CMD_CREATE:
             createAlias(remove_white(argv[0]),remove_white(argv[1]));
             break;
+
+        //This erases an alais that the user specifies
         case UNALIAS_CMD:
             unaliasword(remove_white(argv[0]));
             break;
+
+        //This expands the environment variable
         case ENVEXP_CMD:
             envExpansion();
             break;
+
+        //This sets the environment with a left side variable and a right side path
         case SETENV_CMD:
             setEnvironment();
             break;
+
+        //This unsets the environment variable that the user specifies
         case UNSETENV_CMD:
             unsetEnvironment();
             break;
+
+        //This displays to the user all environment variables and paths in a list
         case PRINTENV_CMD:
             printEnvironment();
             break;
+
+        //This simply creates a new line
         case NEWLINE_CMD:
             break;
         default:
@@ -817,23 +856,28 @@ int executable(){
 int getCommand();
 void processCommand();
 
+/*====================================================================*/
+/*  This function concatenates all the user arguments into a string token
+    which is sent to the lexer for reprocessing */ 
+/*====================================================================*/
+
 void reprocess() {
 
     int length = 0;
-    while(argv[length] != NULL) {
+    while(argv[length] != NULL) {    //Counts the number of arguments
         ++length;
     }
 
-    char * new_command = argv[0];
+    char * new_command = argv[0];   //Sets the new command char * to the first argument
 
     if(length == 1) {
-        strcat(new_command, "\n");
+        strcat(new_command, "\n");  //If only one argument, add a new line to the command
     }
     else {
-        strcat(new_command, " ");
+        strcat(new_command, " ");   //Add a space to separate the commands
         int i = 1;
         while(argv[i] != NULL){
-            strcat(new_command, argv[i]);
+            strcat(new_command, argv[i]);    //Concatenates all the arguments into a token string
             if(i == (length-1) ) {
                 strcat(new_command, "\n");
             }
@@ -844,6 +888,8 @@ void reprocess() {
         }
     }
 
+        //This series of commands resets the tokens of the 
+            //lexer and parses it. The current commands buffer is destroyed.
         YY_BUFFER_STATE bp;
         bp = yy_scan_string( new_command );
         yy_switch_to_buffer( bp );
@@ -876,7 +922,7 @@ void execute_it(){
 
 
     pid_t pid, pid2;
-    FILE *fp,*fpRead;
+    FILE *fp;
     int mode2 = NORMAL, cmdArgc, status1, status2;
     char *cmdArgv2[INPUT_STRING_SIZE], *supplement2 = NULL;
     if(currcmd == PIPELINE){
@@ -894,25 +940,9 @@ void execute_it(){
         switch(currcmd)
         {
             case OUTPUT_REDIRECTION: {
-                fpRead = fopen(input_command, "r");
                 fp = fopen(distf, "w+");
                 char const* const fileName = argv[1]; /* should check that argc > 1 */
                 FILE* file = fopen(fileName, "r"); /* should check the result */
-                char new_line[256];
-
-                while ( fgets(new_line, sizeof(new_line), fpRead) != NULL) { 
-
-                    // printf("%s\n", str);
-                    char* reserve;
-                    char* tok = strtok_r(new_line, " ", &reserve);
-                    int i = 0;
-                    while (tok != NULL){
-                        argv[i] = tok;
-                        ++i;
-                        tok = strtok_r(NULL, " ", &reserve);
-                    }
-
-                }
 
                 dup2(fileno(fp), 1);
 
