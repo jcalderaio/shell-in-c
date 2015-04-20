@@ -953,7 +953,7 @@ void execute_it(){
 
 
     pid_t pid, pid2;
-    FILE *fp;
+    FILE *fp, *fpRead;
     int mode2 = NORMAL, cmdArgc, status1, status2;
     char *cmdArgv2[INPUT_STRING_SIZE], *supplement2 = NULL;
     if(currcmd == PIPELINE){
