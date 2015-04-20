@@ -11,16 +11,16 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdbool.h>
-
-
 #include "shellProject.h"
 
-//////////////////////////////////////////////////////
-///////Builtin Functions//////////////////////////////
-//////////////////////////////////////////////////////
 
-extern char **environ;
 
+extern char **environ;    //This is the table to set our environments
+
+
+/*====================================================================*/
+/* THESE ARE THE FUNCTIONS IMPORTED FROM THE LEX.YY.C FILE */ 
+/*====================================================================*/
 extern int yyparse();
 extern int yylex_destroy();
 typedef struct yy_buffer_state * YY_BUFFER_STATE;
@@ -29,15 +29,19 @@ extern YY_BUFFER_STATE yy_scan_string(char * str);
 extern void yy_delete_buffer(YY_BUFFER_STATE buffer);
 extern YY_BUFFER_STATE yy_scan_buffer(char *);
 
-/*
-This function takes a character pointer as an argument and returns true if
-it has a corresponding alias in the aliasTable and false if it doesnt
-*/
+
+/*====================================================================*/
+/*  This function takes a character pointer as an argument and returns 
+    true if it has a corresponding alias in the aliasTable and false 
+    if it doesnt */ 
+/*====================================================================*/
+
 bool is_alias(char *key) {        
 
     struct AliasNode currAlias;
     int index = 0;
     while(alias_count > index){
+
         if(!strcmp(aliasTable[index].key, key)){  
             currAlias = aliasTable[index];
             return true;
@@ -48,10 +52,12 @@ bool is_alias(char *key) {
 }
 
 
-/*
-This function takes a character pointer as an argument and returns true if
-it has a corresponding alias in the aliasTable and false if it doesnt
-*/
+/*====================================================================*/
+/*  This function takes a character pointer as an argument and returns 
+    the most nested alias if it has a corresponding alias in the aliasTable 
+    the the original inputted character pointer if it doesn't */ 
+/*====================================================================*/
+
 char * get_alias(char *key) {
 
     struct AliasNode currAlias;
