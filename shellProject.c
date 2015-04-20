@@ -37,12 +37,16 @@ extern YY_BUFFER_STATE yy_scan_buffer(char *);
 /*====================================================================*/
 
 bool is_alias(char *key) {        
+/*
+This function takes a character pointer as an argument and returns true if
+it has a corresponding alias in the aliasTable and false if it doesnt
+*/
+bool is_alias(char *key) {
 
     struct AliasNode currAlias;
     int index = 0;
     while(alias_count > index){
-
-        if(!strcmp(aliasTable[index].key, key)){   //Compares input key and aliasTable key
+        if(!strcmp(aliasTable[index].key, key)){  
             currAlias = aliasTable[index];
             return true;
         }
