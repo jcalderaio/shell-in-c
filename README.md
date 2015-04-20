@@ -1,47 +1,34 @@
 # shellProject
 This is a shell that was coded using lex and yacc in c.
 
-///////////////////////////////////////////////////////
-///////Lex Input///////////////////////////////////////
-///////////////////////////////////////////////////////
+NOT Implemented features
+==================================
+    - Pipelining
+    - Muitiplte I/O redirection
+    - ~User tilde expansion
+    - replacing environment expansion within
+      words and strings ${ }
 
-FIRST PART
-
-%%
-
-pattern                        //action
-
-. . . .
-
-%%
-
-THIRD PART
-
-///////////////////////////////////////////////////////
-///////How to run//////////////////////////////////////
-///////////////////////////////////////////////////////
-
-$ lex ex1.l                   //Process the lex file to generate a scanner
-
-$cc lex.yy.c -ll              //Compile the scanner and grab main() from the lex library (-ll option)
-
-$./a.out
-
-//The you enter in the input and you should
-//recieve the output
-
-///////////////////////////////////////////////////////
-///////Lex Patterns////////////////////////////////////
-///////////////////////////////////////////////////////
-
-1. abc                       //Match the string abc
-
-2. [a-zA-Z]                  //Match and lower or upercase letter
-
-3. dog.*cat                  //Match any lower or uppercase letter
-
-4. (ab)+                     //Match one or more occurence of "ab" concatenated
-
-5. [^a-z]+                   //Match any string of one or more characters that do not include lower case a-z
-
-6. [+-]?[0-9]+               //Match any stringof one or more digits with an optional prefix of + or -
+Implemented features
+===================================
+    - CD
+    - CD ~
+    - CD WORD
+    - LS
+    - LS WORD
+    - LS WORD WORD
+    - SETENV
+    - SETENV WORD
+    - SETENV WORD WORD
+    - UNSETENV WORD
+    - PRINTENV
+    - ALIAS
+    - ALIAS WORD WORD
+    - UNALIAS WORD
+    - We also implemented reparsing char* when they are alias
+    - We implemented I/O redirect WORD > WORD, WORD >> WORD, WORD < WORD
+    - We also made ${variable} return a value
+    - If you type ~ this will take you to the home drectory
+    - We also incorporated tilde in the file path ~/bin/app
+    - We have double dot and single dot implemented (i.e: cd.. cd . cd ../Desktop/stuff cd ./Desktop/stuff)
+    - We have wildcard in place using * and ?
