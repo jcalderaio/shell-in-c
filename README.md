@@ -1,14 +1,6 @@
 # shellProject
 This is a shell that was coded using lex and yacc in c.
 
-NOT Implemented features
-==================================
-    - Pipelining
-    - Muitiplte I/O redirection
-    - ~User tilde expansion
-    - replacing environment expansion within
-      words and strings ${ }
-
 Implemented features
 ===================================
     - CD
@@ -32,3 +24,11 @@ Implemented features
     - We also incorporated tilde in the file path ~/bin/app
     - We have double dot and single dot implemented (i.e: cd.. cd . cd ../Desktop/stuff cd ./Desktop/stuff)
     - We have wildcard in place using * and ?
+
+NOT Implemented features
+==================================
+    - Pipelining
+    - Muitiplte I/O redirection
+    - ~User tilde expansion
+    - replacing environment expansion within
+      words and strings ${ }
