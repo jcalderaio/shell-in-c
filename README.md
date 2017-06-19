@@ -1,5 +1,4 @@
 # shellProject
-## hkhkjh
 This is a shell that was coded using lex and yacc in c.
 
 Implemented features
