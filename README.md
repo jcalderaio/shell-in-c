@@ -28,7 +28,7 @@ Implemented features
 NOT Implemented features
 ==================================
     - Pipelining
-    - Muitiplte I/O redirection
+    - Multiple I/O redirection
     - ~User tilde expansion
-    - replacing environment expansion within
+    - Replacing environment expansion within
       words and strings ${ }
